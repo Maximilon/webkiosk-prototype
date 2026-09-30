@@ -1,0 +1,4964 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>iPayroll — Prototype v5 (minimal)</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand-600: #d4540a;
+        --brand-500: #ee5f0a;
+        --brand-200: #f5be8a;
+        --brand-100: #ffe4d0;
+        --brand-50: #fff3ea;
+        --ink-900: #1b1e23;
+        --ink-700: #3c424b;
+        --ink-500: #616a76;
+        --ink-300: #b4bac3;
+        --surface: #ffffff;
+        --soft: #f2f3f5;
+        --soft-2: #e8eaee;
+        --line: #e6e9ed;
+        --border-200: #d8dde3;
+        --link-500: #1b66c9;
+        --info-50: #edf4fd;
+        --info-700: #124a8f;
+        --success-700: #116636;
+        --success-500: #178a47;
+        --success-50: #e7f6ec;
+        --warning-700: #7c5300;
+        --warning-500: #e9930c;
+        --warning-50: #fdf3e0;
+        --danger-700: #a82a20;
+        --danger-500: #d3382c;
+        --danger-50: #fcedeb;
+        --font-display: "Sora", system-ui, sans-serif;
+        --font-body: "Inter", system-ui, sans-serif;
+        --gutter: 20px;
+        --r-sm: 10px;
+        --r-md: 14px;
+        --r-lg: 20px;
+        --r-sheet: 24px;
+        --r-pill: 999px;
+        --shadow-float: 0 8px 24px rgba(27, 30, 35, 0.16);
+        --shadow-hero: 0 6px 20px rgba(238, 95, 10, 0.24);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        font-family: var(--font-body);
+        color: var(--ink-900);
+        background: #dfe3e8;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        -webkit-font-smoothing: antialiased;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+      }
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      .tnum {
+        font-variant-numeric: tabular-nums;
+      }
+      svg {
+        display: block;
+      }
+
+      /* ---------- phone frame ---------- */
+      .phone {
+        width: 390px;
+        height: 844px;
+        background: var(--surface);
+        border-radius: 44px;
+        border: 10px solid #14161a;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        box-sizing: content-box;
+      }
+      .screen {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        background: var(--surface);
+      }
+      @media (max-width: 480px) {
+        body {
+          padding: 0;
+          display: block;
+        }
+        .phone {
+          width: 100%;
+          height: 100dvh;
+          border: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+      }
+
+      /* ---------- brand bar (persistent, v3 new-navigation decision) ---------- */
+      .brand-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px var(--gutter) 6px;
+        flex: none;
+        background: var(--surface);
+      }
+      .brand-logo img {
+        height: 26px;
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--brand-100);
+        color: var(--brand-600);
+        display: grid;
+        place-items: center;
+      }
+      .avatar svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+      .avatar.lg {
+        width: 48px;
+        height: 48px;
+      }
+      .avatar.lg svg {
+        width: 26px;
+        height: 26px;
+      }
+
+      /* ---------- scroller ---------- */
+      #view {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+        scrollbar-width: none;
+      }
+      #view::-webkit-scrollbar {
+        display: none;
+      }
+      .page {
+        padding: 0 var(--gutter) 120px;
+      }
+      .page.has-sticky {
+        padding-bottom: 190px;
+      }
+
+      /* ---------- headers ---------- */
+      .top-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0 6px;
+      }
+      .top-head h1 {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 28px;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--soft);
+        display: grid;
+        place-items: center;
+        flex: none;
+      }
+      .icon-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: var(--ink-900);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .icon-btn.plain {
+        background: none;
+      }
+      .text-btn {
+        color: var(--link-500);
+        font-weight: 600;
+        font-size: 15px;
+        padding: 6px 2px;
+      }
+      .sub-head {
+        display: grid;
+        grid-template-columns: 40px 1fr 40px;
+        align-items: center;
+        padding: 6px 0 10px;
+      }
+      .sub-head h1 {
+        margin: 0;
+        text-align: center;
+        font-size: 17px;
+        font-weight: 600;
+      }
+      .sub-head .icon-btn {
+        background: none;
+        margin-left: -8px;
+      }
+      .tabs {
+        display: flex;
+        gap: 22px;
+        border-bottom: 1px solid var(--line);
+        margin: 6px calc(-1 * var(--gutter)) 0;
+        padding: 0 var(--gutter);
+      }
+      .tab {
+        padding: 10px 0 11px;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--ink-500);
+        position: relative;
+      }
+      .tab[aria-selected="true"] {
+        color: var(--ink-900);
+        font-weight: 600;
+      }
+      .tab[aria-selected="true"]::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 3px;
+        border-radius: 3px 3px 0 0;
+        background: var(--brand-500);
+      }
+
+      /* ---------- section headers ---------- */
+      .sec {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 26px 0 4px;
+      }
+      .sec h2 {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0;
+        font-family: var(--font-display);
+        letter-spacing: -0.01em;
+      }
+      .sec .tot {
+        font-size: 13px;
+        color: var(--ink-500);
+      }
+      .sec .text-btn {
+        font-size: 14px;
+        padding: 0;
+      }
+
+      /* ---------- list rows (no containers, inset hairlines) ---------- */
+      .list {
+        margin: 0;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        text-align: left;
+        padding: 13px 0;
+        min-height: 56px;
+        position: relative;
+        background: var(--surface);
+      }
+      .list > * + *::before,
+      .group > * + *::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: var(--div-left, 0);
+        height: 1px;
+        background: var(--line);
+        z-index: 3;
+      }
+      .list > *,
+      .group > * {
+        position: relative;
+      }
+      .row .lead {
+        flex: none;
+      }
+      .row .main {
+        flex: 1;
+        min-width: 0;
+      }
+      .row .main > .t,
+      .row .main > .s {
+        display: block;
+      }
+      .row .t {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.3;
+      }
+      .row .s {
+        font-size: 13px;
+        color: var(--ink-500);
+        margin-top: 2px;
+        line-height: 1.3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .row .v {
+        text-align: right;
+        flex: none;
+        font-size: 15px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+      .row .v small {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--ink-500);
+        margin-top: 2px;
+      }
+      .row .chev {
+        width: 18px;
+        height: 18px;
+        stroke: var(--ink-300);
+        fill: none;
+        stroke-width: 2;
+        flex: none;
+      }
+      .row.link .t {
+        color: var(--link-500);
+        font-weight: 600;
+      }
+      .row.danger .t {
+        color: var(--danger-500);
+        font-weight: 600;
+      }
+      .row.center {
+        justify-content: center;
+      }
+      .row .ico {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--soft);
+        display: grid;
+        place-items: center;
+      }
+      .row .ico svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--ink-700);
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .row .ico.red {
+        background: var(--danger-50);
+      }
+      .row .ico.red svg {
+        stroke: var(--danger-500);
+      }
+      .row .mono {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 13px;
+        color: #fff;
+      }
+      .row.dim .t,
+      .row.dim .v {
+        color: var(--ink-500);
+      }
+      .kv {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 11px 0;
+        font-size: 15px;
+        position: relative;
+      }
+      .kv + .kv::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--line);
+      }
+      .kv .k {
+        color: var(--ink-500);
+      }
+      .kv .v {
+        font-weight: 500;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .kv.total .k,
+      .kv.total .v {
+        color: var(--ink-900);
+        font-weight: 700;
+      }
+      .kv .sub {
+        display: block;
+        font-size: 12px;
+        color: var(--ink-500);
+        font-weight: 400;
+        margin-top: 2px;
+      }
+
+      /* soft grouped block (My account only) */
+      .group {
+        background: var(--soft);
+        border-radius: var(--r-md);
+        padding: 0 16px;
+      }
+      .group .row {
+        background: transparent;
+      }
+
+      /* swipe-to-delete */
+      .swipe {
+        position: relative;
+        overflow: hidden;
+      }
+      .swipe .row {
+        transition: transform 0.2s ease;
+        z-index: 2;
+        touch-action: pan-y;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      .swipe .swipe-del {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 88px;
+        background: var(--danger-500);
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        display: grid;
+        place-items: center;
+        z-index: 1;
+      }
+      .swipe.open .row {
+        transform: translateX(-88px);
+      }
+
+      /* ---------- chips & pills ---------- */
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        height: 22px;
+        padding: 0 9px;
+        border-radius: var(--r-pill);
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .chip.draft {
+        background: var(--warning-50);
+        color: var(--warning-700);
+      }
+      .chip.sent,
+      .chip.approved,
+      .chip.ok {
+        background: var(--success-50);
+        color: var(--success-700);
+      }
+      .chip.declined,
+      .chip.bad {
+        background: var(--danger-50);
+        color: var(--danger-700);
+      }
+      .chip.neutral {
+        background: var(--soft-2);
+        color: var(--ink-700);
+      }
+      .chip.nudge {
+        background: var(--warning-50);
+        color: var(--warning-700);
+      }
+      .pills {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        margin: 14px calc(-1 * var(--gutter)) 0;
+        padding: 0 var(--gutter) 2px;
+        scrollbar-width: none;
+      }
+      .pills::-webkit-scrollbar {
+        display: none;
+      }
+      .pill {
+        flex: none;
+        height: 36px;
+        padding: 0 15px;
+        border-radius: var(--r-pill);
+        border: 1px solid var(--border-200);
+        font-size: 14px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--surface);
+        white-space: nowrap;
+      }
+      .pill[aria-pressed="true"] {
+        background: var(--ink-900);
+        border-color: var(--ink-900);
+        color: #fff;
+      }
+      .pill .n {
+        font-size: 12px;
+        opacity: 0.7;
+      }
+      .pill.choice {
+        height: auto;
+        padding: 8px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1px;
+        border-radius: 14px;
+      }
+      .pill.choice small {
+        font-size: 12px;
+        color: var(--ink-500);
+        font-weight: 400;
+      }
+      .pill.choice[aria-pressed="true"] small {
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      /* segmented — only for small in-content toggles (Days/Hours, One-off/Every pay) */
+      .seg {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 1fr;
+        background: var(--soft);
+        border-radius: 12px;
+        padding: 3px;
+        margin-top: 16px;
+      }
+      .seg button {
+        height: 34px;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink-500);
+      }
+      .seg button[aria-pressed="true"] {
+        background: var(--surface);
+        color: var(--ink-900);
+        font-weight: 600;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      }
+
+      /* ---------- buttons ---------- */
+      .btn {
+        height: 52px;
+        width: 100%;
+        border-radius: var(--r-pill);
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .btn.primary {
+        background: var(--ink-900);
+        color: #fff;
+      }
+      .btn.primary:disabled {
+        background: var(--soft-2);
+        color: var(--ink-300);
+        cursor: default;
+      }
+      .btn.secondary {
+        background: var(--soft);
+        color: var(--ink-900);
+      }
+      .btn.danger {
+        background: var(--danger-500);
+        color: #fff;
+      }
+      .btn.ghost-danger {
+        color: var(--danger-500);
+        height: 44px;
+      }
+      .btn.sm {
+        height: 40px;
+        font-size: 14px;
+        width: auto;
+        padding: 0 18px;
+      }
+      .btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+      .stack {
+        display: grid;
+        gap: 10px;
+      }
+      .link {
+        color: var(--link-500);
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .muted {
+        color: var(--ink-500);
+      }
+      .small {
+        font-size: 13px;
+      }
+      .center {
+        text-align: center;
+      }
+
+      /* ---------- inputs (soft filled) ---------- */
+      .field {
+        margin-top: 16px;
+      }
+      .field label,
+      .field .lbl {
+        display: block;
+        font-size: 13px;
+        color: var(--ink-500);
+        margin-bottom: 6px;
+        font-weight: 500;
+      }
+      .field .opt {
+        font-weight: 400;
+        color: var(--ink-300);
+      }
+      .input {
+        width: 100%;
+        height: 50px;
+        border: 0;
+        border-radius: var(--r-md);
+        background: var(--soft);
+        padding: 0 14px;
+        font-size: 16px;
+        outline: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      textarea.input {
+        height: 90px;
+        padding: 12px 14px;
+        resize: none;
+      }
+      .input:focus,
+      .input:focus-within {
+        box-shadow: inset 0 0 0 2px var(--brand-500);
+        background: var(--surface);
+      }
+      .input input {
+        flex: 1;
+        border: 0;
+        background: none;
+        outline: none;
+        font-size: 16px;
+        min-width: 0;
+        height: 100%;
+      }
+      .input .eye {
+        width: 22px;
+        height: 22px;
+        stroke: var(--ink-500);
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .check {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        margin-top: 18px;
+      }
+      .check input {
+        width: 20px;
+        height: 20px;
+        accent-color: var(--ink-900);
+      }
+      .rules {
+        margin-top: 10px;
+        display: grid;
+        gap: 6px;
+        font-size: 13px;
+      }
+      .rules div {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        color: var(--ink-500);
+      }
+      .rules div svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--ink-300);
+        fill: none;
+        stroke-width: 2.4;
+      }
+      .rules div.ok {
+        color: var(--success-700);
+      }
+      .rules div.ok svg {
+        stroke: var(--success-500);
+      }
+      .codes {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .codes input {
+        width: 100%;
+        min-width: 0;
+        height: 56px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+        border: 0;
+        border-radius: 12px;
+        background: var(--soft);
+        outline: none;
+      }
+      .codes input:focus {
+        box-shadow: inset 0 0 0 2px var(--brand-500);
+        background: #fff;
+      }
+
+      /* toggle */
+      .toggle {
+        width: 50px;
+        height: 30px;
+        border-radius: 15px;
+        background: var(--soft-2);
+        position: relative;
+        flex: none;
+        transition: background 0.2s;
+      }
+      .toggle::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        transition: left 0.2s;
+      }
+      .toggle[aria-checked="true"] {
+        background: var(--success-500);
+      }
+      .toggle[aria-checked="true"]::after {
+        left: 23px;
+      }
+
+      /* ---------- surfaces ---------- */
+      .hero {
+        background: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+        color: #fff;
+        border-radius: var(--r-lg);
+        padding: 18px 20px;
+        text-align: center;
+        box-shadow: var(--shadow-hero);
+        margin-top: 14px;
+      }
+      .hero .lbl {
+        font-size: 13px;
+        font-weight: 600;
+        opacity: 0.95;
+      }
+      .hero .amt {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 38px;
+        letter-spacing: -0.02em;
+        margin-top: 2px;
+        font-variant-numeric: tabular-nums;
+      }
+      .hero .paid {
+        font-size: 13px;
+        margin-top: 4px;
+        opacity: 0.95;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 14px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 14px;
+      }
+      .stats > * {
+        text-align: left;
+        padding-right: 12px;
+      }
+      .stats > * + * {
+        border-left: 1px solid var(--line);
+        padding-left: 16px;
+      }
+      .stats .l {
+        font-size: 13px;
+        color: var(--ink-500);
+      }
+      .stats .n {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 22px;
+        margin-top: 2px;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.01em;
+      }
+      .stats .u {
+        font-size: 13px;
+        color: var(--ink-500);
+        margin-top: 1px;
+      }
+      .banner {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--warning-50);
+        border-radius: var(--r-md);
+        padding: 12px 14px;
+        margin-top: 12px;
+      }
+      .banner .main {
+        flex: 1;
+        font-size: 14px;
+      }
+      .banner .main b {
+        display: block;
+        font-size: 15px;
+      }
+      .banner .link {
+        font-size: 14px;
+        white-space: nowrap;
+      }
+      .banner .x {
+        width: 26px;
+        height: 26px;
+        display: grid;
+        place-items: center;
+        margin-right: -4px;
+      }
+      .banner .x svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--ink-500);
+        fill: none;
+        stroke-width: 2;
+      }
+      .banner.info {
+        background: var(--info-50);
+      }
+      .banner.ok {
+        background: var(--success-50);
+        color: var(--success-700);
+      }
+      .bar {
+        display: flex;
+        height: 12px;
+        border-radius: 6px;
+        overflow: hidden;
+        margin-top: 8px;
+        background: var(--soft);
+      }
+      .bar > i {
+        display: block;
+        height: 100%;
+      }
+      .legend {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        color: var(--ink-500);
+        margin-top: 8px;
+      }
+      .legend span::before {
+        content: "";
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 2px;
+        margin-right: 5px;
+        background: var(--c);
+        vertical-align: -1px;
+      }
+      .prog {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--soft-2);
+        overflow: hidden;
+        margin-top: 8px;
+      }
+      .prog i {
+        display: block;
+        height: 100%;
+        background: var(--ink-900);
+        border-radius: 3px;
+      }
+      .big {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 40px;
+        letter-spacing: -0.02em;
+        text-align: center;
+        font-variant-numeric: tabular-nums;
+      }
+      .qr {
+        width: 160px;
+        height: 160px;
+        margin: 12px auto 0;
+        background:
+          conic-gradient(from 90deg at 30% 30%, #000 25%, transparent 0) 0
+            0/20px 20px,
+          #fff;
+        border: 8px solid #fff;
+        outline: 1px solid var(--line);
+        border-radius: 8px;
+        image-rendering: pixelated;
+      }
+      .empty {
+        text-align: center;
+        color: var(--ink-500);
+        padding: 40px 0;
+        font-size: 15px;
+      }
+      .doc h2 {
+        font-size: 17px;
+        margin: 24px 0 6px;
+        font-family: var(--font-display);
+      }
+      .doc p {
+        font-size: 15px;
+        line-height: 1.55;
+        color: var(--ink-700);
+        margin: 0 0 10px;
+      }
+
+      /* period + day strip */
+      .period {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px;
+      }
+      .period b {
+        font-size: 16px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+      .strip {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        margin: 14px calc(-1 * var(--gutter)) 0;
+        padding: 0 var(--gutter);
+        scrollbar-width: none;
+      }
+      .strip::-webkit-scrollbar {
+        display: none;
+      }
+      .day {
+        flex: none;
+        width: 46px;
+        padding: 8px 0 7px;
+        border-radius: 14px;
+        text-align: center;
+      }
+      .day .dw {
+        font-size: 11px;
+        color: var(--ink-500);
+        font-weight: 600;
+      }
+      .day .dn {
+        font-size: 17px;
+        font-weight: 600;
+        margin-top: 2px;
+      }
+      .day .dh {
+        font-size: 11px;
+        color: var(--ink-500);
+        margin-top: 2px;
+        font-variant-numeric: tabular-nums;
+      }
+      .day .dh.has {
+        color: var(--success-700);
+        font-weight: 600;
+      }
+      .day .dh.dr {
+        color: var(--warning-700);
+        font-weight: 600;
+      }
+      .day[aria-pressed="true"] {
+        background: var(--ink-900);
+        color: #fff;
+      }
+      .day[aria-pressed="true"] .dw,
+      .day[aria-pressed="true"] .dh {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .day.wkend .dn {
+        color: var(--ink-300);
+      }
+      .day[aria-pressed="true"].wkend .dn {
+        color: #fff;
+      }
+
+      /* calendar */
+      .cal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 16px;
+      }
+      .cal-head b {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .cal {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        row-gap: 4px;
+        margin-top: 8px;
+        text-align: center;
+      }
+      .cal .dow {
+        font-size: 12px;
+        color: var(--ink-500);
+        font-weight: 600;
+        padding: 4px 0;
+      }
+      .cal .c {
+        height: 42px;
+        display: grid;
+        place-items: center;
+        font-size: 15px;
+        position: relative;
+        font-variant-numeric: tabular-nums;
+      }
+      .cal .c.wk {
+        color: var(--ink-300);
+      }
+      .cal .c.hol {
+        color: var(--ink-300);
+        text-decoration: line-through;
+      }
+      .cal .c.mine {
+        background: var(--brand-100);
+        font-weight: 600;
+      }
+      .cal .c.mine.s {
+        border-radius: 10px 0 0 10px;
+      }
+      .cal .c.mine.e {
+        border-radius: 0 10px 10px 0;
+      }
+      .cal .c.mine.s.e {
+        border-radius: 10px;
+      }
+      .cal .c.away::after {
+        content: "";
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        margin-left: -2.5px;
+        border-radius: 50%;
+        background: var(--ink-700);
+      }
+      .cal .c.sel {
+        background: var(--ink-900);
+        color: #fff;
+        font-weight: 600;
+      }
+      .cal .c.rng {
+        background: var(--soft-2);
+      }
+      .cal .c.sel.s {
+        border-radius: 12px 0 0 12px;
+      }
+      .cal .c.sel.e {
+        border-radius: 0 12px 12px 0;
+      }
+      .cal .c.sel.s.e {
+        border-radius: 12px;
+      }
+      .cal .c.today {
+        box-shadow: inset 0 0 0 1.5px var(--ink-900);
+        border-radius: 12px;
+      }
+      .cal button.c:disabled {
+        cursor: default;
+      }
+
+      /* ---------- bottom nav ---------- */
+      .bottom-nav {
+        display: flex;
+        background: var(--surface);
+        border-top: 1px solid var(--line);
+        padding: 6px 0 22px;
+        flex: none;
+        position: relative;
+        z-index: 5;
+      }
+      .nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--ink-500);
+        padding-top: 6px;
+      }
+      .nav-item svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .nav-item .ico-fill {
+        display: none;
+      }
+      .nav-item[aria-current="page"] {
+        color: var(--brand-600);
+        font-weight: 600;
+      }
+      .nav-item[aria-current="page"] .ico-line {
+        display: none;
+      }
+      .nav-item[aria-current="page"] .ico-fill {
+        display: block;
+        fill: currentColor;
+        stroke: none;
+      }
+
+      /* sticky action bar (Timelogs approve) */
+      .sticky {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 81px;
+        z-index: 4;
+        background: var(--surface);
+        border-top: 1px solid var(--line);
+        padding: 12px var(--gutter);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .sticky .main {
+        flex: 1;
+      }
+      .sticky b {
+        display: block;
+        font-size: 15px;
+      }
+      .sticky span {
+        font-size: 13px;
+        color: var(--ink-500);
+      }
+      .sticky .btn {
+        width: auto;
+        padding: 0 24px;
+        height: 46px;
+      }
+
+      /* ---------- sheet / dialog / toast ---------- */
+      .scrim {
+        position: absolute;
+        inset: 0;
+        background: rgba(20, 22, 26, 0.45);
+        z-index: 20;
+        opacity: 0;
+        transition: opacity 0.22s;
+      }
+      .scrim.show {
+        opacity: 1;
+      }
+      .sheet {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 21;
+        background: var(--surface);
+        border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+        max-height: 92%;
+        display: flex;
+        flex-direction: column;
+        transform: translateY(100%);
+        transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+        box-shadow: var(--shadow-float);
+      }
+      .sheet.show {
+        transform: none;
+      }
+      .sheet.tall {
+        height: 92%;
+      }
+      .sheet-handle {
+        width: 36px;
+        height: 5px;
+        border-radius: 3px;
+        background: var(--soft-2);
+        margin: 8px auto 0;
+        flex: none;
+      }
+      .sheet-head {
+        display: grid;
+        grid-template-columns: 44px 1fr 44px;
+        align-items: center;
+        padding: 4px 12px 6px;
+        flex: none;
+      }
+      .sheet-head h2 {
+        margin: 0;
+        text-align: center;
+        font-size: 17px;
+        font-weight: 600;
+      }
+      .sheet-head .icon-btn {
+        background: none;
+      }
+      .sheet-body {
+        padding: 0 var(--gutter) 16px;
+        overflow-y: auto;
+        flex: 1;
+      }
+      .sheet-foot {
+        padding: 12px var(--gutter) 28px;
+        flex: none;
+        border-top: 1px solid var(--line);
+      }
+      .sheet-foot .hint {
+        font-size: 13px;
+        color: var(--ink-500);
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .dialog {
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        top: 50%;
+        transform: translateY(-46%) scale(0.96);
+        opacity: 0;
+        z-index: 23;
+        background: var(--surface);
+        border-radius: var(--r-lg);
+        padding: 22px 20px 18px;
+        box-shadow: var(--shadow-float);
+        transition: all 0.2s;
+      }
+      .dialog.show {
+        opacity: 1;
+        transform: translateY(-50%);
+      }
+      .dialog h2 {
+        margin: 0 0 6px;
+        font-size: 19px;
+        font-family: var(--font-display);
+      }
+      .dialog p {
+        margin: 0 0 12px;
+        color: var(--ink-500);
+        font-size: 15px;
+        line-height: 1.45;
+      }
+      .dialog .acts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .dialog .acts .btn {
+        height: 46px;
+        font-size: 15px;
+      }
+      .toast {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 96px;
+        z-index: 50;
+        background: var(--ink-900);
+        color: #fff;
+        border-radius: var(--r-md);
+        padding: 13px 16px;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transform: translateY(20px);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.22s;
+      }
+      .toast.show {
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .toast span {
+        flex: 1;
+      }
+      .toast button {
+        color: #8cc1ff;
+        font-weight: 600;
+      }
+      .toast.high {
+        bottom: 170px;
+      }
+
+      /* ---------- full-screen overlays: splash, login, browser, lock ---------- */
+      .overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 40;
+        background: var(--surface);
+        display: flex;
+        flex-direction: column;
+      }
+      .overlay[hidden] {
+        display: none;
+      }
+      .splash {
+        align-items: center;
+        justify-content: center;
+      }
+      .splash img {
+        height: 44px;
+      }
+      .auth {
+        padding: 0 28px 34px;
+      }
+      .auth .mid {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .auth .mid img {
+        height: 40px;
+        margin-bottom: 26px;
+      }
+      .auth h1 {
+        font-family: var(--font-display);
+        font-size: 26px;
+        margin: 0;
+      }
+      .auth p {
+        color: var(--ink-500);
+        margin: 8px 0 0;
+        font-size: 15px;
+      }
+      .browser-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 16px 10px;
+        background: var(--soft);
+        flex: none;
+      }
+      .browser-bar .url {
+        flex: 1;
+        background: #fff;
+        border-radius: 10px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 14px;
+        color: var(--ink-700);
+      }
+      .browser-bar .url svg {
+        width: 14px;
+        height: 14px;
+        stroke: var(--ink-500);
+        fill: none;
+        stroke-width: 2;
+      }
+      .browser-page {
+        flex: 1;
+        padding: 40px 28px;
+        overflow: auto;
+      }
+      .browser-page img {
+        height: 32px;
+        display: block;
+        margin: 0 auto 24px;
+      }
+      .browser-page h2 {
+        text-align: center;
+        font-family: var(--font-display);
+        margin: 0 0 6px;
+      }
+      .lock {
+        align-items: center;
+        padding: 48px 32px 28px;
+      }
+      .lock img {
+        height: 30px;
+      }
+      .lock h2 {
+        font-family: var(--font-display);
+        font-size: 22px;
+        margin: 26px 0 4px;
+      }
+      .pin-dots {
+        display: flex;
+        gap: 16px;
+        margin: 22px 0 10px;
+      }
+      .pin-dots i {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 1.5px solid var(--ink-900);
+      }
+      .pin-dots i.on {
+        background: var(--ink-900);
+      }
+      .pin-dots.err {
+        animation: shake 0.35s;
+      }
+      .pin-dots.err i {
+        border-color: var(--danger-500);
+      }
+      @keyframes shake {
+        25% {
+          transform: translateX(-8px);
+        }
+        75% {
+          transform: translateX(8px);
+        }
+      }
+      .keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 70px);
+        gap: 12px 28px;
+        margin-top: auto;
+      }
+      .key {
+        height: 70px;
+        border-radius: 50%;
+        background: var(--soft);
+        font-size: 28px;
+        font-weight: 500;
+        display: grid;
+        place-items: center;
+      }
+      .key.plain {
+        background: none;
+      }
+      .key svg {
+        width: 30px;
+        height: 30px;
+        stroke: var(--ink-900);
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .faceid {
+        width: 90px;
+        height: 90px;
+        border-radius: 24px;
+        border: 3px solid var(--ink-900);
+        display: grid;
+        place-items: center;
+        animation: pulse 1s infinite;
+      }
+      .faceid svg {
+        width: 48px;
+        height: 48px;
+        stroke: var(--ink-900);
+        fill: none;
+        stroke-width: 1.8;
+      }
+      @keyframes pulse {
+        50% {
+          transform: scale(0.94);
+          opacity: 0.7;
+        }
+      }
+
+      /* ============================ v5 additions ============================ */
+      /* home: payslip row (date + amount on line 1, two full lines below, eye never clipped) */
+      .pay-row {
+        padding: 0;
+        align-items: flex-start;
+      }
+      .pay-main {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+        padding: 13px 0;
+      }
+      .pay-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 10px;
+      }
+      .row .s.wrap {
+        white-space: normal;
+        overflow: visible;
+        line-height: 1.45;
+      }
+      .nw {
+        white-space: nowrap;
+      }
+      .eye-btn {
+        margin: 7px -8px 0 0;
+      }
+      /* home: stats with a Leave balances indicator */
+      .stats-nav {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        text-align: left;
+        margin-top: 14px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .stats-nav .stats {
+        flex: 1;
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      .stats-nav .l,
+      .stats-nav .n,
+      .stats-nav .u {
+        display: block;
+      }
+      .stats-nav .go {
+        flex: none;
+        width: 72px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        border-left: 1px solid var(--line);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--link-500);
+        line-height: 1.2;
+        text-align: center;
+      }
+      .stats-nav .go .c {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--soft);
+        display: grid;
+        place-items: center;
+      }
+      .stats-nav .go svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--ink-900);
+        fill: none;
+        stroke-width: 2.2;
+      }
+      /* errors & warnings */
+      .field.err .input,
+      .field.err input.input,
+      .field.err select.input {
+        box-shadow: inset 0 0 0 2px var(--danger-500);
+        background: var(--danger-50);
+      }
+      .err-msg,
+      .warn-msg {
+        display: flex;
+        gap: 6px;
+        align-items: flex-start;
+        font-size: 13px;
+        color: var(--danger-700);
+        margin-top: 7px;
+        line-height: 1.35;
+      }
+      .warn-msg {
+        color: var(--warning-700);
+      }
+      .err-msg svg,
+      .warn-msg svg,
+      .formerr svg,
+      .offline svg {
+        width: 16px;
+        height: 16px;
+        flex: none;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        margin-top: 1px;
+      }
+      .formerr {
+        background: var(--danger-50);
+        color: var(--danger-700);
+        border-radius: var(--r-md);
+        padding: 10px 12px;
+        font-size: 14px;
+        margin-top: 12px;
+        display: grid;
+        gap: 6px;
+        line-height: 1.35;
+      }
+      .formerr div {
+        display: flex;
+        gap: 8px;
+      }
+      .toast.err {
+        background: var(--danger-700);
+      }
+      .toast.err button {
+        color: #fff;
+        text-decoration: underline;
+      }
+      .pin-msg {
+        min-height: 20px;
+        margin: 0;
+        font-size: 14px;
+      }
+      /* offline strip */
+      #net:empty {
+        display: none;
+      }
+      .offline {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--ink-900);
+        color: #fff;
+        font-size: 13px;
+        padding: 8px var(--gutter);
+        flex: none;
+      }
+      .offline button {
+        margin-left: auto;
+        color: #8cc1ff;
+        font-weight: 600;
+      }
+      /* loading skeletons */
+      .sk {
+        height: 12px;
+        border-radius: 8px;
+        background: linear-gradient(
+          90deg,
+          var(--soft) 25%,
+          var(--soft-2) 37%,
+          var(--soft) 63%
+        );
+        background-size: 400% 100%;
+        animation: sk 1.1s ease infinite;
+      }
+      .sk.c {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        flex: none;
+      }
+      .sk-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      @keyframes sk {
+        0% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0 50%;
+        }
+      }
+      /* nav badge dots (drafts waiting) */
+      .nav-item {
+        position: relative;
+      }
+      .nav-item[data-dot]::after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: calc(50% + 7px);
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--brand-500);
+        border: 2px solid #fff;
+      }
+      /* touch + keyboard feedback */
+      button.row:active,
+      .pay-main:active,
+      .stats-nav:active {
+        background: var(--soft);
+      }
+      .pill:active,
+      .btn:active:not(:disabled),
+      .icon-btn:active,
+      .key:active {
+        transform: scale(0.97);
+      }
+      .key:active {
+        background: var(--soft-2);
+      }
+      :focus-visible {
+        outline: 2px solid var(--brand-500);
+        outline-offset: 2px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone" id="phone">
+      <div class="screen">
+        <header class="brand-bar">
+          <button class="brand-logo" data-go="home" aria-label="Home">
+            <img src="ipayroll-logo.svg" alt="iPayroll" />
+          </button>
+          <button class="avatar" data-go="account" aria-label="My account">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 21a8 8 0 0 1 16 0z" />
+            </svg>
+          </button>
+        </header>
+        <div id="net"></div>
+
+        <main id="view" aria-live="polite"></main>
+
+        <nav class="bottom-nav" aria-label="Main">
+          <button class="nav-item" data-go="payslips" data-nav="payslips">
+            <svg class="ico-line" viewBox="0 0 24 24">
+              <rect x="4" y="3" width="16" height="18" rx="2" />
+              <line x1="8" y1="8" x2="16" y2="8" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+              <line x1="8" y1="16" x2="12" y2="16" />
+            </svg>
+            <svg class="ico-fill" viewBox="0 0 24 24">
+              <path
+                fill-rule="evenodd"
+                d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm4 2.2h8v1.6H8zm0 4h8v1.6H8zm0 4h5v1.6H8z"
+              />
+            </svg>
+            Payslips
+          </button>
+          <button class="nav-item" data-go="leave" data-nav="leave">
+            <svg class="ico-line" viewBox="0 0 24 24">
+              <rect x="3" y="5" width="18" height="16" rx="2" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+              <line x1="8" y1="3" x2="8" y2="7" />
+              <line x1="16" y1="3" x2="16" y2="7" />
+            </svg>
+            <svg class="ico-fill" viewBox="0 0 24 24">
+              <rect x="7.2" y="2" width="1.6" height="3" />
+              <rect x="15.2" y="2" width="1.6" height="3" />
+              <rect x="3" y="4" width="18" height="5.2" rx="1.6" />
+              <rect x="3" y="10.6" width="18" height="10.4" rx="1.6" />
+            </svg>
+            Leave
+          </button>
+          <button class="nav-item" data-go="timelogs" data-nav="timelogs">
+            <svg class="ico-line" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" />
+              <polyline points="12 7 12 12 15.5 14" />
+            </svg>
+            <svg class="ico-fill" viewBox="0 0 24 24">
+              <path
+                fill-rule="evenodd"
+                d="M12 2.6a9.4 9.4 0 1 0 0 18.8 9.4 9.4 0 0 0 0-18.8zM11.1 6.6h1.8v5.05l3.35 2.02-.93 1.54-4.22-2.55z"
+              />
+            </svg>
+            Timelogs
+          </button>
+          <button class="nav-item" data-go="tax" data-nav="tax">
+            <svg class="ico-line" viewBox="0 0 24 24">
+              <path
+                d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"
+              />
+              <polyline points="14 3 14 9 20 9" />
+            </svg>
+            <svg class="ico-fill" viewBox="0 0 24 24">
+              <path
+                d="M6 2h8v6h6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"
+              />
+              <path d="M14 2l6 6h-6z" opacity=".5" />
+            </svg>
+            Tax
+          </button>
+          <button class="nav-item" data-go="donate" data-nav="donate">
+            <svg class="ico-line" viewBox="0 0 24 24">
+              <path
+                d="M12 21s-7.5-4.6-9.5-9C1 8.4 3 5 6.5 5c2 0 3.6 1.2 4.5 2.6C11.9 6.2 13.5 5 15.5 5 19 5 21 8.4 20.5 12c-2 4.4-8.5 9-8.5 9z"
+              />
+            </svg>
+            <svg class="ico-fill" viewBox="0 0 24 24">
+              <path
+                d="M12 21s-7.5-4.6-9.5-9C1 8.4 3 5 6.5 5c2 0 3.6 1.2 4.5 2.6C11.9 6.2 13.5 5 15.5 5 19 5 21 8.4 20.5 12c-2 4.4-8.5 9-8.5 9z"
+              />
+            </svg>
+            Donate
+          </button>
+        </nav>
+
+        <div id="sticky-slot"></div>
+        <div id="layer"></div>
+        <div class="toast" id="toast" role="status">
+          <span></span><button hidden>Undo</button>
+        </div>
+
+        <!-- full-screen overlays -->
+        <div class="overlay splash" id="splash">
+          <img src="ipayroll-logo.svg" alt="iPayroll" />
+        </div>
+        <div class="overlay" id="auth" hidden></div>
+      </div>
+    </div>
+    <script>
+      "use strict"
+      /* =====================================================================
+         CORE · helpers, icons, dates, data. Everything is rendered from `S`
+         (state) by the screen functions in part B; interactions live in part C.
+         Prototype "today" is fixed to Wed 3 Jun 2026 so every screen agrees.
+         ===================================================================== */
+      const $ = (s, r = document) => r.querySelector(s)
+      const $$ = (s, r = document) => [...r.querySelectorAll(s)]
+      const esc = (s) =>
+        String(s ?? "").replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        )
+      const r2 = (n) => Math.round(n * 100) / 100
+      const money = (n, sign) =>
+        (n < 0 ? "−" : sign && n > 0 ? "+" : "") +
+        "$" +
+        Math.abs(n).toLocaleString("en-NZ", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      const money0 = (n) => "$" + Math.round(n).toLocaleString("en-NZ")
+      const num = (n, d = 2) => Number(n).toFixed(d)
+
+      // ---------- icons ----------
+      const P = {
+        chev: '<polyline points="9 6 15 12 9 18"/>',
+        back: '<polyline points="15 6 9 12 15 18"/>',
+        down: '<polyline points="6 9 12 15 18 9"/>',
+        close:
+          '<line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>',
+        plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+        dl: '<path d="M12 4v11"/><polyline points="7 10 12 15 17 10"/><path d="M5 19h14"/>',
+        eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+        eyeoff:
+          '<path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6C3.7 8.5 2 12 2 12s3.6 7 10 7a9.8 9.8 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+        lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+        check: '<polyline points="5 12.5 10 17 19 7"/>',
+        dot: '<circle cx="12" cy="12" r="3"/>',
+        doc: '<path d="M6 3h9l5 5v13H6z"/><polyline points="14 3 14 9 20 9"/>',
+        clock:
+          '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
+        cal: '<rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/>',
+        phone:
+          '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><line x1="11" y1="18.5" x2="13" y2="18.5"/>',
+        alert:
+          '<path d="M12 3 2 20h20z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17" r=".6"/>',
+        search:
+          '<circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>',
+        face: '<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><line x1="9" y1="9" x2="9" y2="11"/><line x1="15" y1="9" x2="15" y2="11"/><path d="M12 9v4h-1"/><path d="M9 16c1.7 1.3 4.3 1.3 6 0"/>',
+        bksp: '<path d="M21 5H9l-6 7 6 7h12z"/><line x1="12" y1="9" x2="17" y2="14"/><line x1="17" y1="9" x2="12" y2="14"/>',
+        heart:
+          '<path d="M12 21s-7.5-4.6-9.5-9C1 8.4 3 5 6.5 5c2 0 3.6 1.2 4.5 2.6C11.9 6.2 13.5 5 15.5 5 19 5 21 8.4 20.5 12c-2 4.4-8.5 9-8.5 9z"/>',
+        info: '<circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r=".6"/>',
+      }
+      const ico = (n, cls = "") =>
+        `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`
+      const CHEV = ico("chev", "chev")
+
+      // ---------- dates ----------
+      const MON = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ]
+      const MONTH = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ]
+      const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+      const D = (y, m, d) => new Date(y, m - 1, d)
+      const iso = (d) =>
+        `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+      const fromIso = (s) => {
+        const [y, m, d] = s.split("-").map(Number)
+        return new Date(y, m - 1, d)
+      }
+      const addDays = (d, n) => {
+        const x = new Date(d)
+        x.setDate(x.getDate() + n)
+        return x
+      }
+      const sameDay = (a, b) => iso(a) === iso(b)
+      const fd = (d, o = {}) =>
+        `${o.dow ? DOW[d.getDay()] + " " : ""}${d.getDate()} ${MON[d.getMonth()]}${o.y ? " " + d.getFullYear() : ""}`
+      const TODAY = D(2026, 6, 3)
+      const HOLIDAYS = [
+        "2026-04-03",
+        "2026-04-06",
+        "2026-04-27",
+        "2026-06-01",
+        "2026-07-10",
+        "2026-10-26",
+        "2026-12-25",
+        "2026-12-28",
+        "2027-01-01",
+        "2027-01-04",
+      ]
+      const isWeekend = (d) => d.getDay() === 0 || d.getDay() === 6
+      const isHoliday = (d) => HOLIDAYS.includes(iso(d))
+      const workDays = (a, b) => {
+        let n = 0
+        for (let d = new Date(a); d <= b; d = addDays(d, 1))
+          if (!isWeekend(d) && !isHoliday(d)) n++
+        return n
+      }
+      function range(a, b) {
+        // "21–24 Jul" style
+        if (!b || sameDay(a, b)) return fd(a, { dow: true })
+        if (a.getMonth() === b.getMonth())
+          return `${a.getDate()}–${b.getDate()} ${MON[b.getMonth()]}`
+        return `${fd(a)} – ${fd(b)}`
+      }
+      const time12 = (t) => {
+        if (!t) return ""
+        let [h, m] = t.split(":").map(Number)
+        const ap = h >= 12 ? "pm" : "am"
+        h = h % 12 || 12
+        return `${h}:${String(m).padStart(2, "0")} ${ap}`
+      }
+      const hoursBetween = (a, b) => {
+        if (!a || !b) return 0
+        const [h1, m1] = a.split(":").map(Number),
+          [h2, m2] = b.split(":").map(Number)
+        return Math.max(0, (h2 * 60 + m2 - h1 * 60 - m1) / 60)
+      }
+      const addTime = (t, hrs) => {
+        const [h, m] = t.split(":").map(Number)
+        const mins = Math.min(23 * 60 + 59, h * 60 + m + Math.round(hrs * 60))
+        return `${String(Math.floor(mins / 60)).padStart(2, "0")}:${String(mins % 60).padStart(2, "0")}`
+      }
+
+      // ---------- data ----------
+      const ME = {
+        first: "Bruce",
+        name: "Bruce Wayne",
+        email: "batman@gmail.com",
+        employer: "Wayne Enterprises",
+        approver: "Lucius Fox",
+      }
+      const HRS_PER_DAY = 8
+
+      // Payslips: fortnightly, paid Wednesdays, newest first. The first one reproduces v3's figures.
+      const PAYS = (() => {
+        const out = []
+        let pay = D(2026, 5, 27)
+        const hrsPattern = [72, 80, 80, 76, 80, 80, 80, 72, 80, 80]
+        for (let i = 0; i < 26; i++) {
+          const ord = hrsPattern[i % hrsPattern.length]
+          const hol = ord === 72 ? 448.11 : 0
+          const gross = r2(ord * 48 + hol)
+          const paye = i === 0 ? 828.54 : r2(gross * 0.21222)
+          const ks = r2(gross * 0.06)
+          out.push({
+            id: "p" + i,
+            date: new Date(pay),
+            start: addDays(pay, -16),
+            end: addDays(pay, -3),
+            ord,
+            hol,
+            gross,
+            paye,
+            ks,
+            net: r2(gross - paye - ks),
+          })
+          pay = addDays(pay, -14)
+        }
+        return out
+      })()
+
+      const LEAVE_TYPES = [
+        { id: "annual", name: "Annual leave", short: "Annual" },
+        { id: "lieu", name: "Lieu leave", short: "Lieu" },
+        {
+          id: "bereavement",
+          name: "Bereavement leave",
+          short: "Bereavement",
+          other: true,
+        },
+        {
+          id: "lwop",
+          name: "Leave without pay",
+          short: "Without pay",
+          other: true,
+        },
+        {
+          id: "fv",
+          name: "Family violence leave",
+          short: "Family violence",
+          other: true,
+        },
+        {
+          id: "jury",
+          name: "Jury service",
+          short: "Jury service",
+          other: true,
+        },
+      ]
+      const typeName = (id) => LEAVE_TYPES.find((t) => t.id === id)?.name || id
+
+      const CHARITIES = [
+        {
+          id: "agaram",
+          name: "Agaram Foundation",
+          c: "#7b4fd6",
+          cause: "Education",
+        },
+        { id: "kidscan", name: "KidsCan", c: "#e0527a", cause: "Children" },
+        {
+          id: "starship",
+          name: "Starship Foundation",
+          c: "#1b66c9",
+          cause: "Children's health",
+        },
+        {
+          id: "redcross",
+          name: "NZ Red Cross",
+          c: "#d3382c",
+          cause: "Disaster relief",
+        },
+        { id: "spca", name: "SPCA", c: "#178a47", cause: "Animal welfare" },
+        {
+          id: "refuge",
+          name: "Women's Refuge",
+          c: "#b0487b",
+          cause: "Family safety",
+        },
+        {
+          id: "mission",
+          name: "Auckland City Mission",
+          c: "#e9930c",
+          cause: "Homelessness",
+        },
+        {
+          id: "plunket",
+          name: "Whānau Āwhina Plunket",
+          c: "#0f8a8a",
+          cause: "Families",
+        },
+      ]
+      const charity = (id) => CHARITIES.find((c) => c.id === id)
+      const initials = (s) =>
+        s
+          .replace(/[^A-Za-zĀ-ž ]/g, "")
+          .split(" ")
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((w) => w[0])
+          .join("")
+          .toUpperCase()
+
+      const TAX = {
+        "2025–26": {
+          from: "1 Apr 2025",
+          to: "31 Mar 2026",
+          taxable: 93698.64,
+          hourly: 93698.64,
+          paye: 19885.12,
+          acc: 1499.18,
+          ks: 5621.92,
+          credits: -367.06,
+          employer: 2810.96,
+        },
+        "2024–25": {
+          from: "1 Apr 2024",
+          to: "31 Mar 2025",
+          taxable: 89120.4,
+          hourly: 89120.4,
+          paye: 18873.46,
+          acc: 1425.93,
+          ks: 5347.22,
+          credits: -361.93,
+          employer: 2673.61,
+        },
+        "2023–24": {
+          from: "1 Apr 2023",
+          to: "31 Mar 2024",
+          taxable: 84552.1,
+          hourly: 84552.1,
+          paye: 17656.53,
+          acc: 1293.65,
+          ks: 5073.13,
+          credits: -319.33,
+          employer: 2536.56,
+        },
+      }
+
+      const PERIODS = [
+        { start: D(2026, 5, 18), end: D(2026, 5, 31) },
+        { start: D(2026, 6, 1), end: D(2026, 6, 14) },
+        { start: D(2026, 6, 15), end: D(2026, 7, 1) }, // 17 days on purpose (periods vary)
+      ]
+
+      // ---------- state ----------
+      let uid = 100
+      const S = {
+        route: "home",
+        payTab: "my",
+        payIdx: 0,
+        payOpen: new Set(),
+        payRange: "3M",
+        masked: true,
+        leaveTab: "requests",
+        leaveFilter: "all",
+        calMonth: D(2026, 6, 1),
+        calWho: "everyone",
+        calDay: null,
+        unit: "days",
+        requests: [
+          {
+            id: "l1",
+            type: "annual",
+            start: D(2026, 7, 21),
+            end: D(2026, 7, 24),
+            status: "draft",
+            note: "",
+          },
+          {
+            id: "l2",
+            type: "lwop",
+            start: D(2026, 8, 5),
+            end: D(2026, 8, 5),
+            status: "draft",
+            note: "",
+          },
+          {
+            id: "l3",
+            type: "annual",
+            start: D(2026, 6, 22),
+            end: D(2026, 6, 25),
+            status: "approved",
+            note: "Family trip",
+          },
+          {
+            id: "l4",
+            type: "bereavement",
+            start: D(2026, 5, 18),
+            end: D(2026, 5, 21),
+            status: "approved",
+            note: "",
+          },
+          {
+            id: "l5",
+            type: "annual",
+            start: D(2026, 4, 10),
+            end: D(2026, 4, 10),
+            hrs: 8,
+            status: "declined",
+            note: "",
+          },
+          {
+            id: "l6",
+            type: "annual",
+            start: D(2026, 3, 2),
+            end: D(2026, 3, 3),
+            status: "approved",
+            note: "",
+          },
+        ],
+        team: [
+          {
+            name: "Diana Prince",
+            start: D(2026, 6, 3),
+            end: D(2026, 6, 3),
+            team: true,
+          },
+          {
+            name: "Alfred Pennyworth",
+            start: D(2026, 6, 10),
+            end: D(2026, 6, 11),
+            team: true,
+          },
+          {
+            name: "Lucius Fox",
+            start: D(2026, 6, 15),
+            end: D(2026, 6, 19),
+            team: false,
+          },
+          {
+            name: "Barbara Gordon",
+            start: D(2026, 6, 29),
+            end: D(2026, 7, 3),
+            team: true,
+          },
+        ],
+        balances: { annual: { entitled: 15, accrued: 4.06 }, lieu: 0.25 },
+        periodIdx: 1,
+        day: iso(TODAY),
+        logs: {},
+        taxYear: "2025–26",
+        donFilter: "upcoming",
+        donations: [
+          {
+            id: "d1",
+            charity: "agaram",
+            amt: 45.26,
+            freq: "every",
+            status: "active",
+            submitted: D(2025, 12, 4),
+            contact: false,
+          },
+          {
+            id: "d2",
+            charity: "kidscan",
+            amt: 20,
+            freq: "once",
+            status: "active",
+            submitted: D(2026, 5, 29),
+            contact: true,
+          },
+          {
+            id: "d3",
+            charity: "redcross",
+            amt: 50,
+            freq: "once",
+            status: "paid",
+            submitted: D(2026, 3, 20),
+            paid: D(2026, 4, 1),
+          },
+          {
+            id: "d4",
+            charity: "starship",
+            amt: 25,
+            freq: "once",
+            status: "paid",
+            submitted: D(2026, 1, 28),
+            paid: D(2026, 2, 4),
+          },
+        ],
+        twofa: false,
+        faceid: true,
+        notifPaid: true,
+        offline: false,
+        skeleton: true,
+        pinTries: 0,
+        details: {
+          line1: "266 West Place",
+          line2: "",
+          city: "Christchurch",
+          post: "8024",
+          region: "Canterbury",
+          phone: "",
+          email: ME.email,
+        },
+        locked: {
+          name: ME.name,
+          bank: "02-0500-0984667-00",
+          ird: "025-213-993",
+          taxcode: "M",
+        },
+        dismissed: new Set(),
+        activity: [
+          {
+            t: "Payslip for 27 May",
+            s: "Take-home pay available",
+            chip: null,
+            go: "payslips",
+          },
+          {
+            t: "Timelogs · Fri 29 May",
+            s: "Approved by Lucius Fox",
+            chip: ["approved", "Approved"],
+            go: "timelogs",
+          },
+          {
+            t: "Bereavement leave",
+            s: "18–21 May · approved",
+            chip: ["approved", "Approved"],
+            go: "leave",
+          },
+        ],
+      }
+      // seed timelogs: previous period approved; current period Mon (holiday) + Tue approved, Wed two drafts
+      ;(function seedLogs() {
+        const add = (dt, e) =>
+          (S.logs[dt] = S.logs[dt] || []).push({
+            id: "t" + uid++,
+            type: "Ordinary time",
+            ...e,
+          })
+        for (
+          let d = new Date(PERIODS[0].start);
+          d <= PERIODS[0].end;
+          d = addDays(d, 1)
+        ) {
+          if (isWeekend(d)) continue
+          add(
+            iso(d),
+            d.getDay() === 3
+              ? { start: "08:30", end: "16:00", hrs: 7.5, status: "approved" }
+              : { start: "08:00", end: "16:00", hrs: 8, status: "approved" },
+          )
+        }
+        add("2026-06-01", {
+          type: "Public holiday",
+          start: "",
+          end: "",
+          hrs: 8,
+          status: "approved",
+        })
+        add("2026-06-02", {
+          start: "08:30",
+          end: "16:00",
+          hrs: 7.5,
+          status: "approved",
+        })
+        add("2026-06-03", {
+          start: "08:00",
+          end: "12:00",
+          hrs: 4,
+          status: "draft",
+        })
+        add("2026-06-03", {
+          start: "13:00",
+          end: "17:00",
+          hrs: 4,
+          status: "draft",
+        })
+      })()
+
+      // ---------- derived ----------
+      const reqDays = (r) =>
+        r.hrs ? r.hrs / HRS_PER_DAY : workDays(r.start, r.end)
+      const reqAmount = (r) =>
+        r.hrs && r.hrs < HRS_PER_DAY
+          ? `${num(r.hrs)} hours`
+          : `${num(reqDays(r))} ${reqDays(r) === 1 ? "day" : "days"}`
+      const annualAvail = () =>
+        r2(S.balances.annual.entitled + S.balances.annual.accrued)
+      const balanceOf = (id) =>
+        id === "annual" ? annualAvail() : id === "lieu" ? S.balances.lieu : null
+      const unitFmt = (days) =>
+        S.unit === "days"
+          ? `${num(days)} days`
+          : `${num(days * HRS_PER_DAY)} hrs`
+      const periodDays = (p) => {
+        const out = []
+        for (let d = new Date(p.start); d <= p.end; d = addDays(d, 1))
+          out.push(new Date(d))
+        return out
+      }
+      const dayLogs = (dt) => S.logs[dt] || []
+      const dayHrs = (dt) => dayLogs(dt).reduce((a, e) => a + e.hrs, 0)
+      function periodStats(p) {
+        let hrs = 0,
+          drafts = 0,
+          draftHrs = 0,
+          expected = 0
+        for (const d of periodDays(p)) {
+          if (!isWeekend(d)) expected += HRS_PER_DAY
+          for (const e of dayLogs(iso(d))) {
+            hrs += e.hrs
+            if (e.status === "draft") {
+              drafts++
+              draftHrs += e.hrs
+            }
+          }
+        }
+        return { hrs, drafts, draftHrs, expected }
+      }
+      const leaveDrafts = () =>
+        S.requests.filter((r) => r.status === "draft").length
+      const nextPay = () => addDays(PAYS[0].date, 14)
+      const donCredit = (amt) => r2(amt / 3)
+      /* =====================================================================
+         SCREENS · each returns HTML for #view from state S
+         ===================================================================== */
+      const topHead = (title, action = "") =>
+        `<div class="top-head"><h1>${title}</h1>${action}</div>`
+      const subHead = (title, back = "account") =>
+        `<div class="sub-head"><button class="icon-btn" data-go="${back}" aria-label="Back">${ico("back")}</button><h1>${title}</h1><span></span></div>`
+      const iconAct = (icon, act, label, extra = "") =>
+        `<button class="icon-btn" data-act="${act}" ${extra} aria-label="${label}">${ico(icon)}</button>`
+      const tabs = (list, cur, act) =>
+        `<div class="tabs" role="tablist">${list.map(([id, l]) => `<button class="tab" role="tab" aria-selected="${id === cur}" data-act="${act}" data-v="${id}">${l}</button>`).join("")}</div>`
+      const pills = (list, cur, act, extraCls = "") =>
+        `<div class="pills ${extraCls}">${list.map(([id, l, n]) => `<button class="pill" aria-pressed="${id === cur}" data-act="${act}" data-v="${id}">${l}${n != null ? ` <span class="n">${n}</span>` : ""}</button>`).join("")}</div>`
+      const sec = (title, right = "") =>
+        `<div class="sec"><h2>${title}</h2>${right}</div>`
+      const chip = (cls, l) => `<span class="chip ${cls}">${l}</span>`
+      const STATUS = {
+        draft: ["draft", "Draft"],
+        sent: ["sent", "Sent"],
+        approved: ["approved", "Approved"],
+        declined: ["declined", "Declined"],
+      }
+      const mono = (name, c) =>
+        `<span class="mono" style="background:${c}">${initials(name)}</span>`
+      function row({
+        t,
+        s,
+        v,
+        vs,
+        lead,
+        chipH,
+        chev = true,
+        act,
+        go,
+        data = "",
+        cls = "",
+        tag = "button",
+      }) {
+        const attrs = `${act ? `data-act="${act}"` : ""} ${go ? `data-go="${go}"` : ""} ${data}`
+        return `<${tag} class="row ${cls}" ${attrs}>${lead ? `<span class="lead">${lead}</span>` : ""}<span class="main"><span class="t">${t}</span>${s ? `<span class="s">${s}</span>` : ""}</span>${chipH || ""}${v != null ? `<span class="v">${v}${vs ? `<small>${vs}</small>` : ""}</span>` : ""}${chev ? CHEV : ""}</${tag}>`
+      }
+      const swipe = (inner, kind, id) =>
+        `<div class="swipe" data-kind="${kind}" data-id="${id}"><button class="swipe-del" data-act="swipeDel" data-kind="${kind}" data-id="${id}">Delete</button>${inner}</div>`
+
+      // ---------------- HOME ----------------
+      function scrHome() {
+        // v5 · Version C with "Away today" (from the Excalidraw board, row 1b)
+        const tl = periodStats(PERIODS[1])
+        const banners = []
+        if (tl.drafts && !S.dismissed.has("tl"))
+          banners.push(
+            `<div class="banner"><div class="main"><b>${tl.drafts} timelog${tl.drafts > 1 ? "s" : ""} to approve</b>${num(tl.draftHrs)} hrs this pay period</div><button class="link" data-go="timelogs">Review</button><button class="x" data-act="dismiss" data-v="tl" aria-label="Dismiss">${ico("close")}</button></div>`,
+          )
+        if (leaveDrafts() && !S.dismissed.has("lv"))
+          banners.push(
+            `<div class="banner"><div class="main"><b>${leaveDrafts()} leave draft${leaveDrafts() > 1 ? "s" : ""} not sent</b>Your approver can't see drafts yet</div><button class="link" data-act="leaveDrafts">View</button><button class="x" data-act="dismiss" data-v="lv" aria-label="Dismiss">${ico("close")}</button></div>`,
+          )
+        if (!S.twofa && !S.dismissed.has("2fa"))
+          banners.push(
+            `<div class="banner info"><div class="main"><b>Protect your pay details</b>Turn on two-factor authentication</div><button class="link" data-go="account/2fa">Set up</button><button class="x" data-act="dismiss" data-v="2fa" aria-label="Dismiss">${ico("close")}</button></div>`,
+          )
+        const p = PAYS[0],
+          np = nextPay(),
+          inDays = Math.round((np - TODAY) / 864e5)
+        const backOn = (end) => {
+          let d = addDays(end, 1)
+          while (isWeekend(d) || isHoliday(d)) d = addDays(d, 1)
+          return d
+        }
+        const away = S.team.filter((t) => TODAY >= t.start && TODAY <= t.end)
+        const plus = ico("plus").replace(
+          "<svg",
+          '<svg width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"',
+        )
+        return `<div class="page">
+          ${topHead(`Hi ${ME.first}`)}
+          ${banners.slice(0, 2).join("")}
+          ${sec("Latest payslip", `<button class="text-btn" data-act="payHistory">All payslips</button>`)}
+          <div class="list"><div class="row pay-row">
+            <button class="pay-main" data-act="openPay" data-i="0">
+              <span class="lead"><span class="ico">${ico("doc")}</span></span>
+              <span class="main"><span class="pay-top"><span class="t">${fd(p.date, { dow: true, y: true })}</span><span class="v tnum">${S.masked ? "$ ••••••" : money(p.net)}</span></span>
+                <span class="s wrap">Take-home paid to <span class="nw">02-0500-•••4667-00</span><br />${ME.employer} · ${range(p.start, p.end)} pay</span></span>
+            </button>
+            <button class="icon-btn plain eye-btn" data-act="mask" aria-label="${S.masked ? "Show" : "Hide"} take-home pay">${ico(S.masked ? "eye" : "eyeoff")}</button>
+          </div></div>
+          <button class="stats-nav" data-act="goBalances" aria-label="Annual leave ${num(annualAvail())} days, next pay ${fd(np)}. Open leave balances">
+            <span class="stats"><span><span class="l">Annual leave</span><span class="n">${num(annualAvail())}</span><span class="u">days available</span></span><span><span class="l">Next pay</span><span class="n">${fd(np)}</span><span class="u">in ${inDays} days</span></span></span>
+            <span class="go"><span class="c">${ico("chev")}</span>Leave<br />balances</span>
+          </button>
+          <div class="pills">
+            <button class="pill" data-act="addTime" data-v="${iso(TODAY)}">${plus} Timelog</button>
+            <button class="pill" data-act="requestLeave">${plus} Leave</button>
+          </div>
+          ${sec("Away today", `<span class="tot">${fd(TODAY, { dow: true })}</span>`)}
+          <div class="list">${away.length ? away.map((t) => row({ t: t.name, s: `${sameDay(t.start, t.end) ? "All day" : range(t.start, t.end)} · back ${fd(backOn(t.end), { dow: true })}`, lead: mono(t.name, "#616a76"), chev: false, tag: "div" })).join("") : `<div class="empty" style="padding:18px 0">Everyone is in today.</div>`}</div>
+        </div>`
+      }
+
+      // ---------------- PAYSLIPS ----------------
+      const payFilter = (key) => {
+        const cut = {
+          "3M": addDays(TODAY, -92),
+          "6M": addDays(TODAY, -183),
+          "1Y": addDays(TODAY, -365),
+          Tax: D(2026, 4, 1),
+          All: D(2000, 1, 1),
+        }[key]
+        return PAYS.filter((p) => p.date >= cut)
+      }
+      const PAY_RANGES = [
+        ["3M", "3M"],
+        ["6M", "6M"],
+        ["1Y", "1Y"],
+        ["Tax", "This tax year"],
+        ["All", "All"],
+      ]
+      function byMonth(list, dateOf) {
+        const g = new Map()
+        for (const x of list) {
+          const d = dateOf(x)
+          const k = `${MONTH[d.getMonth()]} ${d.getFullYear()}`
+          if (!g.has(k)) g.set(k, [])
+          g.get(k).push(x)
+        }
+        return [...g.entries()]
+      }
+      function scrPayslips() {
+        const action =
+          S.payTab === "my"
+            ? iconAct(
+                "dl",
+                "downloadPay",
+                "Download PDF",
+                `data-i="${S.payIdx}"`,
+              )
+            : iconAct("dl", "selectPays", "Download payslips")
+        let body = ""
+        if (S.payTab === "my") {
+          const p = PAYS[S.payIdx]
+          const open = (k) => S.payOpen.has(k)
+          const pct = (x) => Math.round((x / p.gross) * 100)
+          body = `
+            <div style="display:flex;align-items:center;gap:8px;margin-top:16px">
+              <button class="icon-btn" data-act="payStep" data-v="1" aria-label="Older payslip" ${S.payIdx >= PAYS.length - 1 ? "disabled style='opacity:.35'" : ""}>${ico("back")}</button>
+              <button class="input" data-act="payPicker" style="flex:1;justify-content:space-between;height:44px"><span><b style="font-weight:600">${fd(p.date, { dow: true, y: true })}</b></span>${ico("down").replace("<svg", '<svg width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"')}</button>
+              <button class="icon-btn" data-act="payStep" data-v="-1" aria-label="Newer payslip" ${S.payIdx === 0 ? "disabled style='opacity:.35'" : ""}>${ico("chev")}</button>
+            </div>
+            <div class="hero"><div class="lbl">Take-home pay</div><div class="amt">${money(p.net)}</div><div class="paid">Paid to 02-0500-0984667-00 on ${fd(p.date, { y: true })}</div></div>
+            <div style="margin-top:18px">
+              <div class="small muted">From ${money(p.gross)} gross</div>
+              <div class="bar"><i style="width:${(p.net / p.gross) * 100}%;background:var(--ink-900)"></i><i style="width:${(p.paye / p.gross) * 100}%;background:var(--ink-500)"></i><i style="width:${(p.ks / p.gross) * 100}%;background:var(--ink-300)"></i></div>
+              <div class="legend"><span style="--c:var(--ink-900)">Take-home ${pct(p.net)}%</span><span style="--c:var(--ink-500)">PAYE ${pct(p.paye)}%</span><span style="--c:var(--ink-300)">KiwiSaver ${pct(p.ks)}%</span></div>
+            </div>
+            <div class="list" style="margin-top:10px">
+              ${expander(
+                "pays",
+                "Payments",
+                money(p.gross),
+                open("pays"),
+                `
+                <div class="kv"><span class="k">${num(p.ord)} hrs Ordinary time<span class="sub">@ $48.00</span></span><span class="v">${money(p.ord * 48)}</span></div>
+                ${p.hol ? `<div class="kv"><span class="k">8.00 hrs Public holiday (not worked)<span class="sub">1.00 day @ $56.01</span></span><span class="v">${money(p.hol)}</span></div>` : ""}
+                <div class="kv total"><span class="k">Total payments</span><span class="v">${money(p.gross)}</span></div>`,
+              )}
+              ${expander(
+                "deds",
+                "Deductions",
+                money(-(p.paye + p.ks)),
+                open("deds"),
+                `
+                <div class="kv"><span class="k">PAYE (tax code M)<span class="sub">to IRD 025-213-993</span></span><span class="v">${money(p.paye)}</span></div>
+                <div class="kv"><span class="k">KiwiSaver employee 6%</span><span class="v">${money(p.ks)}</span></div>
+                <div class="kv total"><span class="k">Total deductions</span><span class="v">${money(p.paye + p.ks)}</span></div>`,
+              )}
+              ${expander(
+                "emp",
+                "Employee details",
+                "",
+                open("emp"),
+                `
+                <div class="kv"><span class="k">Name</span><span class="v">${ME.name}</span></div>
+                <div class="kv"><span class="k">Employer</span><span class="v">${ME.employer}</span></div>
+                <div class="kv"><span class="k">Pay period</span><span class="v">${fd(p.start)} – ${fd(p.end, { y: true })}</span></div>
+                <div class="kv"><span class="k">IRD number</span><span class="v">025-213-993</span></div>
+                <div class="kv"><span class="k">Tax code</span><span class="v">M</span></div>`,
+              )}
+            </div>`
+        } else {
+          const list = payFilter(S.payRange)
+          body =
+            pills(PAY_RANGES, S.payRange, "payRange") +
+            byMonth(list, (p) => p.date)
+              .map(
+                ([m, ps]) => `
+            ${sec(m, `<span class="tot">${money(ps.reduce((a, p) => a + p.net, 0))}</span>`)}
+            <div class="list">${ps.map((p) => row({ t: fd(p.date), s: `${num(p.ord + (p.hol ? 8 : 0))} hrs · tax ${money(p.paye)}`, v: money(p.net), act: "openPay", data: `data-i="${PAYS.indexOf(p)}"` })).join("")}</div>`,
+              )
+              .join("")
+        }
+        return `<div class="page">${topHead("Payslips", action)}${tabs(
+          [
+            ["my", "My payslips"],
+            ["history", "Pay history"],
+          ],
+          S.payTab,
+          "payTab",
+        )}${body}</div>`
+      }
+      function expander(k, t, v, open, inner) {
+        return `<button class="row" data-act="payToggle" data-v="${k}"><span class="main"><span class="t">${t}</span></span>${v ? `<span class="v">${v}</span>` : ""}${ico(open ? "down" : "chev", "chev")}</button>${open ? `<div style="padding:0 0 8px">${inner}</div>` : ""}`
+      }
+
+      // ---------------- LEAVE ----------------
+      function scrLeave() {
+        let body = ""
+        if (S.leaveTab === "requests") {
+          const f = S.leaveFilter
+          const list = S.requests.filter(
+            (r) =>
+              f === "all" ||
+              (f === "drafts" && r.status === "draft") ||
+              (f === "upcoming" && r.end >= TODAY) ||
+              (f === "past" && r.end < TODAY),
+          )
+          const up = list
+            .filter((r) => r.end >= TODAY)
+            .sort((a, b) => a.start - b.start)
+          const past = list
+            .filter((r) => r.end < TODAY)
+            .sort((a, b) => b.start - a.start)
+          const rrow = (r) => {
+            const inner = row({
+              t: typeName(r.type),
+              s: `${range(r.start, r.end)} · ${reqAmount(r)}`,
+              chipH: chip(...STATUS[r.status]),
+              act: "openReq",
+              data: `data-id="${r.id}"`,
+            })
+            return r.status === "draft" ? swipe(inner, "req", r.id) : inner
+          }
+          body =
+            pills(
+              [
+                ["all", "All"],
+                ["drafts", "Drafts", leaveDrafts() || null],
+                ["upcoming", "Upcoming"],
+                ["past", "Past"],
+              ],
+              f,
+              "leaveFilter",
+            ) +
+            (up.length
+              ? sec("Upcoming") +
+                `<div class="list">${up.map(rrow).join("")}</div>`
+              : "") +
+            (past.length
+              ? sec("Past") +
+                `<div class="list">${past.map(rrow).join("")}</div>`
+              : "") +
+            (!up.length && !past.length
+              ? `<div class="empty">Nothing here yet.</div>`
+              : "") +
+            (leaveDrafts()
+              ? `<p class="small muted center" style="margin-top:18px">Swipe a draft left to delete it.</p>`
+              : "")
+        } else if (S.leaveTab === "calendar") {
+          body =
+            pills(
+              [
+                ["everyone", "Everyone"],
+                ["team", "My team"],
+                ["me", "Just me"],
+              ],
+              S.calWho,
+              "calWho",
+            ) + calendarView()
+        } else {
+          const a = S.balances.annual
+          const bal = (
+            label,
+            days,
+            p,
+            helper,
+            id,
+          ) => `<button class="row" data-act="balDetail" data-v="${id}" style="display:block"><span class="s" style="margin:0">${label}</span>
+              <span style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--font-display);font-weight:700;font-size:24px" class="tnum">${unitFmt(days)}</span>${CHEV}</span>
+              <span class="prog" style="display:block"><i style="width:${Math.min(100, p * 100)}%"></i></span>${helper ? `<span class="s" style="display:block;margin-top:6px">${helper}</span>` : ""}</button>`
+          body = `<div class="seg" role="group" aria-label="Unit"><button aria-pressed="${S.unit === "days"}" data-act="unit" data-v="days">Days</button><button aria-pressed="${S.unit === "hours"}" data-act="unit" data-v="hours">Hours</button></div>
+            <div class="list" style="margin-top:8px">
+              ${bal("Annual leave available", annualAvail(), annualAvail() / 25, `${unitFmt(a.entitled)} entitled + ${unitFmt(a.accrued)} accrued`, "annual")}
+              ${bal("Lieu leave", S.balances.lieu, 0.05, "From working public holidays", "lieu")}
+            </div>
+            <div class="list">${row({ t: "What will I have on…", s: "Estimate a future balance", cls: "link", act: "projected", lead: `<span class="ico">${ico("cal")}</span>` })}
+            ${row({ t: "How annual leave is shown", s: "Entitled vs accrued", cls: "link", act: "leaveInfo", lead: `<span class="ico">${ico("info")}</span>` })}</div>`
+        }
+        return `<div class="page">${topHead("Leave", iconAct("plus", "requestLeave", "Request leave"))}${tabs(
+          [
+            ["requests", "Requests"],
+            ["calendar", "Calendar"],
+            ["balances", "Balances"],
+          ],
+          S.leaveTab,
+          "leaveTab",
+        )}${body}</div>`
+      }
+      function mineRanges() {
+        return S.requests.filter(
+          (r) => r.status === "approved" || r.status === "sent",
+        )
+      }
+      function calendarView() {
+        const m = S.calMonth,
+          y = m.getFullYear(),
+          mo = m.getMonth()
+        const first = new Date(y, mo, 1),
+          last = new Date(y, mo + 1, 0)
+        const lead = (first.getDay() + 6) % 7
+        const mine = S.calWho !== "team" ? mineRanges() : []
+        const team =
+          S.calWho === "me"
+            ? []
+            : S.team.filter((t) => S.calWho === "everyone" || t.team)
+        let cells =
+          ["M", "T", "W", "T", "F", "S", "S"]
+            .map((d) => `<div class="dow">${d}</div>`)
+            .join("") + "<div></div>".repeat(lead)
+        for (let d = new Date(first); d <= last; d = addDays(d, 1)) {
+          const cls = []
+          const my = mine.find(
+            (r) => d >= r.start && d <= r.end && !isWeekend(d),
+          )
+          if (my) {
+            cls.push("mine")
+            const prev = addDays(d, -1),
+              next = addDays(d, 1)
+            if (!(prev >= my.start && !isWeekend(prev))) cls.push("s")
+            if (!(next <= my.end && !isWeekend(next))) cls.push("e")
+          } else if (isWeekend(d)) cls.push("wk")
+          if (isHoliday(d)) cls.push("hol")
+          if (team.some((t) => d >= t.start && d <= t.end)) cls.push("away")
+          if (sameDay(d, TODAY) && !my) cls.push("today")
+          if (S.calDay === iso(d)) cls.push("sel", "s", "e")
+          cells += `<button class="c ${cls.join(" ")}" data-act="calDay" data-v="${iso(d)}" aria-label="${fd(d, { dow: true })}">${d.getDate()}</button>`
+        }
+        const inMonth = (a, b) => a <= last && b >= first
+        const onDay = S.calDay ? fromIso(S.calDay) : null
+        const people = [
+          ...mine.map((r) => ({
+            name: "You",
+            what: typeName(r.type),
+            start: r.start,
+            end: r.end,
+            c: "var(--brand-500)",
+          })),
+          ...team.map((t) => ({
+            name: t.name,
+            what: "Away",
+            start: t.start,
+            end: t.end,
+            c: "#616a76",
+          })),
+        ]
+          .filter((p) =>
+            onDay
+              ? onDay >= p.start && onDay <= p.end
+              : inMonth(p.start, p.end),
+          )
+          .sort((a, b) => a.start - b.start)
+        return `<div class="cal-head"><button class="icon-btn plain" data-act="calMonth" data-v="-1" aria-label="Previous month">${ico("back")}</button><b>${MONTH[mo]} ${y}</b><button class="icon-btn plain" data-act="calMonth" data-v="1" aria-label="Next month">${ico("chev")}</button></div>
+          <div class="cal">${cells}</div>
+          <div class="legend" style="margin-top:10px"><span style="--c:var(--brand-100)">Your leave</span><span style="--c:var(--ink-700)">Someone away</span><span style="--c:var(--soft-2)">Public holiday (struck through)</span></div>
+          ${sec(onDay ? `Away on ${fd(onDay, { dow: true })}` : `Away in ${MONTH[mo]}`, onDay ? `<button class="text-btn" data-act="calDay" data-v="${S.calDay}">Show month</button>` : "")}
+          <div class="list">${people.length ? people.map((p) => row({ t: p.name === "You" ? `You · ${p.what}` : p.name, s: range(p.start, p.end), lead: mono(p.name === "You" ? ME.name : p.name, p.c), chev: false, tag: "div" })).join("") : `<div class="empty">No one is away${onDay ? " that day" : ""}.</div>`}</div>`
+      }
+
+      // ---------------- TIMELOGS ----------------
+      function scrTimelogs() {
+        const p = PERIODS[S.periodIdx],
+          st = periodStats(p)
+        if (!periodDays(p).some((d) => iso(d) === S.day)) S.day = iso(p.start)
+        const day = fromIso(S.day),
+          logs = dayLogs(S.day)
+        const strip = periodDays(p)
+          .map((d) => {
+            const h = dayHrs(iso(d)),
+              dr = dayLogs(iso(d)).some((e) => e.status === "draft")
+            return `<button class="day ${isWeekend(d) ? "wkend" : ""}" aria-pressed="${iso(d) === S.day}" data-act="pickDay" data-v="${iso(d)}"><div class="dw">${DOW[d.getDay()]}</div><div class="dn">${d.getDate()}</div><div class="dh ${h ? (dr ? "dr" : "has") : ""}">${h ? num(h) : "–"}</div></button>`
+          })
+          .join("")
+        const prevWork = (() => {
+          let d = addDays(day, -1)
+          for (let i = 0; i < 7; i++, d = addDays(d, -1))
+            if (dayLogs(iso(d)).length) return d
+          return null
+        })()
+        const entries = logs
+          .map((e) => {
+            const inner = row({
+              t: e.type,
+              s: `${e.start ? `${time12(e.start)} – ${time12(e.end)} · ` : ""}${num(e.hrs)} hrs`,
+              chipH: chip(...STATUS[e.status]),
+              act: "openLog",
+              data: `data-id="${e.id}"`,
+              cls: "tnum",
+            })
+            return e.status === "draft" ? swipe(inner, "log", e.id) : inner
+          })
+          .join("")
+        return `<div class="page ${st.drafts ? "has-sticky" : ""}">
+          ${topHead("Timelogs")}
+          <div class="period"><button class="icon-btn" data-act="period" data-v="-1" ${S.periodIdx === 0 ? "disabled style='opacity:.35'" : ""} aria-label="Previous period">${ico("back")}</button><b>${fd(p.start)} – ${fd(p.end, { y: true })}</b><button class="icon-btn" data-act="period" data-v="1" ${S.periodIdx === PERIODS.length - 1 ? "disabled style='opacity:.35'" : ""} aria-label="Next period">${ico("chev")}</button></div>
+          <div style="margin-top:14px"><div style="display:flex;justify-content:space-between;font-size:14px"><span><b class="tnum">${num(st.hrs)}</b> <span class="muted">of ${num(st.expected)} hrs this period</span></span><span class="muted">${st.drafts ? `${st.drafts} draft${st.drafts > 1 ? "s" : ""}` : "All sent"}</span></div><div class="prog"><i style="width:${Math.min(100, (st.hrs / st.expected) * 100)}%"></i></div></div>
+          <div class="strip">${strip}</div>
+          ${sec(fd(day, { dow: true }), `<span class="tot">${num(dayHrs(S.day))} hrs</span>`)}
+          <div class="list">
+            ${entries || (isHoliday(day) ? `<div class="empty" style="padding:16px 0">Public holiday</div>` : "")}
+            ${row({ t: `Add time for ${fd(day, { dow: true })}`, cls: "link", act: "addTime", data: `data-v="${S.day}"`, lead: `<span class="ico">${ico("plus")}</span>`, chev: false })}
+            ${!logs.length && prevWork ? row({ t: `Copy ${fd(prevWork, { dow: true })}`, s: `${num(dayHrs(iso(prevWork)))} hrs · ${dayLogs(iso(prevWork)).length} entr${dayLogs(iso(prevWork)).length > 1 ? "ies" : "y"}`, cls: "link", act: "copyDay", data: `data-v="${iso(prevWork)}"`, lead: `<span class="ico">${ico("doc")}</span>`, chev: false }) : ""}
+          </div>
+        </div>`
+      }
+      function stickyTimelogs() {
+        const st = periodStats(PERIODS[S.periodIdx])
+        if (!st.drafts) return ""
+        return `<div class="sticky"><div class="main"><b>${st.drafts} draft${st.drafts > 1 ? "s" : ""} · ${num(st.draftHrs)} hrs</b><span>Send this period to ${ME.approver}</span></div><button class="btn primary" data-act="approve">Approve</button></div>`
+      }
+
+      // ---------------- TAX ----------------
+      function scrTax() {
+        const t = TAX[S.taxYear],
+          deds = t.paye + t.ks + t.credits
+        return `<div class="page">${topHead("Tax summary", iconAct("dl", "downloadTax", "Download tax summary"))}
+          ${pills(
+            Object.keys(TAX).map((k) => [k, k]),
+            S.taxYear,
+            "taxYear",
+          )}
+          <p class="small muted" style="margin:12px 0 0">Tax year ${t.from} – ${t.to}</p>
+          <div class="stats"><div><div class="l">Taxable earnings</div><div class="n">${money(t.taxable)}</div></div><div><div class="l">Total deductions</div><div class="n">${money(deds)}</div></div></div>
+          ${sec("Earnings")}<div class="list"><div class="kv"><span class="k">Hourly earnings</span><span class="v">${money(t.hourly)}</span></div><div class="kv total"><span class="k">Total earnings</span><span class="v">${money(t.hourly)}</span></div></div>
+          ${sec("Deductions")}<div class="list">
+            <div class="kv"><span class="k">PAYE (tax code M)<span class="sub">Includes ACC earner levy ${money(t.acc)}</span></span><span class="v">${money(t.paye)}</span></div>
+            <div class="kv"><span class="k">KiwiSaver employee (6%)</span><span class="v">${money(t.ks)}</span></div>
+            <div class="kv"><span class="k">Donation tax credits</span><span class="v">${money(t.credits)}</span></div>
+            <div class="kv total"><span class="k">Total deductions</span><span class="v">${money(deds)}</span></div></div>
+          ${sec("Superannuation subsidies")}<div class="list"><div class="kv"><span class="k">KiwiSaver employer (3%)</span><span class="v">${money(t.employer)}</span></div></div>
+          ${sec("Employee details")}<div class="list"><div class="kv"><span class="k">Name</span><span class="v">${ME.name}</span></div><div class="kv"><span class="k">IRD number</span><span class="v">025-213-993</span></div><div class="kv"><span class="k">Tax code</span><span class="v">M</span></div><div class="kv"><span class="k">Employer</span><span class="v">${ME.employer}</span></div></div>
+        </div>`
+      }
+
+      // ---------------- DONATE ----------------
+      const donSub = (d) =>
+        d.status === "stopped"
+          ? "Stopped"
+          : d.status === "paid"
+            ? `One-off · paid ${fd(d.paid, { y: true })}`
+            : d.freq === "every"
+              ? `Every pay · credit ${money(donCredit(d.amt))}`
+              : `One-off · ${fd(nextPay())} pay · credit ${money(donCredit(d.amt))}`
+      function scrDonate() {
+        const f = S.donFilter
+        const list = S.donations.filter(
+          (d) =>
+            (f === "upcoming" && d.status === "active") ||
+            (f === "recurring" && d.freq === "every") ||
+            (f === "past" && (d.status === "paid" || d.status === "stopped")),
+        )
+        const given =
+          734.12 +
+          S.donations
+            .filter((d) => d.status === "paid")
+            .reduce((a, d) => a + d.amt, 0) +
+          292.06
+        return `<div class="page">${topHead("Donate", iconAct("plus", "addDonation", "Add donation"))}
+          <div class="stats"><div><div class="l">Given in 2025–26</div><div class="n">${money(given)}</div></div><div><div class="l">Tax credits back</div><div class="n">${money(r2(given / 3))}</div></div></div>
+          ${pills(
+            [
+              ["upcoming", "Upcoming"],
+              ["recurring", "Recurring"],
+              ["past", "Past"],
+            ],
+            f,
+            "donFilter",
+          )}
+          <div class="list" style="margin-top:8px">${
+            list.length
+              ? list
+                  .map((d) => {
+                    const c = charity(d.charity)
+                    return row({
+                      t: c.name,
+                      s: donSub(d),
+                      v: money(d.amt),
+                      lead: mono(c.name, c.c),
+                      act: "openDon",
+                      data: `data-id="${d.id}"`,
+                      cls: d.status === "stopped" ? "dim" : "",
+                    })
+                  })
+                  .join("")
+              : `<div class="empty">No ${f} donations.</div>`
+          }</div>
+          <div class="list">${row({ t: "How payroll giving works", cls: "link", act: "givingInfo", lead: `<span class="ico">${ico("heart")}</span>` })}</div>
+        </div>`
+      }
+
+      // ---------------- ACCOUNT ----------------
+      const toggleBtn = (on, act, label) =>
+        `<button class="toggle" role="switch" aria-checked="${on}" data-act="${act}" aria-label="${label}"></button>`
+      function scrAccount() {
+        // v5.1 · same list style as the rest of the app (section header + inset hairlines), no grey blocks
+        const g = (title, inner) =>
+          `${title ? sec(title) : `<div style="height:18px"></div>`}<div class="list">${inner}</div>`
+        return `<div class="page">${topHead("My account")}
+          <div class="list" style="margin-top:6px">${row({ t: ME.name, s: S.details.email, lead: `<span class="avatar lg">${$(".avatar").innerHTML}</span>`, go: "account/details" })}</div>
+          ${g(
+            "Security",
+            row({ t: "Change password", go: "account/password" }) +
+              row({
+                t: "Two-factor authentication",
+                chipH: S.twofa ? chip("ok", "On") : chip("nudge", "Turn on"),
+                go: "account/2fa",
+              }) +
+              `<div class="row"><span class="main"><span class="t">Face ID or PIN to open</span><span class="s">PIN is 12345 in this prototype</span></span>${toggleBtn(S.faceid, "faceid", "Face ID or PIN")}</div>` +
+              row({ t: "Lock app now", act: "lockNow" }) +
+              row({ t: "Sign-in activity", go: "account/activity" }),
+          )}
+          ${g(
+            "Profile",
+            row({ t: "Personal details", go: "account/details" }) +
+              `<div class="row"><span class="main"><span class="t">Email me when I've been paid</span></span>${toggleBtn(S.notifPaid, "notif", "Payday email")}</div>`,
+          )}
+          ${g("About", row({ t: "Privacy policy", go: "account/privacy" }) + row({ t: "Version", v: "2.2.34", chev: false, tag: "div" }))}
+          ${g(
+            "Prototype",
+            `<div class="row"><span class="main"><span class="t">Simulate offline</span><span class="s">Saves fail with a retry</span></span>${toggleBtn(S.offline, "simOffline", "Simulate offline")}</div>` +
+              `<div class="row"><span class="main"><span class="t">Show loading states</span><span class="s">Skeletons when you change section</span></span>${toggleBtn(S.skeleton, "simSkeleton", "Show loading states")}</div>` +
+              row({ t: "How to trigger error states", act: "errHelp" }) +
+              row({ t: "Reset demo data", act: "resetDemo" }),
+          )}
+          ${g("", row({ t: "Sign out", cls: "danger", act: "signOut", chev: false }))}
+        </div>`
+      }
+      function scrPassword() {
+        return `<div class="page">${subHead("Password")}
+          <div class="field"><label for="pw0">Current password</label><div class="input"><input id="pw0" type="password" data-in="pw" autocomplete="current-password" /><button data-act="eye" aria-label="Show password">${ico("eye", "eye")}</button></div></div>
+          <p style="margin:10px 0 0"><button class="link" data-act="forgot">Forgot password?</button></p>
+          <div class="field"><label for="pw1">New password</label><div class="input"><input id="pw1" type="password" data-in="pw" autocomplete="new-password" /><button data-act="eye" aria-label="Show password">${ico("eye", "eye")}</button></div>
+            <div class="rules" id="pw-rules"></div></div>
+          <div class="field"><label for="pw2">Confirm new password</label><div class="input"><input id="pw2" type="password" data-in="pw" autocomplete="new-password" /><button data-act="eye" aria-label="Show password">${ico("eye", "eye")}</button></div>
+            <div class="rules" id="pw-match"></div></div>
+          <button class="btn primary" style="margin-top:26px" id="pw-save" data-act="savePw" disabled>Change password</button>
+        </div>`
+      }
+      function scr2fa() {
+        if (S.twofa)
+          return `<div class="page">${subHead("Two-factor")}
+          <div class="banner ok" style="margin-top:8px"><div class="main"><b>Two-factor is on</b>You'll be asked for a code from your authenticator app when you sign in.</div></div>
+          <div class="list" style="margin-top:12px">${row({ t: "Turn off two-factor", cls: "danger", act: "twofaOff", chev: false })}</div></div>`
+        return `<div class="page">${subHead("Two-factor")}
+          <p class="small muted" style="margin:6px 0 0">Step 1 of 2</p><div class="prog"><i style="width:50%"></i></div>
+          <h2 style="font-size:18px;margin:18px 0 4px;font-family:var(--font-display)">Add iPayroll to your authenticator app</h2>
+          <p class="muted" style="margin:0;font-size:15px">Copy this key into Google Authenticator, Authy or 1Password.</p>
+          <div class="list" style="margin-top:8px">${row({ t: '<span class="tnum" style="letter-spacing:.06em">LK2Y WOXG S6YA QBOQ</span>', s: "Setup key", v: '<span class="link">Copy</span>', act: "copyKey", chev: false })}</div>
+          <button class="btn secondary" data-act="openAuth" style="margin-top:8px">Open authenticator app</button>
+          <p class="center" style="margin:14px 0 0"><button class="link" data-act="showQr">${S.showQr ? "Hide QR code" : "Using another device? Show QR code"}</button></p>
+          ${S.showQr ? `<div class="qr" role="img" aria-label="QR code"></div>` : ""}
+          <p class="small muted" style="margin:26px 0 0">Step 2 of 2</p>
+          <h2 style="font-size:18px;margin:6px 0 0;font-family:var(--font-display)">Enter the 6-digit code</h2>
+          <div class="codes">${Array.from({ length: 6 }, (_, i) => `<input inputmode="numeric" maxlength="1" data-in="code" data-i="${i}" aria-label="Digit ${i + 1}" />`).join("")}</div>
+          <button class="btn primary" id="code-go" data-act="verify2fa" style="margin-top:20px" disabled>Verify and turn on</button>
+          <div class="list" style="margin-top:14px">${row({ t: "Use a different method", s: "Text message or email instead", act: "otherMethod" })}</div>
+        </div>`
+      }
+      function scrDetails() {
+        const d = S.details,
+          L = S.locked
+        const addr = [d.line1, d.line2, `${d.city} ${d.post}`, d.region]
+          .filter(Boolean)
+          .join(", ")
+        const lockRow = (t, s, k) =>
+          row({
+            t,
+            s,
+            act: "changeReq",
+            data: `data-v="${k}"`,
+            chev: false,
+            chipH: `<span style="color:var(--ink-300)">${ico("lock").replace("<svg", '<svg width="18" height="18" stroke="currentColor" fill="none" stroke-width="1.8"')}</span>`,
+          })
+        return `<div class="page">${subHead("Personal details")}
+          ${sec("You can edit")}
+          <div class="list">${row({ t: "Home address", s: addr, act: "editDetail", data: 'data-v="address"' })}${row({ t: "Phone", s: d.phone || '<span style="color:var(--link-500)">Add a phone number</span>', act: "editDetail", data: 'data-v="phone"' })}${row({ t: "Email", s: d.email, act: "editDetail", data: 'data-v="email"' })}</div>
+          ${sec("Managed by payroll")}
+          <div class="list">${lockRow("Name", L.name, "name")}${lockRow("Bank account", L.bank.replace(/-(\d+)-/, "-•••••••-"), "bank")}${lockRow("IRD number · Tax code", `${L.ird} · ${L.taxcode}`, "ird")}</div>
+          <p class="small muted" style="margin-top:10px">Tap a locked detail to ask your payroll administrator to change it.</p>
+        </div>`
+      }
+      const SIGNINS = [
+        {
+          day: "Tue 2 Jun",
+          items: [["Signed in", "09:02 · 10.136.30.75 · Christchurch"]],
+        },
+        {
+          day: "Mon 1 Jun",
+          items: [["Signed in", "08:47 · 10.136.30.75 · Christchurch"]],
+        },
+        {
+          day: "Fri 29 May",
+          items: [
+            ["Signed in", "17:21 · 172.20.4.118 · Auckland"],
+            ["Failed sign-in", "17:19 · 172.20.4.118 · Auckland", true],
+          ],
+        },
+        {
+          day: "Thu 28 May",
+          items: [["Signed in", "08:55 · 10.136.30.75 · Christchurch"]],
+        },
+      ]
+      function scrActivity() {
+        return `<div class="page">${subHead("Sign-in activity")}
+          ${sec("This device")}<div class="list">${row({ t: "iPhone · Christchurch", s: "Active now", lead: `<span class="ico">${ico("phone")}</span>`, chipH: chip("ok", "This device"), chev: false, tag: "div" })}</div>
+          ${SIGNINS.map((g) => sec(g.day) + `<div class="list">${g.items.map(([t, s, bad]) => row({ t: bad ? `<span style="color:var(--danger-500)">${t}</span>` : t, s, lead: `<span class="ico ${bad ? "red" : ""}">${ico(bad ? "alert" : "phone")}</span>`, chev: false, tag: "div" })).join("")}</div>`).join("")}
+          <div class="list" style="margin-top:18px">${row({ t: "Not you? Change your password", cls: "link", go: "account/password", chev: false })}${row({ t: "Sign out other devices", cls: "danger", act: "signOutOthers", chev: false })}</div>
+        </div>`
+      }
+      function scrPrivacy() {
+        return `<div class="page doc">${subHead("Privacy policy")}
+          <p class="small muted">Last updated 1 September 2026</p>
+          <h2>What we collect</h2><p>Your name, contact details, bank account, IRD number, pay and leave records — the information your employer needs to pay you correctly.</p>
+          <h2>How we use it</h2><p>To calculate and pay your wages, meet tax and KiwiSaver obligations, and show you your payslips, leave and timelogs.</p>
+          <h2>Who can see it</h2><p>Your employer's payroll administrators, Inland Revenue, and your KiwiSaver provider. We never sell your information.</p>
+          <h2>Your rights</h2><p>You can ask to see or correct your information at any time through your payroll administrator.</p>
+          <p><button class="link">Open the full policy in your browser ↗</button></p>
+        </div>`
+      }
+
+      const SCREENS = {
+        home: scrHome,
+        payslips: scrPayslips,
+        leave: scrLeave,
+        timelogs: scrTimelogs,
+        tax: scrTax,
+        donate: scrDonate,
+        account: scrAccount,
+        "account/password": scrPassword,
+        "account/2fa": scr2fa,
+        "account/details": scrDetails,
+        "account/activity": scrActivity,
+        "account/privacy": scrPrivacy,
+      }
+      /* =====================================================================
+         APP · routing, sheets, dialogs, toast, swipe, actions, auth
+         ===================================================================== */
+      const view = $("#view"),
+        layer = $("#layer"),
+        auth = $("#auth")
+
+      let goT
+      function go(route) {
+        const changed = route.split("/")[0] !== S.route.split("/")[0]
+        S.route = route
+        closeSheet(true)
+        clearTimeout(goT)
+        if (S.skeleton && changed) {
+          paintChrome()
+          $("#sticky-slot").innerHTML = ""
+          view.innerHTML = skeleton()
+          view.scrollTop = 0
+          goT = setTimeout(() => render(true), 380)
+        } else render(true)
+      }
+      function skeleton() {
+        const r =
+          '<div class="sk-row"><div class="sk c"></div><div style="flex:1"><div class="sk" style="width:62%"></div><div class="sk" style="width:38%;margin-top:9px"></div></div><div class="sk" style="width:54px"></div></div>'
+        return `<div class="page" aria-busy="true"><div class="sk" style="width:52%;height:30px;margin-top:14px"></div><div class="sk" style="width:100%;height:40px;margin-top:22px;border-radius:14px"></div><div class="sk" style="width:34%;height:16px;margin-top:26px"></div>${r.repeat(6)}</div>`
+      }
+      function paintChrome() {
+        const root = S.route.split("/")[0]
+        $$(".nav-item").forEach((b) =>
+          b.dataset.nav === root
+            ? b.setAttribute("aria-current", "page")
+            : b.removeAttribute("aria-current"),
+        )
+        const dots = {
+          timelogs: periodStats(PERIODS[1]).drafts > 0,
+          leave: leaveDrafts() > 0,
+        }
+        $$(".nav-item").forEach((b) =>
+          dots[b.dataset.nav]
+            ? b.setAttribute("data-dot", "")
+            : b.removeAttribute("data-dot"),
+        )
+        $("#net").innerHTML = S.offline
+          ? `<div class="offline">${ico("alert")}<span>You're offline — showing what was loaded at 9:02 am</span><button data-act="simOffline">Retry</button></div>`
+          : ""
+      }
+      function render(toTop) {
+        const st = view.scrollTop
+        view.innerHTML = SCREENS[S.route]()
+        $("#sticky-slot").innerHTML =
+          S.route === "timelogs" ? stickyTimelogs() : ""
+        paintChrome()
+        view.scrollTop = toTop ? 0 : st
+        if (S.route === "account/password") paintPw()
+        if (S.route === "timelogs" && toTop) {
+          const d = $(`.day[aria-pressed="true"]`)
+          d && d.scrollIntoView({ inline: "center", block: "nearest" })
+        }
+      }
+
+      // ---------- toast ----------
+      let toastTimer
+      function toast(msg, undo, label = "Undo", kind = "") {
+        const t = $("#toast")
+        t.querySelector("span").textContent = msg
+        t.classList.toggle("err", kind === "err")
+        const b = t.querySelector("button")
+        b.hidden = !undo
+        b.textContent = label
+        b.onclick = () => {
+          t.classList.remove("show")
+          undo()
+        }
+        t.classList.toggle(
+          "high",
+          S.route === "timelogs" &&
+            periodStats(PERIODS[S.periodIdx]).drafts > 0 &&
+            !SH,
+        )
+        t.classList.add("show")
+        clearTimeout(toastTimer)
+        toastTimer = setTimeout(
+          () => t.classList.remove("show"),
+          undo ? 5000 : 2600,
+        )
+      }
+
+      // ---------- sheet ----------
+      let SH = null
+      function openSheet(renderFn, opts = {}) {
+        closeDialog()
+        SH = { render: renderFn, ...opts }
+        layer.innerHTML = `<div class="scrim" data-act="closeSheet"></div><div class="sheet" role="dialog" aria-modal="true"></div>`
+        paintSheet()
+        requestAnimationFrame(() => {
+          $(".scrim", layer).classList.add("show")
+          $(".sheet", layer).classList.add("show")
+        })
+      }
+      function paintSheet() {
+        if (!SH) return
+        const el = $(".sheet", layer)
+        if (!el) return
+        const c = SH.render()
+        const body = $(".sheet-body", el)
+        const st = body ? body.scrollTop : 0
+        el.classList.toggle("tall", !!c.tall)
+        el.innerHTML = `<div class="sheet-handle"></div><div class="sheet-head"><button class="icon-btn" data-act="${c.back ? "sheetBack" : "closeSheet"}" aria-label="${c.back ? "Back" : "Close"}">${ico(c.back ? "back" : "close")}</button><h2>${c.title}</h2><span></span></div><div class="sheet-body">${c.body}</div>${c.foot ? `<div class="sheet-foot">${c.foot}</div>` : ""}`
+        $(".sheet-body", el).scrollTop = st
+      }
+      function closeSheet(now) {
+        if (!SH && !$(".dialog", layer)) return
+        SH = null
+        const s = $(".sheet", layer),
+          sc = $(".scrim", layer)
+        if (now || !s) {
+          layer.innerHTML = ""
+          return
+        }
+        s.classList.remove("show")
+        sc && sc.classList.remove("show")
+        setTimeout(() => {
+          if (!SH) layer.innerHTML = ""
+        }, 240)
+      }
+      // ---------- dialog ----------
+      function openDialog({
+        title,
+        text = "",
+        html = "",
+        cancel = "Cancel",
+        ok = "OK",
+        danger,
+        onOk,
+      }) {
+        SH = null
+        layer.innerHTML = `<div class="scrim" data-act="closeDialog"></div><div class="dialog" role="alertdialog" aria-modal="true"><h2>${title}</h2>${text ? `<p>${text}</p>` : ""}${html}<div class="acts">${cancel ? `<button class="btn secondary" data-act="closeDialog">${cancel}</button>` : ""}<button class="btn ${danger ? "danger" : "primary"}" id="dlg-ok" ${cancel ? "" : 'style="grid-column:1/-1"'}>${ok}</button></div></div>`
+        $("#dlg-ok").onclick = () => {
+          closeDialog()
+          onOk && onOk()
+        }
+        requestAnimationFrame(() => {
+          $(".scrim", layer).classList.add("show")
+          $(".dialog", layer).classList.add("show")
+        })
+      }
+      function closeDialog() {
+        if ($(".dialog", layer)) layer.innerHTML = ""
+      }
+      const kvs = (rows) =>
+        `<div class="list" style="margin-top:4px">${rows.map(([k, v]) => `<div class="kv"><span class="k">${k}</span><span class="v">${v}</span></div>`).join("")}</div>`
+
+      // =====================================================================
+      // SHEETS
+      // =====================================================================
+      function payPickerSheet() {
+        openSheet(() => ({
+          title: "Choose a payslip",
+          tall: true,
+          body: byMonth(PAYS, (p) => p.date)
+            .map(
+              ([m, ps]) =>
+                sec(m) +
+                `<div class="list">${ps
+                  .map((p) => {
+                    const i = PAYS.indexOf(p)
+                    return row({
+                      t: fd(p.date, { dow: true }),
+                      s: `${fd(p.start)} – ${fd(p.end)}`,
+                      v: money(p.net),
+                      act: "pickPay",
+                      data: `data-i="${i}"`,
+                      chev: false,
+                      chipH:
+                        i === S.payIdx
+                          ? `<span style="color:var(--brand-600)">${ico("check").replace("<svg", '<svg width="20" height="20" stroke="currentColor" fill="none" stroke-width="2.4"')}</span>`
+                          : "",
+                    })
+                  })
+                  .join("")}</div>`,
+            )
+            .join(""),
+        }))
+      }
+      let SEL = null
+      function selectSheet() {
+        SEL = { range: "3M", picked: new Set() }
+        openSheet(() => {
+          const list = payFilter(SEL.range)
+          const all = list.every((p) => SEL.picked.has(p.id)) && list.length
+          return {
+            title: "Download payslips",
+            tall: true,
+            body:
+              `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span class="small muted">${SEL.picked.size} selected</span><button class="text-btn" data-act="selAll">${all ? "Clear" : "Select all"}</button></div>` +
+              pills(PAY_RANGES.slice(0, 4), SEL.range, "selRange") +
+              `<div class="list" style="margin-top:8px">${list.map((p) => row({ t: fd(p.date, { y: true }), s: `${num(p.ord + (p.hol ? 8 : 0))} hrs`, v: money(p.net), act: "selPay", data: `data-id="${p.id}"`, chev: false, lead: `<input type="checkbox" tabindex="-1" ${SEL.picked.has(p.id) ? "checked" : ""} style="width:22px;height:22px;accent-color:var(--ink-900);pointer-events:none" />` })).join("")}</div>`,
+            foot: `<button class="btn primary" data-act="selDownload" ${SEL.picked.size ? "" : "disabled"}>${SEL.picked.size ? `Download ${SEL.picked.size} payslip${SEL.picked.size > 1 ? "s" : ""} (PDF)` : "Select payslips to download"}</button>`,
+          }
+        })
+      }
+
+      // ---- leave request ----
+      let RQ = null
+      function openRequest(existing, startIso) {
+        const st = startIso ? fromIso(startIso) : null
+        RQ = existing
+          ? {
+              id: existing.id,
+              type: existing.type,
+              start: existing.start,
+              end: existing.end,
+              hrs: existing.hrs || null,
+              note: existing.note,
+              showNote: !!existing.note,
+              month: new Date(
+                existing.start.getFullYear(),
+                existing.start.getMonth(),
+                1,
+              ),
+              other: !!LEAVE_TYPES.find((t) => t.id === existing.type).other,
+              editHrs: !!existing.hrs,
+            }
+          : {
+              type: "annual",
+              start: st,
+              end: null,
+              hrs: null,
+              note: "",
+              showNote: false,
+              month: st
+                ? new Date(st.getFullYear(), st.getMonth(), 1)
+                : new Date(TODAY.getFullYear(), TODAY.getMonth(), 1),
+              other: false,
+              editHrs: false,
+            }
+        openSheet(renderRequest)
+      }
+      const rqDays = () =>
+        RQ.start ? workDays(RQ.start, RQ.end || RQ.start) : 0
+      const rqHrs = () => RQ.hrs ?? rqDays() * HRS_PER_DAY
+      function renderRequest() {
+        const choice = (t) => {
+          const b = balanceOf(t.id)
+          return `<button class="pill choice" aria-pressed="${RQ.type === t.id}" data-act="rqType" data-v="${t.id}">${t.short}${b != null ? `<small>${num(b)} days</small>` : ""}</button>`
+        }
+        const main = LEAVE_TYPES.filter((t) => !t.other),
+          others = LEAVE_TYPES.filter((t) => t.other)
+        const m = RQ.month,
+          y = m.getFullYear(),
+          mo = m.getMonth(),
+          first = new Date(y, mo, 1),
+          last = new Date(y, mo + 1, 0)
+        const end = RQ.end || RQ.start
+        let cells =
+          ["M", "T", "W", "T", "F", "S", "S"]
+            .map((d) => `<div class="dow">${d}</div>`)
+            .join("") + "<div></div>".repeat((first.getDay() + 6) % 7)
+        for (let d = new Date(first); d <= last; d = addDays(d, 1)) {
+          const cls = []
+          const past = d < TODAY
+          if (RQ.start && d >= RQ.start && d <= end) {
+            cls.push(sameDay(d, RQ.start) || sameDay(d, end) ? "sel" : "rng")
+            if (sameDay(d, RQ.start)) cls.push("s")
+            if (sameDay(d, end)) cls.push("e")
+          } else if (isWeekend(d) || past) cls.push("wk")
+          if (isHoliday(d)) cls.push("hol")
+          if (S.team.some((t) => d >= t.start && d <= t.end)) cls.push("away")
+          cells += `<button class="c ${cls.join(" ")}" data-act="rqDay" data-v="${iso(d)}" ${past ? "disabled" : ""}>${d.getDate()}</button>`
+        }
+        const bal = balanceOf(RQ.type),
+          after = bal != null ? r2(bal - rqHrs() / HRS_PER_DAY) : null
+        const days = rqDays(),
+          label = RQ.start
+            ? RQ.hrs && RQ.hrs < HRS_PER_DAY * days
+              ? `${num(RQ.hrs)} hrs`
+              : `${num(days, days % 1 ? 2 : 0)} day${days === 1 ? "" : "s"}`
+            : ""
+        const away = RQ.start
+          ? S.team.filter((t) => t.start <= end && t.end >= RQ.start)
+          : []
+        const errs = rqProblems(end, days, after)
+        return {
+          title: RQ.id ? "Edit leave request" : "Request leave",
+          tall: true,
+          body: `<div class="pills" style="margin-top:4px">${main.map(choice).join("")}${RQ.other ? others.map(choice).join("") : `<button class="pill choice" data-act="rqOther">Other…<small>${others.length} more types</small></button>`}</div>
+            <div class="cal-head"><button class="icon-btn plain" data-act="rqMonth" data-v="-1" aria-label="Previous month">${ico("back")}</button><b>${MONTH[mo]} ${y}</b><button class="icon-btn plain" data-act="rqMonth" data-v="1" aria-label="Next month">${ico("chev")}</button></div>
+            <div class="cal">${cells}</div>
+            <p class="small muted" style="margin:6px 0 0">${RQ.start ? (RQ.end ? "Tap a new first day to start again." : "Tap the last day, or submit for one day.") : "Tap your first day off."}</p>
+            ${
+              RQ.start
+                ? `<div class="list" style="margin-top:6px">
+              <div class="row"><span class="main"><span class="t">${range(RQ.start, end)}</span><span class="s tnum">${num(days, 0)} working day${days === 1 ? "" : "s"} · ${num(rqHrs())} hrs</span></span><button class="link" data-act="rqEditHrs">${RQ.editHrs ? "Done" : "Edit hours"}</button></div>
+              ${RQ.editHrs ? `<div class="field" style="margin:0 0 12px"><label for="rq-hrs">Hours (for part days)</label><input class="input" id="rq-hrs" inputmode="decimal" data-in="rqHrs" value="${num(rqHrs())}" /></div>` : ""}
+              ${after != null ? `<div class="kv"><span class="k">${typeName(RQ.type)} after this</span><span class="v" id="rq-after" style="color:${after < 0 ? "var(--danger-500)" : "var(--success-700)"}">${num(after)} days</span></div>` : ""}
+              ${away.length ? `<div class="kv"><span class="k">Also away</span><span class="v">${away.map((a) => a.name.split(" ")[0]).join(", ")}</span></div>` : ""}
+            </div>`
+                : ""
+            }
+            ${errs.length ? `<div class="formerr" role="alert">${errs.map((m) => `<div>${ico("alert")}<span>${m}</span></div>`).join("")}</div>` : ""}
+            ${RQ.showNote ? `<div class="field"><label for="rq-note">Note for ${ME.approver} <span class="opt">(optional)</span></label><textarea class="input" id="rq-note" data-in="rqNote">${esc(RQ.note)}</textarea></div>` : `<p style="margin:16px 0 0"><button class="link" data-act="rqNoteShow">+ Add a note for ${ME.approver}</button></p>`}`,
+          foot: `<button class="btn primary" data-act="rqSubmit" id="rq-go" ${RQ.start && !errs.length ? "" : "disabled"}>${RQ.start ? `Submit ${label}` : "Choose your dates"}</button><button class="btn" style="height:44px;margin-top:4px;font-size:15px;color:var(--ink-700)" data-act="rqDraft" ${RQ.start ? "" : "disabled"}>Save as draft</button>`,
+        }
+      }
+      function saveRequest(status) {
+        const data = {
+          type: RQ.type,
+          start: RQ.start,
+          end: RQ.end || RQ.start,
+          hrs: RQ.hrs && RQ.hrs !== rqDays() * HRS_PER_DAY ? RQ.hrs : undefined,
+          note: RQ.note,
+          status,
+        }
+        if (RQ.id)
+          Object.assign(
+            S.requests.find((r) => r.id === RQ.id),
+            data,
+          )
+        else S.requests.push({ id: "l" + uid++, ...data })
+        if (status === "sent")
+          S.activity.unshift({
+            t: typeName(RQ.type),
+            s: `${range(data.start, data.end)} · sent to ${ME.approver}`,
+            chip: ["sent", "Sent"],
+            go: "leave",
+          })
+        closeSheet()
+        render()
+        toast(
+          status === "sent"
+            ? `Leave request sent to ${ME.approver}`
+            : "Saved as a draft",
+        )
+      }
+      function reqDetail(id) {
+        openSheet(() => {
+          const r = S.requests.find((x) => x.id === id)
+          if (!r) return { title: "", body: "" }
+          const acts =
+            r.status === "draft"
+              ? `<div class="stack"><button class="btn primary" data-act="reqSend" data-id="${id}">Send to ${ME.approver}</button><button class="btn secondary" data-act="reqEdit" data-id="${id}">Edit</button><button class="btn ghost-danger" data-act="reqDelete" data-id="${id}">Delete draft</button></div>`
+              : r.status === "declined"
+                ? `<button class="btn secondary" data-act="reqEdit" data-id="${id}">Edit and resend</button>`
+                : r.end >= TODAY
+                  ? `<button class="btn ghost-danger" data-act="reqCancel" data-id="${id}">${r.status === "approved" ? "Cancel this leave" : "Withdraw request"}</button>`
+                  : ""
+          return {
+            title: typeName(r.type),
+            body: `<div style="margin-top:6px">${chip(...STATUS[r.status])}</div>${kvs([["Dates", range(r.start, r.end)], ["Amount", reqAmount(r)], ["Approver", ME.approver], ...(r.note ? [["Note", esc(r.note)]] : [])])}`,
+            foot: acts,
+          }
+        })
+      }
+      function removeReq(id, label) {
+        const i = S.requests.findIndex((r) => r.id === id)
+        if (i < 0) return
+        const [r] = S.requests.splice(i, 1)
+        closeSheet()
+        render()
+        toast(label, () => {
+          S.requests.splice(i, 0, r)
+          render()
+        })
+      }
+
+      // ---- projected ----
+      let PJ = null
+      function projected() {
+        PJ = { type: "annual", date: "2026-12-14", wk: 37.5 }
+        openSheet(() => ({
+          title: "Future balance",
+          body:
+            pills(
+              [
+                ["annual", "Annual"],
+                ["lieu", "Lieu"],
+              ],
+              PJ.type,
+              "pjType",
+            ) +
+            `<div class="row2"><div class="field"><label for="pj-d">On date</label><input class="input" type="date" id="pj-d" data-in="pjDate" value="${PJ.date}" min="${iso(TODAY)}" /></div><div class="field"><label for="pj-w">Avg weekly hours</label><input class="input" id="pj-w" data-in="pjWk" inputmode="decimal" value="${PJ.wk}" /></div></div>
+            <div style="margin:26px 0 6px"><div class="big" id="pj-out">${pjCalc()}</div><p class="center muted small" id="pj-sub" style="margin:4px 0 0">${pjSub()}</p></div>
+            <p class="small muted center" style="margin-top:14px">An estimate based on pay to 31 May 2026 and your anniversary on 4 May. Approved leave before that date is taken off.</p>`,
+          foot: `<button class="btn secondary" data-act="pjRequest">Request leave from this date</button>`,
+        }))
+      }
+      function pjDays() {
+        const d = fromIso(PJ.date)
+        if (PJ.type === "lieu") return S.balances.lieu
+        const accrue = Math.max(0, (d - D(2026, 5, 31)) / 864e5) * (15 / 365)
+        const booked = S.requests
+          .filter(
+            (r) =>
+              r.type === "annual" &&
+              r.status === "approved" &&
+              r.start >= TODAY &&
+              r.start <= d,
+          )
+          .reduce((a, r) => a + reqDays(r), 0)
+        return r2(annualAvail() + accrue - booked)
+      }
+      const pjCalc = () => `${num(pjDays())} days`
+      const pjSub = () =>
+        `≈ ${num((pjDays() * (Number(PJ.wk) || 37.5)) / 5)} hrs of ${typeName(PJ.type).toLowerCase()} on ${fd(fromIso(PJ.date), { dow: true, y: true })}`
+      function balDetail(id) {
+        const a = S.balances.annual
+        const booked = S.requests
+          .filter(
+            (r) =>
+              r.type === "annual" &&
+              r.status === "approved" &&
+              r.start >= TODAY,
+          )
+          .reduce((x, r) => x + reqDays(r), 0)
+        const rows =
+          id === "annual"
+            ? [
+                ["Entitled on 4 May 2026", unitFmt(a.entitled)],
+                ["Accrued since then", unitFmt(a.accrued)],
+                ["Available now", `<b>${unitFmt(annualAvail())}</b>`],
+                ["Booked and approved", "−" + unitFmt(booked)],
+                ["Left after booked leave", unitFmt(annualAvail() - booked)],
+              ]
+            : [
+                ["Earned · Matariki 2025", unitFmt(1)],
+                ["Used", "−" + unitFmt(0.75)],
+                ["Available", `<b>${unitFmt(S.balances.lieu)}</b>`],
+              ]
+        openSheet(() => ({
+          title: typeName(id),
+          body: kvs(rows),
+          foot: `<button class="btn primary" data-act="requestLeave" data-v="${id}">Request ${typeName(id).toLowerCase()}</button>`,
+        }))
+      }
+
+      // ---- timelog add / edit ----
+      let TL = null
+      function openTime(dateIso, entry) {
+        TL = entry
+          ? {
+              date: dateIso,
+              id: entry.id,
+              type: entry.type,
+              start: entry.start,
+              end: entry.end,
+              hrs: entry.hrs,
+              manual: !entry.start,
+              note: entry.note || "",
+              showNote: !!entry.note,
+            }
+          : {
+              date: dateIso,
+              type: "Ordinary time",
+              start: "08:00",
+              end: "12:00",
+              hrs: 4,
+              manual: false,
+              note: "",
+              showNote: false,
+            }
+        openSheet(renderTime)
+      }
+      function renderTime() {
+        const d = fromIso(TL.date)
+        return {
+          title: `${TL.id ? "Edit" : "Add"} time · ${fd(d, { dow: true })}`,
+          body:
+            pills(
+              [
+                ["Ordinary time", "Ordinary"],
+                ["Overtime", "Overtime"],
+                ["On call", "On call"],
+              ],
+              TL.type,
+              "tlType",
+            ) +
+            `<div class="row2"><div class="field"><label for="tl-s">Start</label><input class="input" type="time" id="tl-s" data-in="tlStart" value="${TL.start}" /></div><div class="field"><label for="tl-e">End</label><input class="input" type="time" id="tl-e" data-in="tlEnd" value="${TL.end}" /></div></div>
+            <div id="tl-err">${tlErrHtml()}</div>
+            <div class="field"><label for="tl-h">Hours <span class="opt">(worked out from your times)</span></label><input class="input tnum" id="tl-h" data-in="tlHrs" inputmode="decimal" value="${num(TL.hrs)}" /></div>
+            <div class="pills">${[4, 7.5, 8].map((h) => `<button class="pill" data-act="tlDur" data-v="${h}">${h} h</button>`).join("")}<button class="pill" data-act="tlBreak">− 30 min break</button></div>
+            ${TL.showNote ? `<div class="field"><label for="tl-n">Note for ${ME.approver} <span class="opt">(optional)</span></label><textarea class="input" id="tl-n" data-in="tlNote">${esc(TL.note)}</textarea></div>` : `<p style="margin:16px 0 0"><button class="link" data-act="tlNoteShow">+ Add a note</button></p>`}`,
+          foot: `<button class="btn primary" id="tl-go" data-act="tlSave" ${tlProblems().errs.length ? "disabled" : ""}>Save ${num(TL.hrs)} hrs</button>${TL.id ? `<button class="btn ghost-danger" data-act="tlDelete">Delete timelog</button>` : ""}`,
+        }
+      }
+      function tlSync() {
+        const h = $("#tl-h"),
+          g = $("#tl-go"),
+          box = $("#tl-err")
+        if (h && !TL.manual) h.value = num(TL.hrs)
+        if (box) box.innerHTML = tlErrHtml()
+        if (g) {
+          g.textContent = `Save ${num(TL.hrs)} hrs`
+          g.disabled = tlProblems().errs.length > 0
+        }
+      }
+      function tlProblems() {
+        const errs = [],
+          warns = []
+        if (TL.start && TL.end && TL.end <= TL.start)
+          errs.push("End time needs to be after the start time")
+        else if (TL.hrs > 16)
+          errs.push("That's more than 16 hours in a day — check your times")
+        else if (!(TL.hrs > 0)) errs.push("Enter the hours you worked")
+        const clash = dayLogs(TL.date).some(
+          (e) =>
+            e.id !== TL.id &&
+            e.start &&
+            TL.start &&
+            TL.end &&
+            TL.start < e.end &&
+            TL.end > e.start,
+        )
+        if (clash) warns.push("This overlaps another entry on this day")
+        return { errs, warns }
+      }
+      const tlErrHtml = () => {
+        const { errs, warns } = tlProblems()
+        return (
+          errs
+            .map(
+              (m) =>
+                `<div class="err-msg" role="alert">${ico("alert")}${m}</div>`,
+            )
+            .join("") +
+          warns
+            .map((m) => `<div class="warn-msg">${ico("info")}${m}</div>`)
+            .join("")
+        )
+      }
+      function removeLog(id) {
+        for (const [dt, list] of Object.entries(S.logs)) {
+          const i = list.findIndex((e) => e.id === id)
+          if (i >= 0) {
+            const [e] = list.splice(i, 1)
+            closeSheet()
+            render()
+            toast("Timelog deleted", () => {
+              list.splice(i, 0, e)
+              render()
+            })
+            return
+          }
+        }
+      }
+
+      // ---- donations ----
+      function donDetail(id) {
+        openSheet(() => {
+          const d = S.donations.find((x) => x.id === id),
+            c = charity(d.charity)
+          const rows = [
+            [
+              "Type",
+              d.freq === "every" ? "Every pay until stopped" : "One-off",
+            ],
+            [
+              "Tax credit",
+              `${money(donCredit(d.amt))}${d.freq === "every" ? " each pay" : ""}`,
+            ],
+            d.status === "active"
+              ? ["Next deduction", `${fd(nextPay(), { dow: true })} pay`]
+              : d.status === "paid"
+                ? ["Paid", fd(d.paid, { y: true })]
+                : ["Status", "Stopped"],
+            ["Submitted", fd(d.submitted, { y: true })],
+            ["Charity can contact you", d.contact ? "Yes" : "No"],
+          ]
+          const foot =
+            d.status === "active"
+              ? `<div class="stack"><button class="btn secondary" data-act="donEdit" data-id="${id}">Change amount</button><button class="btn ghost-danger" data-act="donStop" data-id="${id}">${d.freq === "every" ? "Stop donation" : "Cancel donation"}</button></div>`
+              : d.status === "paid"
+                ? `<button class="btn secondary" data-act="donReceipt">Download receipt</button>`
+                : ""
+          return {
+            title: c.name,
+            body: `<div class="big" style="margin-top:10px">${money(d.amt)}</div><p class="center muted small" style="margin:2px 0 8px">${c.cause}</p>${kvs(rows)}`,
+            foot,
+          }
+        })
+      }
+      let DG = null
+      function addDonation(editId) {
+        const d = editId && S.donations.find((x) => x.id === editId)
+        DG = d
+          ? {
+              step: "amount",
+              charity: d.charity,
+              amt: d.amt,
+              freq: d.freq,
+              contact: d.contact,
+              editId,
+              q: "",
+            }
+          : {
+              step: "charity",
+              charity: null,
+              amt: 20,
+              freq: "once",
+              contact: false,
+              q: "",
+            }
+        openSheet(renderDonation)
+      }
+      const dgList = () =>
+        CHARITIES.filter((c) =>
+          (c.name + " " + c.cause).toLowerCase().includes(DG.q.toLowerCase()),
+        )
+          .map((c) =>
+            row({
+              t: c.name,
+              s: c.cause,
+              lead: mono(c.name, c.c),
+              act: "dgPick",
+              data: `data-v="${c.id}"`,
+            }),
+          )
+          .join("") ||
+        `<div class="empty">No charities match “${esc(DG.q)}”.</div>`
+      const dgCta = () =>
+        DG.amt > 0
+          ? `${DG.editId ? "Save" : "Donate"} ${money(DG.amt).replace(".00", "")} ${DG.freq === "once" ? "once" : "every pay"}`
+          : "Enter an amount"
+      const dgCredit = () =>
+        `<b>You get ${money(donCredit(DG.amt || 0))} back</b>as a tax credit ${DG.freq === "once" ? "in the same pay" : "each pay"}. Real cost to you: ${money((DG.amt || 0) - donCredit(DG.amt || 0))}.`
+      function renderDonation() {
+        if (DG.step === "charity")
+          return {
+            title: "Choose a charity",
+            tall: true,
+            body: `<div class="input" style="margin-top:6px">${ico("search").replace("<svg", '<svg width="18" height="18" stroke="#616a76" fill="none" stroke-width="2"')}<input placeholder="Search charities" data-in="dgQ" value="${esc(DG.q)}" aria-label="Search charities" /></div><div class="list" id="dg-list" style="margin-top:6px">${dgList()}</div>`,
+          }
+        const c = charity(DG.charity)
+        return {
+          title: c.name,
+          back: !DG.editId,
+          tall: true,
+          body: `<div class="input" style="height:84px;justify-content:center;margin-top:10px;gap:2px"><span style="font-family:var(--font-display);font-weight:800;font-size:34px">$</span><input id="dg-amt" data-in="dgAmt" inputmode="decimal" value="${DG.amt || ""}" placeholder="0" aria-label="Amount" style="flex:none;width:4.2ch;font-family:var(--font-display);font-weight:800;font-size:42px" /></div>
+            <div class="pills" style="justify-content:center">${[10, 20, 50].map((v) => `<button class="pill" aria-pressed="${DG.amt === v}" data-act="dgPreset" data-v="${v}">$${v}</button>`).join("")}<button class="pill" data-act="dgOther">Other</button></div>
+            <div class="seg"><button aria-pressed="${DG.freq === "once"}" data-act="dgFreq" data-v="once">One-off</button><button aria-pressed="${DG.freq === "every"}" data-act="dgFreq" data-v="every">Every pay</button></div>
+            <div class="banner ok" style="margin-top:16px"><div class="main" id="dg-credit">${dgCredit()}</div></div>
+            <div id="dg-err">${dgErrHtml()}</div>
+            <label class="check"><input type="checkbox" data-in="dgContact" ${DG.contact ? "checked" : ""} /> Let ${c.name} contact me</label>`,
+          foot: `<button class="btn primary" id="dg-go" data-act="dgSave" ${dgErr() ? "disabled" : ""}>${dgCta()}</button>`,
+        }
+      }
+
+      // ---- personal details ----
+      const REGIONS = [
+        "Northland",
+        "Auckland",
+        "Waikato",
+        "Bay of Plenty",
+        "Gisborne",
+        "Hawke's Bay",
+        "Taranaki",
+        "Manawatū-Whanganui",
+        "Wellington",
+        "Tasman",
+        "Nelson",
+        "Marlborough",
+        "West Coast",
+        "Canterbury",
+        "Otago",
+        "Southland",
+      ]
+      function editDetail(kind) {
+        const d = S.details
+        const f = (id, label, val, opt, type = "text") =>
+          `<div class="field"><label for="ed-${id}">${label}${opt ? ' <span class="opt">(optional)</span>' : ""}</label><input class="input" id="ed-${id}" type="${type}" value="${esc(val)}" /></div>`
+        const body =
+          kind === "address"
+            ? f("line1", "Street address", d.line1) +
+              f("line2", "Apartment, unit", d.line2, true) +
+              f("city", "Town or city", d.city) +
+              `<div class="row2">${f("post", "Postcode", d.post)}<div class="field"><label for="ed-region">Region</label><select class="input" id="ed-region">${REGIONS.map((r) => `<option ${r === d.region ? "selected" : ""}>${r}</option>`).join("")}</select></div></div>`
+            : kind === "phone"
+              ? f("phone", "Mobile number", d.phone, false, "tel")
+              : f("email", "Email", d.email, false, "email") +
+                `<p class="small muted" style="margin-top:8px">This is also your sign-in username.</p>`
+        openSheet(() => ({
+          title: { address: "Home address", phone: "Phone", email: "Email" }[
+            kind
+          ],
+          body,
+          foot: `<button class="btn primary" data-act="saveDetail" data-v="${kind}">Save</button>`,
+        }))
+      }
+      function changeReq(kind) {
+        const L = S.locked
+        const cfg = {
+          name: [
+            "Change name",
+            [["Current", L.name]],
+            `<div class="field"><label for="cr-1">New legal name</label><input class="input" id="cr-1" /></div>`,
+          ],
+          bank: [
+            "Change bank account",
+            [["Current", L.bank.replace(/-(\d+)-/, "-•••••••-")]],
+            `<div class="field"><label for="cr-1">New account number</label><input class="input tnum" id="cr-1" placeholder="00-0000-0000000-00" inputmode="numeric" /></div>`,
+          ],
+          ird: [
+            "Change IRD or tax code",
+            [
+              ["IRD number", L.ird],
+              ["Tax code", L.taxcode],
+            ],
+            `<div class="field"><label for="cr-1">IRD number</label><input class="input tnum" id="cr-1" value="${L.ird}" /></div><div class="field"><span class="lbl">Tax code</span></div><div class="pills" style="margin-top:0">${["M", "ME", "SB", "S", "SH", "ST", "SA"].map((c) => `<button class="pill" aria-pressed="${c === L.taxcode}" data-act="crCode" data-v="${c}">${c}</button>`).join("")}</div>`,
+          ],
+        }[kind]
+        openSheet(() => ({
+          title: cfg[0],
+          body:
+            kvs(cfg[1]) +
+            cfg[2] +
+            `<div class="field"><label for="cr-n">Anything else? <span class="opt">(optional)</span></label><textarea class="input" id="cr-n"></textarea></div><p class="small muted" style="margin-top:10px">Goes to your payroll administrator. Usually done before your next pay on ${fd(nextPay(), { dow: true })}.</p>`,
+          foot: `<button class="btn primary" data-act="sendReq">Send to payroll</button>`,
+        }))
+      }
+
+      // ---- password rules ----
+      const COMMON = [
+        "password",
+        "password1",
+        "12345678",
+        "qwerty123",
+        "ipayroll1",
+        "letmein123",
+      ]
+      function pwChecks() {
+        const cur = $("#pw0")?.value || "",
+          np = $("#pw1")?.value || "",
+          cf = $("#pw2")?.value || ""
+        const seq =
+          /(.)\1\1/.test(np) ||
+          /(012|123|234|345|456|567|678|789|abc|bcd|cde|def)/i.test(np)
+        return {
+          cur: !!cur,
+          len: np.length >= 8,
+          seq: np.length > 0 && !seq,
+          common: np.length > 0 && !COMMON.includes(np.toLowerCase()),
+          match: cf.length > 0 && cf === np,
+        }
+      }
+      function paintPw() {
+        const c = pwChecks(),
+          li = (ok, t) =>
+            `<div class="${ok ? "ok" : ""}">${ico(ok ? "check" : "dot")}${t}</div>`
+        $("#pw-rules").innerHTML =
+          li(c.len, "8 or more characters") +
+          li(c.seq, "No repeated or sequential characters (aaa, 123)") +
+          li(c.common, "Not a common password")
+        $("#pw-match").innerHTML = li(c.match, "Passwords match")
+        $("#pw-save").disabled = !(
+          c.cur &&
+          c.len &&
+          c.seq &&
+          c.common &&
+          c.match
+        )
+      }
+
+      // =====================================================================
+      // ACTIONS
+      // =====================================================================
+      const ACT = {
+        closeSheet: () => closeSheet(),
+        closeDialog: () => closeDialog(),
+        sheetBack: () => {
+          if (DG && SH && SH.render === renderDonation) {
+            DG.step = "charity"
+            paintSheet()
+          } else closeSheet()
+        },
+        dismiss: (el) => {
+          S.dismissed.add(el.dataset.v)
+          render()
+        },
+        mask: () => {
+          S.masked = !S.masked
+          render()
+        },
+        leaveDrafts: () => {
+          S.leaveTab = "requests"
+          S.leaveFilter = "drafts"
+          go("leave")
+        },
+        goBalances: () => {
+          S.leaveTab = "balances"
+          go("leave")
+        },
+        payHistory: () => {
+          S.payTab = "history"
+          go("payslips")
+        },
+        openPay: (el) => {
+          S.payIdx = +el.dataset.i
+          S.payTab = "my"
+          closeSheet()
+          go("payslips")
+        },
+        downloadPay: (el) =>
+          toast(
+            `Payslip ${fd(PAYS[+el.dataset.i || 0].date, { y: true })} downloaded (PDF)`,
+          ),
+        payTab: (el) => {
+          S.payTab = el.dataset.v
+          render(true)
+        },
+        payStep: (el) => {
+          S.payIdx = Math.max(
+            0,
+            Math.min(PAYS.length - 1, S.payIdx + +el.dataset.v),
+          )
+          render()
+        },
+        payPicker: payPickerSheet,
+        pickPay: (el) => {
+          S.payIdx = +el.dataset.i
+          closeSheet()
+          render()
+        },
+        payToggle: (el) => {
+          const k = el.dataset.v
+          S.payOpen.has(k) ? S.payOpen.delete(k) : S.payOpen.add(k)
+          render()
+        },
+        payRange: (el) => {
+          S.payRange = el.dataset.v
+          render()
+        },
+        selectPays: selectSheet,
+        selRange: (el) => {
+          SEL.range = el.dataset.v
+          paintSheet()
+        },
+        selPay: (el) => {
+          const id = el.dataset.id
+          SEL.picked.has(id) ? SEL.picked.delete(id) : SEL.picked.add(id)
+          paintSheet()
+        },
+        selAll: () => {
+          const list = payFilter(SEL.range)
+          const all = list.every((p) => SEL.picked.has(p.id))
+          list.forEach((p) =>
+            all ? SEL.picked.delete(p.id) : SEL.picked.add(p.id),
+          )
+          paintSheet()
+        },
+        selDownload: () => {
+          const n = SEL.picked.size
+          closeSheet()
+          toast(`${n} payslip${n > 1 ? "s" : ""} downloaded as one PDF`)
+        },
+
+        leaveTab: (el) => {
+          S.leaveTab = el.dataset.v
+          render(true)
+        },
+        leaveFilter: (el) => {
+          S.leaveFilter = el.dataset.v
+          render()
+        },
+        calWho: (el) => {
+          S.calWho = el.dataset.v
+          render()
+        },
+        calMonth: (el) => {
+          const m = S.calMonth
+          S.calMonth = new Date(
+            m.getFullYear(),
+            m.getMonth() + +el.dataset.v,
+            1,
+          )
+          S.calDay = null
+          render()
+        },
+        calDay: (el) => {
+          S.calDay = S.calDay === el.dataset.v ? null : el.dataset.v
+          render()
+        },
+        unit: (el) => {
+          S.unit = el.dataset.v
+          render()
+        },
+        requestLeave: (el) => {
+          openRequest(null)
+          if (
+            el &&
+            el.dataset.v &&
+            LEAVE_TYPES.some((t) => t.id === el.dataset.v)
+          ) {
+            RQ.type = el.dataset.v
+            paintSheet()
+          }
+        },
+        openReq: (el) => reqDetail(el.dataset.id),
+        reqEdit: (el) =>
+          openRequest(S.requests.find((r) => r.id === el.dataset.id)),
+        reqSend: (el) => {
+          const r = S.requests.find((x) => x.id === el.dataset.id)
+          r.status = "sent"
+          S.activity.unshift({
+            t: typeName(r.type),
+            s: `${range(r.start, r.end)} · sent to ${ME.approver}`,
+            chip: ["sent", "Sent"],
+            go: "leave",
+          })
+          closeSheet()
+          render()
+          toast(`Sent to ${ME.approver}`)
+        },
+        reqDelete: (el) => removeReq(el.dataset.id, "Draft deleted"),
+        reqCancel: (el) => {
+          const r = S.requests.find((x) => x.id === el.dataset.id)
+          openDialog({
+            title:
+              r.status === "approved"
+                ? "Cancel this leave?"
+                : "Withdraw this request?",
+            text: `${typeName(r.type)} · ${range(r.start, r.end)}. ${ME.approver} will be told.`,
+            cancel: "Keep it",
+            ok: r.status === "approved" ? "Cancel leave" : "Withdraw",
+            danger: true,
+            onOk: () =>
+              removeReq(
+                r.id,
+                r.status === "approved"
+                  ? "Leave cancelled"
+                  : "Request withdrawn",
+              ),
+          })
+        },
+        rqType: (el) => {
+          RQ.type = el.dataset.v
+          paintSheet()
+        },
+        rqOther: () => {
+          RQ.other = true
+          paintSheet()
+        },
+        rqMonth: (el) => {
+          RQ.month = new Date(
+            RQ.month.getFullYear(),
+            RQ.month.getMonth() + +el.dataset.v,
+            1,
+          )
+          paintSheet()
+        },
+        rqDay: (el) => {
+          const d = fromIso(el.dataset.v)
+          if (!RQ.start || RQ.end || d < RQ.start) {
+            RQ.start = d
+            RQ.end = null
+          } else RQ.end = sameDay(d, RQ.start) ? null : d
+          RQ.hrs = null
+          paintSheet()
+        },
+        rqEditHrs: () => {
+          RQ.editHrs = !RQ.editHrs
+          paintSheet()
+          if (RQ.editHrs) $("#rq-hrs")?.focus()
+        },
+        rqNoteShow: () => {
+          RQ.showNote = true
+          paintSheet()
+          $("#rq-note")?.focus()
+        },
+        rqSubmit: () => saveRequest("sent"),
+        rqDraft: () => saveRequest("draft"),
+        projected,
+        pjType: (el) => {
+          PJ.type = el.dataset.v
+          paintSheet()
+        },
+        pjRequest: () => {
+          const dt = PJ.date
+          closeSheet(true)
+          openRequest(null, dt)
+        },
+        balDetail: (el) => balDetail(el.dataset.v),
+        leaveInfo: () =>
+          openDialog({
+            title: "How annual leave is shown",
+            text: "Entitled is the leave you were given on your work anniversary (4 May). Accrued is what's built up since then and can be taken early with approval. Available is both together.",
+            cancel: "",
+            ok: "Got it",
+          }),
+
+        period: (el) => {
+          S.periodIdx = Math.max(
+            0,
+            Math.min(PERIODS.length - 1, S.periodIdx + +el.dataset.v),
+          )
+          S.day = iso(PERIODS[S.periodIdx].start)
+          render(true)
+        },
+        pickDay: (el) => {
+          S.day = el.dataset.v
+          render()
+        },
+        addTime: (el) => openTime(el.dataset.v || iso(TODAY)),
+        openLog: (el) => {
+          for (const [dt, list] of Object.entries(S.logs)) {
+            const e = list.find((x) => x.id === el.dataset.id)
+            if (e) {
+              if (e.status === "draft") openTime(dt, e)
+              else
+                toast(
+                  `${STATUS[e.status][1]} timelogs can't be edited — ask ${ME.approver}`,
+                )
+              return
+            }
+          }
+        },
+        copyDay: (el) => {
+          const src = dayLogs(el.dataset.v),
+            dest = (S.logs[S.day] = S.logs[S.day] || [])
+          const added = src.map((e) => ({
+            ...e,
+            id: "t" + uid++,
+            status: "draft",
+            type: e.type === "Public holiday" ? "Ordinary time" : e.type,
+          }))
+          dest.push(...added)
+          render()
+          toast(
+            `Copied ${added.length} entr${added.length > 1 ? "ies" : "y"} from ${fd(fromIso(el.dataset.v), { dow: true })}`,
+            () => {
+              S.logs[S.day] = dest.filter((e) => !added.includes(e))
+              render()
+            },
+          )
+        },
+        approve: () => {
+          const p = PERIODS[S.periodIdx]
+          let n = 0
+          for (const d of periodDays(p))
+            for (const e of dayLogs(iso(d)))
+              if (e.status === "draft") {
+                e.status = "sent"
+                n++
+              }
+          S.activity.unshift({
+            t: `Timelogs · ${fd(p.start)} – ${fd(p.end)}`,
+            s: `${n} sent to ${ME.approver}`,
+            chip: ["sent", "Sent"],
+            go: "timelogs",
+          })
+          render()
+          toast(`${n} timelog${n > 1 ? "s" : ""} sent to ${ME.approver}`)
+        },
+        tlType: (el) => {
+          TL.type = el.dataset.v
+          paintSheet()
+        },
+        tlDur: (el) => {
+          TL.start = TL.start || "08:00"
+          TL.end = addTime(TL.start, +el.dataset.v)
+          TL.hrs = +el.dataset.v
+          TL.manual = false
+          paintSheet()
+        },
+        tlBreak: () => {
+          TL.hrs = Math.max(0, TL.hrs - 0.5)
+          TL.manual = true
+          paintSheet()
+        },
+        tlNoteShow: () => {
+          TL.showNote = true
+          paintSheet()
+          $("#tl-n")?.focus()
+        },
+        tlSave: () => {
+          const list = (S.logs[TL.date] = S.logs[TL.date] || [])
+          const data = {
+            type: TL.type,
+            start: TL.start,
+            end: TL.end,
+            hrs: r2(TL.hrs),
+            note: TL.note,
+            status: "draft",
+          }
+          if (TL.id)
+            Object.assign(
+              list.find((e) => e.id === TL.id),
+              data,
+            )
+          else list.push({ id: "t" + uid++, ...data })
+          S.day = TL.date
+          const pi = PERIODS.findIndex(
+            (p) => fromIso(TL.date) >= p.start && fromIso(TL.date) <= p.end,
+          )
+          if (pi >= 0) S.periodIdx = pi
+          closeSheet()
+          if (S.route !== "timelogs") go("timelogs")
+          else render()
+          toast(`${num(TL.hrs)} hrs saved as a draft`)
+        },
+        tlDelete: () => removeLog(TL.id),
+        swipeDel: (el) =>
+          el.dataset.kind === "req"
+            ? removeReq(el.dataset.id, "Draft deleted")
+            : removeLog(el.dataset.id),
+
+        taxYear: (el) => {
+          S.taxYear = el.dataset.v
+          render()
+        },
+        downloadTax: () => toast(`Tax summary ${S.taxYear} downloaded (PDF)`),
+
+        donFilter: (el) => {
+          S.donFilter = el.dataset.v
+          render()
+        },
+        openDon: (el) => donDetail(el.dataset.id),
+        donEdit: (el) => addDonation(el.dataset.id),
+        donReceipt: () => {
+          closeSheet()
+          toast("Receipt downloaded (PDF)")
+        },
+        donStop: (el) => {
+          const d = S.donations.find((x) => x.id === el.dataset.id),
+            c = charity(d.charity)
+          openDialog({
+            title:
+              d.freq === "every"
+                ? "Stop this donation?"
+                : "Cancel this donation?",
+            text: "Nothing more will be taken from your pay. Past donations and tax credits are kept.",
+            html: kvs([
+              ["Charity", c.name],
+              [d.freq === "every" ? "Every pay" : "Amount", money(d.amt)],
+              ["Next deduction", `${fd(nextPay())} — cancelled`],
+            ]),
+            cancel: "Keep giving",
+            ok: d.freq === "every" ? "Stop donation" : "Cancel donation",
+            danger: true,
+            onOk: () => {
+              const prev = d.status
+              if (d.freq === "every") d.status = "stopped"
+              else S.donations.splice(S.donations.indexOf(d), 1)
+              render()
+              toast(
+                `${c.name} donation ${d.freq === "every" ? "stopped" : "cancelled"}`,
+              )
+            },
+          })
+        },
+        addDonation: () => addDonation(),
+        dgPick: (el) => {
+          DG.charity = el.dataset.v
+          DG.step = "amount"
+          paintSheet()
+        },
+        dgPreset: (el) => {
+          DG.amt = +el.dataset.v
+          paintSheet()
+        },
+        dgOther: () => {
+          DG.amt = 0
+          paintSheet()
+          $("#dg-amt")?.focus()
+        },
+        dgFreq: (el) => {
+          DG.freq = el.dataset.v
+          paintSheet()
+        },
+        dgSave: () => {
+          const c = charity(DG.charity)
+          if (DG.editId)
+            Object.assign(
+              S.donations.find((x) => x.id === DG.editId),
+              { amt: DG.amt, freq: DG.freq, contact: DG.contact },
+            )
+          else
+            S.donations.unshift({
+              id: "d" + uid++,
+              charity: DG.charity,
+              amt: DG.amt,
+              freq: DG.freq,
+              status: "active",
+              submitted: TODAY,
+              contact: DG.contact,
+            })
+          S.donFilter = "upcoming"
+          closeSheet()
+          if (S.route !== "donate") go("donate")
+          else render()
+          toast(
+            `${money(DG.amt)} to ${c.name} ${DG.editId ? "updated" : "set up"} · ${money(donCredit(DG.amt))} back`,
+          )
+        },
+        givingInfo: () =>
+          openDialog({
+            title: "Payroll giving",
+            text: "Donations come straight out of your pay before it reaches your bank. For every dollar you give to an approved charity you get a third back as a tax credit in the same pay — no receipts or year-end claim needed.",
+            cancel: "",
+            ok: "Got it",
+          }),
+
+        faceid: () => {
+          S.faceid = !S.faceid
+          render()
+          toast(
+            S.faceid
+              ? "Face ID or PIN will be asked when you open iPayroll"
+              : "App lock turned off",
+          )
+        },
+        notif: () => {
+          S.notifPaid = !S.notifPaid
+          render()
+        },
+        lockNow: () => showLock(),
+        signOut: () => {
+          closeSheet(true)
+          showLogin()
+        },
+        eye: (el) => {
+          const inp = el.parentElement.querySelector("input")
+          const show = inp.type === "password"
+          inp.type = show ? "text" : "password"
+          el.innerHTML = ico(show ? "eyeoff" : "eye", "eye")
+        },
+        forgot: () => toast("We've emailed a reset link to batman@gmail.com"),
+        savePw: () => {
+          go("account")
+          toast("Password changed")
+        },
+        copyKey: () => toast("Setup key copied"),
+        openAuth: () => toast("Opening your authenticator app…"),
+        showQr: () => {
+          S.showQr = !S.showQr
+          render()
+        },
+        verify2fa: () => {
+          S.twofa = true
+          S.dismissed.add("2fa")
+          go("account")
+          toast("Two-factor authentication is on")
+        },
+        twofaOff: () =>
+          openDialog({
+            title: "Turn off two-factor?",
+            text: "Your account will only be protected by your password.",
+            cancel: "Keep it on",
+            ok: "Turn off",
+            danger: true,
+            onOk: () => {
+              S.twofa = false
+              render()
+              toast("Two-factor turned off")
+            },
+          }),
+        otherMethod: () =>
+          openSheet(() => ({
+            title: "Other ways to verify",
+            body: `<div class="list">${row({ t: "Text message", s: "We'll text a code to your mobile", act: "soon" })}${row({ t: "Email", s: "We'll email a code to " + S.details.email, act: "soon" })}</div>`,
+          })),
+        soon: () => {
+          closeSheet()
+          toast("Not built in this prototype")
+        },
+        editDetail: (el) => editDetail(el.dataset.v),
+        saveDetail: (el) => {
+          const k = el.dataset.v,
+            v = (id) => $("#ed-" + id).value.trim()
+          if (k === "address")
+            Object.assign(S.details, {
+              line1: v("line1"),
+              line2: v("line2"),
+              city: v("city"),
+              post: v("post"),
+              region: v("region"),
+            })
+          else S.details[k] = v(k)
+          closeSheet()
+          render()
+          toast("Details saved")
+        },
+        changeReq: (el) => changeReq(el.dataset.v),
+        crCode: (el) => {
+          $$('[data-act="crCode"]').forEach((b) =>
+            b.setAttribute("aria-pressed", b === el),
+          )
+        },
+        sendReq: () => {
+          closeSheet()
+          toast("Sent to your payroll administrator")
+        },
+        signOutOthers: () =>
+          openDialog({
+            title: "Sign out other devices?",
+            text: "Everywhere except this iPhone will need to sign in again.",
+            ok: "Sign out others",
+            danger: true,
+            onOk: () => toast("Signed out of 2 other devices"),
+          }),
+
+        // auth
+        faceLogin: () => faceAnim(enterApp),
+        pwLogin: () => showBrowser(),
+        troubleLogin: () =>
+          toast("Ask your payroll administrator to reset your access"),
+        browserCancel: () => showLogin(),
+        savedPw: () => {
+          $("#bpw").value = "••••••••••••"
+        },
+        browserSignIn: () => {
+          if (!$("#bpw").value) {
+            $("#bpw").focus()
+            toast("Enter your password")
+            return
+          }
+          enterApp()
+        },
+        pinKey: (el) => {
+          if (PIN.length >= 5) return
+          PIN += el.dataset.v
+          paintDots()
+          if (PIN.length === 5) setTimeout(checkPin, 150)
+        },
+        pinDel: () => {
+          PIN = PIN.slice(0, -1)
+          paintDots()
+        },
+        pinFace: () =>
+          faceAnim(() => {
+            auth.hidden = true
+          }),
+        forgotPin: () => toast("Sign out and back in to set a new PIN"),
+      }
+
+      // ---------- auth overlays ----------
+      const LOGO = `<img src="ipayroll-logo.svg" alt="iPayroll" />`
+      function enterApp() {
+        auth.hidden = true
+        S.route = "home"
+        render(true)
+      }
+      function showLogin() {
+        auth.hidden = false
+        auth.className = "overlay auth"
+        auth.innerHTML = `<div class="mid">${LOGO}<h1>Welcome back, ${ME.first}</h1><p>Your payslips, leave and timelogs.</p></div>
+          <div class="stack">${S.faceid ? `<button class="btn primary" data-act="faceLogin">${ico("face")} Sign in with Face ID</button>` : ""}<button class="btn ${S.faceid ? "secondary" : "primary"}" data-act="pwLogin">Sign in with password</button><button class="link" data-act="troubleLogin" style="margin-top:8px">Trouble signing in?</button></div>`
+      }
+      function faceAnim(then) {
+        auth.hidden = false
+        auth.className = "overlay auth"
+        auth.innerHTML = `<div class="mid"><div class="faceid">${ico("face")}</div><p style="margin-top:18px">Face ID</p></div>`
+        setTimeout(then, 1100)
+      }
+      function showBrowser() {
+        auth.hidden = false
+        auth.className = "overlay"
+        auth.innerHTML = `<div class="browser-bar"><button class="link" data-act="browserCancel">Cancel</button><div class="url">${ico("lock")} login.ipayroll.co.nz</div><span style="width:44px"></span></div>
+          <div class="browser-page">${LOGO}<h2>Sign in</h2><p class="center muted small" style="margin:0">to your iPayroll account</p>
+            <div class="field"><label for="bem">Email</label><input class="input" id="bem" type="email" value="${S.details.email}" autocomplete="username" /></div>
+            <div class="field"><label for="bpw">Password</label><div class="input"><input id="bpw" type="password" autocomplete="current-password" /><button data-act="eye" aria-label="Show password">${ico("eye", "eye")}</button></div></div>
+            <p style="margin:10px 0 0"><button class="link" data-act="savedPw">Use saved password</button></p>
+            <div id="b-err"></div>
+            <button class="btn primary" style="margin-top:22px" data-act="browserSignIn">Sign in</button>
+            <p class="center small muted" style="margin-top:12px">Prototype: any password of 8+ characters works.</p>
+            <p class="center" style="margin-top:16px"><button class="link" data-act="forgot">Forgot password?</button></p></div>`
+      }
+      let PIN = ""
+      function showLock() {
+        PIN = ""
+        auth.hidden = false
+        auth.className = "overlay lock"
+        const k = (v) =>
+          `<button class="key" data-act="pinKey" data-v="${v}">${v}</button>`
+        auth.innerHTML = `${LOGO}<h2>Hi ${ME.first}</h2><p class="muted pin-msg" id="pin-msg">Enter your PIN</p><div class="pin-dots" id="dots">${"<i></i>".repeat(5)}</div>
+          <p class="small"><button class="link" data-act="forgotPin">Forgot PIN?</button> <span class="muted">·</span> <button class="link" data-act="signOut">Sign out</button></p>
+          <div class="keypad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(k).join("")}${S.faceid ? `<button class="key plain" data-act="pinFace" aria-label="Use Face ID">${ico("face")}</button>` : "<span></span>"}${k(0)}<button class="key plain" data-act="pinDel" aria-label="Delete">${ico("bksp")}</button></div>`
+      }
+      function paintDots() {
+        $$("#dots i").forEach((d, i) =>
+          d.classList.toggle("on", i < PIN.length),
+        )
+      }
+      function checkPin() {
+        if (PIN === "12345") {
+          S.pinTries = 0
+          auth.hidden = true
+          toast("Unlocked")
+          return
+        }
+        S.pinTries++
+        const left = 5 - S.pinTries,
+          m = $("#pin-msg"),
+          d = $("#dots")
+        d.classList.add("err")
+        m.style.color = "var(--danger-500)"
+        if (left <= 0) {
+          m.textContent = "Too many attempts — signing you out"
+          setTimeout(() => {
+            S.pinTries = 0
+            showLogin()
+            toast("For your security, sign in again", null, "", "err")
+          }, 1300)
+        } else
+          m.textContent = `Wrong PIN · ${left} ${left === 1 ? "try" : "tries"} left`
+        setTimeout(() => {
+          d.classList.remove("err")
+          PIN = ""
+          paintDots()
+        }, 400)
+      }
+
+      // =====================================================================
+      // EVENTS
+      // =====================================================================
+      let suppressClick = false
+      $("#phone").addEventListener("click", (e) => {
+        if (suppressClick) {
+          suppressClick = false
+          e.preventDefault()
+          return
+        }
+        const openSw = $(".swipe.open")
+        if (openSw && !e.target.closest(".swipe-del")) {
+          openSw.classList.remove("open")
+          if (openSw.contains(e.target)) return
+        }
+        const a = e.target.closest("[data-act]"),
+          g = e.target.closest("[data-go]")
+        const t = a && g ? (a !== g && a.contains(g) ? g : a) : a || g
+        if (!t || t.disabled) return
+        if (t.dataset.act) {
+          const fn = ACT[t.dataset.act]
+          if (fn) {
+            e.preventDefault()
+            fn(t, e)
+          }
+        } else go(t.dataset.go)
+      })
+      // inputs that update state without a full re-render (keeps focus)
+      $("#phone").addEventListener("input", (e) => {
+        const el = e.target,
+          k = el.dataset.in
+        if (!k) return
+        if (k === "pw") paintPw()
+        if (k === "rqNote") RQ.note = el.value
+        if (k === "rqHrs") {
+          const v = parseFloat(el.value)
+          RQ.hrs = isNaN(v) ? null : v
+          const a = $("#rq-after"),
+            b = balanceOf(RQ.type)
+          if (a && b != null) {
+            const af = r2(b - rqHrs() / HRS_PER_DAY)
+            a.textContent = `${num(af)} days`
+            a.style.color = af < 0 ? "var(--danger-500)" : "var(--success-700)"
+          }
+        }
+        if (k === "pjDate" && el.value) {
+          PJ.date = el.value
+          $("#pj-out").textContent = pjCalc()
+          $("#pj-sub").textContent = pjSub()
+        }
+        if (k === "pjWk") {
+          PJ.wk = el.value
+          $("#pj-sub").textContent = pjSub()
+        }
+        if (k === "tlStart" || k === "tlEnd") {
+          TL[k === "tlStart" ? "start" : "end"] = el.value
+          if (!TL.manual || (TL.start && TL.end)) {
+            TL.hrs = r2(hoursBetween(TL.start, TL.end))
+            TL.manual = false
+          }
+          tlSync()
+        }
+        if (k === "tlHrs") {
+          TL.hrs = parseFloat(el.value) || 0
+          TL.manual = true
+          tlSync()
+        }
+        if (k === "tlNote") TL.note = el.value
+        if (k === "dgQ") {
+          DG.q = el.value
+          $("#dg-list").innerHTML = dgList()
+        }
+        if (k === "dgAmt") {
+          DG.amt = parseFloat(el.value.replace(/[^0-9.]/g, "")) || 0
+          $("#dg-credit").innerHTML = dgCredit()
+          const g = $("#dg-go")
+          g.textContent = dgCta()
+          g.disabled = !(DG.amt > 0)
+          $$('[data-act="dgPreset"]').forEach((b) =>
+            b.setAttribute("aria-pressed", +b.dataset.v === DG.amt),
+          )
+        }
+        if (k === "dgContact") DG.contact = el.checked
+        if (k === "code") {
+          el.value = el.value.replace(/\D/g, "").slice(-1)
+          const boxes = $$('[data-in="code"]')
+          if (el.value && +el.dataset.i < 5) boxes[+el.dataset.i + 1].focus()
+          $("#code-go").disabled = !boxes.every((b) => b.value)
+        }
+      })
+      $("#phone").addEventListener("change", (e) => {
+        if (e.target.dataset.in === "dgContact") DG.contact = e.target.checked
+      })
+      $("#phone").addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeSheet()
+          closeDialog()
+        }
+        const el = e.target
+        if (
+          el.dataset &&
+          el.dataset.in === "code" &&
+          e.key === "Backspace" &&
+          !el.value &&
+          +el.dataset.i > 0
+        )
+          $$('[data-in="code"]')[+el.dataset.i - 1].focus()
+      })
+      $("#phone").addEventListener("paste", (e) => {
+        const el = e.target
+        if (!el.dataset || el.dataset.in !== "code") return
+        const digits = (e.clipboardData.getData("text") || "")
+          .replace(/\D/g, "")
+          .slice(0, 6)
+        if (!digits) return
+        e.preventDefault()
+        const boxes = $$('[data-in="code"]')
+        digits.split("").forEach((d, i) => (boxes[i].value = d))
+        boxes[Math.min(5, digits.length)].focus()
+        $("#code-go").disabled = !boxes.every((b) => b.value)
+      })
+
+      // swipe-to-delete (pointer events: touch and mouse)
+      let SW = null
+      view.addEventListener("pointerdown", (e) => {
+        const r = e.target.closest(".swipe > .row")
+        if (!r) return
+        SW = {
+          row: r,
+          x: e.clientX,
+          y: e.clientY,
+          base: r.parentElement.classList.contains("open") ? -88 : 0,
+          moved: false,
+        }
+      })
+      view.addEventListener("pointermove", (e) => {
+        if (!SW) return
+        const dx = e.clientX - SW.x,
+          dy = e.clientY - SW.y
+        if (!SW.moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy))
+          SW.moved = true
+        if (SW.moved) {
+          SW.row.style.transition = "none"
+          SW.row.style.transform = `translateX(${Math.max(-120, Math.min(0, SW.base + dx))}px)`
+        }
+      })
+      window.addEventListener("pointerup", (e) => {
+        if (!SW) return
+        const { row: r, moved, base, x } = SW
+        SW = null
+        r.style.transition = ""
+        r.style.transform = ""
+        if (moved) {
+          $$(".swipe.open").forEach(
+            (s) => s !== r.parentElement && s.classList.remove("open"),
+          )
+          r.parentElement.classList.toggle("open", base + (e.clientX - x) < -44)
+          suppressClick = true
+          setTimeout(() => (suppressClick = false), 50)
+        }
+      })
+
+      // =====================================================================
+      // v5 LAYER · validation, error states, offline + loading simulation
+      // =====================================================================
+      function fieldErr(id, msg) {
+        const inp = document.getElementById(id)
+        if (!inp) return
+        const f = inp.closest(".field")
+        if (!f) return
+        f.classList.add("err")
+        let m = f.querySelector(".err-msg")
+        if (!m) {
+          m = document.createElement("div")
+          m.className = "err-msg"
+          m.setAttribute("role", "alert")
+          f.appendChild(m)
+        }
+        m.innerHTML = ico("alert") + msg
+      }
+      function clearErrs(root = document) {
+        $$(".field.err", root).forEach((f) => {
+          f.classList.remove("err")
+          f.querySelector(".err-msg")?.remove()
+        })
+      }
+      function rqProblems(end, days, after) {
+        const out = []
+        if (!RQ.start) return out
+        if (!days && !RQ.hrs)
+          out.push("Those dates don't include any working days.")
+        if (after != null && after < 0)
+          out.push(
+            `Not enough ${typeName(RQ.type).toLowerCase()} — you'd be ${num(-after)} days over. Choose fewer days, or use leave without pay.`,
+          )
+        const clash = S.requests.find(
+          (r) =>
+            r.id !== RQ.id &&
+            r.status !== "declined" &&
+            r.start <= end &&
+            r.end >= RQ.start,
+        )
+        if (clash)
+          out.push(
+            `Overlaps your ${typeName(clash.type).toLowerCase()} on ${range(clash.start, clash.end)} (${STATUS[clash.status][1].toLowerCase()}).`,
+          )
+        return out
+      }
+      const dgErr = () =>
+        !(DG.amt > 0)
+          ? "Enter an amount"
+          : DG.amt < 1
+            ? "The minimum donation is $1"
+            : DG.amt > 1000
+              ? "The maximum is $1,000 per pay — contact the charity for larger gifts"
+              : ""
+      const dgErrHtml = () => {
+        const e = dgErr()
+        return e && DG.amt > 0
+          ? `<div class="err-msg" role="alert">${ico("alert")}${e}</div>`
+          : ""
+      }
+      let CRK = null
+
+      // extra live validation (runs after the main input handler)
+      $("#phone").addEventListener("input", (e) => {
+        const el = e.target
+        const f = el.closest && el.closest(".field.err")
+        if (f) {
+          f.classList.remove("err")
+          f.querySelector(".err-msg")?.remove()
+        }
+        if (el.dataset && el.dataset.in === "dgAmt") {
+          $("#dg-err").innerHTML = dgErrHtml()
+          $("#dg-go").disabled = !!dgErr()
+        }
+        if (el.dataset && el.dataset.in === "code") {
+          $("#code-err")?.remove()
+        }
+      })
+
+      const origACT = { ...ACT }
+      Object.assign(ACT, {
+        simOffline: () => {
+          S.offline = !S.offline
+          render()
+          toast(
+            S.offline
+              ? "Offline simulation on — saves will fail"
+              : "Back online",
+          )
+        },
+        simSkeleton: () => {
+          S.skeleton = !S.skeleton
+          render()
+        },
+        resetDemo: () =>
+          openDialog({
+            title: "Reset demo data?",
+            text: "Puts every screen back to how it started.",
+            ok: "Reset",
+            onOk: () => location.reload(),
+          }),
+        errHelp: () =>
+          openDialog({
+            title: "Error states to try",
+            cancel: "",
+            ok: "Got it",
+            html: `<div class="list">
+            <div class="kv"><span class="k">Request leave</span><span class="v">Pick 13 Jul – 21 Aug (too long), or 22 Jun (overlaps)</span></div>
+            <div class="kv"><span class="k">Add time</span><span class="v">End before start, or over 16 hrs</span></div>
+            <div class="kv"><span class="k">Donate</span><span class="v">$0.50 or $2,000</span></div>
+            <div class="kv"><span class="k">Personal details</span><span class="v">Postcode 80, bad email, phone 123</span></div>
+            <div class="kv"><span class="k">Bank change</span><span class="v">Any number not like 00-0000-0000000-00</span></div>
+            <div class="kv"><span class="k">Password</span><span class="v">Current password under 6 characters</span></div>
+            <div class="kv"><span class="k">Two-factor</span><span class="v">Code 000000</span></div>
+            <div class="kv"><span class="k">Lock screen</span><span class="v">Wrong PIN 5 times</span></div>
+            <div class="kv"><span class="k">Sign in</span><span class="v">Password under 8 characters</span></div>
+            <div class="kv"><span class="k">Anything that saves</span><span class="v">Turn on Simulate offline</span></div></div>`,
+          }),
+        tlSave: (el, e) => {
+          if (tlProblems().errs.length) return
+          origACT.tlSave(el, e)
+        },
+        dgSave: (el, e) => {
+          if (dgErr()) {
+            $("#dg-err").innerHTML =
+              `<div class="err-msg" role="alert">${ico("alert")}${dgErr()}</div>`
+            return
+          }
+          origACT.dgSave(el, e)
+        },
+        rqSubmit: (el, e) => {
+          if ($("#rq-go")?.disabled) return
+          origACT.rqSubmit(el, e)
+        },
+        saveDetail: (el, e) => {
+          const k = el.dataset.v,
+            v = (id) => ($("#ed-" + id)?.value || "").trim()
+          clearErrs(layer)
+          let bad = false
+          const need = (id, msg) => {
+            fieldErr("ed-" + id, msg)
+            bad = true
+          }
+          if (k === "address") {
+            if (!v("line1")) need("line1", "Enter your street address")
+            if (!v("city")) need("city", "Enter your town or city")
+            if (!/^\d{4}$/.test(v("post")))
+              need("post", "NZ postcodes are 4 digits")
+          }
+          if (
+            k === "phone" &&
+            v("phone") &&
+            !/^(\+?64|0)2\d{7,9}$/.test(v("phone").replace(/[\s-]/g, ""))
+          )
+            need("phone", "Enter a NZ mobile number, like 021 123 4567")
+          if (
+            k === "email" &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v("email"))
+          )
+            need("email", "Enter a valid email address, like name@example.com")
+          if (!bad) origACT.saveDetail(el, e)
+        },
+        changeReq: (el, e) => {
+          CRK = el.dataset.v
+          origACT.changeReq(el, e)
+        },
+        sendReq: (el, e) => {
+          const val = ($("#cr-1")?.value || "").trim()
+          clearErrs(layer)
+          if (CRK === "name" && val.length < 3)
+            return fieldErr("cr-1", "Enter your full legal name")
+          if (CRK === "bank" && !/^\d{2}-\d{4}-\d{7}-\d{2,3}$/.test(val))
+            return fieldErr("cr-1", "Use the format 00-0000-0000000-00")
+          if (CRK === "ird" && !/^\d{2,3}-?\d{3}-?\d{3}$/.test(val))
+            return fieldErr("cr-1", "IRD numbers are 8 or 9 digits")
+          origACT.sendReq(el, e)
+        },
+        savePw: (el, e) => {
+          if (($("#pw0").value || "").length < 6) {
+            fieldErr("pw0", "That isn't your current password")
+            $("#pw0").focus()
+            return
+          }
+          origACT.savePw(el, e)
+        },
+        verify2fa: (el, e) => {
+          const code = $$('[data-in="code"]')
+            .map((b) => b.value)
+            .join("")
+          if (/^(\d)\1{5}$/.test(code)) {
+            $$('[data-in="code"]').forEach((b) => (b.value = ""))
+            $$('[data-in="code"]')[0].focus()
+            $("#code-go").disabled = true
+            $(".codes").insertAdjacentHTML(
+              "afterend",
+              `<div class="err-msg" id="code-err" role="alert">${ico("alert")}That code didn't work. Codes change every 30 seconds — try the newest one.</div>`,
+            )
+            return
+          }
+          origACT.verify2fa(el, e)
+        },
+        browserSignIn: () => {
+          clearErrs(auth)
+          $("#b-err").innerHTML = ""
+          const em = $("#bem").value.trim(),
+            pw = $("#bpw").value
+          let bad = false
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) {
+            fieldErr("bem", "Enter the email you use for iPayroll")
+            bad = true
+          }
+          if (!pw) {
+            fieldErr("bpw", "Enter your password")
+            bad = true
+          }
+          if (bad) return
+          if (pw.length < 8) {
+            $("#b-err").innerHTML =
+              `<div class="formerr" role="alert"><div>${ico("alert")}<span>Email or password is incorrect. After 2 more tries your account will be locked for 15 minutes.</span></div></div>`
+            $("#bpw").value = ""
+            $("#bpw").focus()
+            return
+          }
+          if (S.offline) {
+            $("#b-err").innerHTML =
+              `<div class="formerr" role="alert"><div>${ico("alert")}<span>Can't reach iPayroll. Check your connection and try again.</span></div></div>`
+            return
+          }
+          enterApp()
+        },
+      })
+      // anything that sends data fails politely while "offline"
+      const NEEDS_NET = {
+        rqSubmit: "send your leave request",
+        rqDraft: "save the draft",
+        reqSend: "send the request",
+        tlSave: "save your time",
+        approve: "send your timelogs",
+        dgSave: "set up the donation",
+        saveDetail: "save your details",
+        sendReq: "send the request",
+        savePw: "change your password",
+        verify2fa: "turn on two-factor",
+        selDownload: "download payslips",
+        downloadPay: "download the payslip",
+        downloadTax: "download the summary",
+        donReceipt: "download the receipt",
+        copyDay: "copy the entries",
+      }
+      for (const [k, label] of Object.entries(NEEDS_NET)) {
+        const fn = ACT[k]
+        ACT[k] = (el, e) => {
+          if (S.offline) {
+            toast(
+              `Couldn't ${label} — you're offline`,
+              () => ACT[k](el, e),
+              "Retry",
+              "err",
+            )
+            return
+          }
+          return fn(el, e)
+        }
+      }
+      // ---------- boot ----------
+      render(true)
+      setTimeout(() => ($("#splash").hidden = true), 900)
+    </script>
+  </body>
+</html>
