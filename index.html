@@ -3,39 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>iPayroll — Prototype v6</title>
+    <title>iPayroll — Prototype v6.5</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDgyIDkxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA4MiA5MTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPiAuc3Qwe2ZpbGw6dXJsKCNTVkdJRF8xXyk7fSAuc3Qxe2ZpbGw6IzZFN0JBMDt9IC5zdDJ7ZmlsbDojMjAyOTQ1O30gLnN0M3tmaWxsOnVybCgjU1ZHSURfMl8pO30gPC9zdHlsZT4gPGcgdHJhbnNmb3JtPSJtYXRyaXgoIDEsIDAsIDAsIDEsIDAsMCkgIj4gPGc+IDxnIGlkPSJMYXllcjBfMF9GSUxMXzJfIj4gPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8xXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI2Ljk4Njg5OGUtMDIiIHkxPSI1Ni40Mzk3IiB4Mj0iNjQuMDc3MSIgeTI9IjU2LjQzOTciPiA8c3RvcCBvZmZzZXQ9IjMuNDM0NTI2ZS0wMyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTBERiIvPiA8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NkM0RTgiLz4gPC9saW5lYXJHcmFkaWVudD4gPHBhdGggY2xhc3M9InN0MCIgZD0iTTAuNSw0OC42bDAuMiwwLjdjMC45LDIuOCwyLjcsNSw1LjMsNi41bDU4LjEsMzMuNWMtMC44LTAuNS0xLjYtMS4xLTIuMy0xLjhjLTEuNy0xLjctMi44LTMuNy0zLjItNS45IGMtMC4xLTAuNC0wLjEtMC45LTAuMi0xLjN2LTAuMWMwLDAsMC0wLjEsMC0wLjFjMC0wLjIsMC0wLjUsMC0wLjdWNTguN0wzOC4zLDQ3LjFjLTAuMi0wLjEtMC4zLTAuMi0wLjUtMC4zIGMtMC4xLTAuMS0wLjEtMC4xLTAuMi0wLjJjLTAuNC0wLjQtMC42LTAuOS0wLjYtMS40YzAtMC41LDAuMi0xLDAuNS0xLjNjMCwwLDAtMC4xLDAuMS0wLjFjMCwwLDAsMCwwLjEtMC4xIGMwLjMtMC4zLDAuNi0wLjcsMC45LTEuMWMwLjktMS4yLDEuNi0yLjYsMi00LjJjMC45LTMuMiwwLjUtNi4yLTEuMi05Yy0xLjYtMi44LTQtNC43LTcuMi01LjVjLTMuMi0wLjgtNi4yLTAuNC05LDEuMkw2LDM1LjIgYy0yLjYsMS41LTQuNCwzLjctNS4zLDYuNWMtMC4xLDAuMi0wLjEsMC40LTAuMiwwLjZjLTAuMSwwLjMtMC4xLDAuNi0wLjIsMC44Yy0wLjEsMC4zLTAuMSwwLjYtMC4yLDAuOWwtMC4xLDEuNyBDMC4xLDQ2LjgsMC4yLDQ3LjcsMC41LDQ4LjZ6Ii8+IDxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik01OC40LDU0LjF2NC42bDE3LjcsMTAuMmMyLjgsMS42LDQuNyw0LDUuNSw3LjJjMC4xLDAuMywwLjEsMC42LDAuMiwwLjljMC4xLDAuNywwLjIsMS40LDAuMiwyLjF2LTQuNyBjMC0wLjktMC4yLTEuOS0wLjQtMi45Yy0wLjgtMy4yLTIuNy01LjYtNS41LTcuMkw1OC40LDU0LjF6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik02NS44LDkwLjFjMC4zLDAuMSwwLjcsMC4zLDEsMC40YzEuNywwLjUsMy41LDAuNiw1LjMsMC4zYzAuMSwwLDAuMSwwLDAuMiwwYzAuMiwwLDAuNS0wLjEsMC43LTAuMiBjMC4xLDAsMC4xLDAsMC4yLDBjMC43LTAuMiwxLjQtMC40LDItMC43YzAuNi0wLjMsMS4yLTAuNiwxLjctMWMxLTAuNywxLjgtMS41LDIuNi0yLjVjMC4yLTAuMywwLjUtMC43LDAuNy0xYzAsMCwwLDAsMCwwbDAsMCBjMC40LTAuNiwwLjctMS4yLDAuOS0xLjhjMC4yLTAuNCwwLjQtMC45LDAuNS0xLjVjMC4yLTAuOSwwLjMtMS45LDAuMy0yLjljMCwwLDAtMC4xLDAtMC4xYzAtMC43LTAuMS0xLjQtMC4yLTIuMSBjLTAuMS0wLjMtMC4xLTAuNi0wLjItMC45Yy0wLjgtMy4yLTIuNy01LjYtNS41LTcuMkw1OC40LDU4Ljd2MjAuN2wwLDAuOHYwLjFjMCwwLjQsMC4xLDAuOSwwLjIsMS4zYzAuNCwyLjIsMS41LDQuMiwzLjIsNS45IGMwLjcsMC43LDEuNSwxLjMsMi4zLDEuOGMwLDAsMC4xLDAuMSwwLjIsMC4xQzY0LjcsODkuNyw2NS4yLDg5LjksNjUuOCw5MC4xeiIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzJfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjU4LjM1NDkiIHkxPSIzNy4xOTQ3IiB4Mj0iODIiIHkyPSIzNy4xOTQ3Ij4gPHN0b3Agb2Zmc2V0PSI5LjQ4MTgyMGUtMDQiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjZDMEUiLz4gPHN0b3Agb2Zmc2V0PSIwLjk5ODYiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjkwMTUiLz4gPC9saW5lYXJHcmFkaWVudD4gPHBhdGggY2xhc3M9InN0MyIgZD0iTTgxLjYsNzEuNWMwLjMsMSwwLjQsMS45LDAuNCwyLjlWMTEuOWMwLTMuMy0xLjItNi0zLjUtOC40Qzc2LjIsMS4yLDczLjQsMCw3MC4yLDBjLTMuMywwLTYsMS4yLTguNCwzLjUgYy0yLjMsMi4zLTMuNSw1LjEtMy41LDguNHY0Mi4ybDE3LjcsMTAuMkM3OC45LDY1LjksODAuNyw2OC4zLDgxLjYsNzEuNXoiLz4gPC9nPiA8L2c+IDwvZz4gPC9zdmc+" /> <!-- favicon.svg, embedded so the file opens on its own -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
     <style>
-      /* ============================================================
-         v5 · MINIMAL — v4 plus Home "Version C + Away today", no sick leave, error states,
-         offline/loading simulation. Built from the "Proposed — minimal" column of
-         ipayroll-screen-audit.excalidraw. Tokens mirror ipayroll-tokens.json.
-         Style rules (Mobbin-backed, see the board's Minimal style guide):
-         · white page, lists without containers, inset hairline dividers
-         · large left title on top-level screens, icon/text header actions
-         · sub-pages: back chevron + short centred title
-         · underline tabs (kept from v3 by design decision)
-         · soft filled inputs, sentence-case section headers
-         · sheets: centred title, close on the right (v6; back arrow on the left when stacked), CTA at the bottom
-         · My account uses the same section + hairline lists as every other screen
-         v5.5 · TEST — designer's Figma edits (Oct 2026) + review decisions:
-         · picker (dropdown trigger → options sheet), with or without arrows
-         · filter dropdown pill (for long filter lists, e.g. leave types)
-         · leave: no drafts, statuses pending/approved/declined/withdrawn/closed,
-           calendar is a list (by day or by person), balances list, projection
-           with a calculation breakdown
-         · tax summary chosen by period from a history sheet
-         · home widgets, empty-account simulation
-         v6 · Oct 2026 — colours re-pointed to the Figma "iPayroll styleguide styles" variables,
-           designer's library nav icons, larger logo, red error states, collapsing header
-           (brand bar hides on scroll, title/tabs/sub-header stay pinned), no Edit home, no
-           Prototype settings (loading states always on), leave: resubmit declined, withdraw approved
-         ============================================================ */
-      /* v6 · values from the Figma file's "iPayroll styleguide styles" collection (semantic variable in comments).
-         Prototype names are kept so the CSS below doesn't change; only the values are re-pointed. */
+   
       :root {
         --brand-600: #d95200;  /* orange/500 · semantic/text/brand, bg/accent-strong, icon/active */
         --brand-500: #ff6c0e;  /* orange/400 · semantic/bg/accent, border/focus */
@@ -52,6 +26,8 @@
         --soft-2: #eeeeee;     /* grey-100 · semantic/bg/subtle */
         --line: #eeeeee;       /* grey-100 · semantic/border/hairline */
         --border-200: #c1cfc8; /* grey-300 · semantic/border/default */
+        --slate: #4a4f54;      /* v6.5 · semantic/bg/emphasis — header + Home card buttons */
+        --peach: rgba(255, 212, 133, 0.48); /* v6.5 · picked date range + selected day (Figma Request leave calendar) */
         --link-500: #0056b3;   /* interactive/link · semantic/text/link */
         --link-on-dark: #a4d4fa; /* blue/200 · semantic/text/link-on-dark */
         --info-50: rgba(16, 107, 218, 0.24);  --info-500: #106bda; --info-700: #124a8f;     /* semantic/notification/info-* */
@@ -64,6 +40,7 @@
         --gutter: 20px; --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-sheet: 24px; --r-pill: 999px;
         --shadow-float: 0 8px 24px rgba(27, 30, 35, 0.16); --shadow-hero: 0 6px 20px rgba(238, 95, 10, 0.24); /* Shadow/Float, Shadow/Hero */
         --gradient-ipayroll: linear-gradient(30deg, #ff6c0e 30%, #ff9015 100%); /* Gradient/ipayroll */
+        --gradient-home-fade: linear-gradient(180deg, #ff6c0e 0, #ff9015 177px, rgba(255, 144, 21, 0) 338px); /* Gradient/home-fade (orange Home) */
         --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Shadow/card (card home) */
       }
       * { box-sizing: border-box; }
@@ -158,12 +135,13 @@
       .row .s { font-size: 13px; color: var(--ink-500); margin-top: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .row .v { text-align: right; flex: none; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
       .row .v small { display: block; font-size: 12px; font-weight: 400; color: var(--ink-500); margin-top: 2px; }
-      .row .chev { width: 18px; height: 18px; stroke: var(--ink-300); fill: none; stroke-width: 2; flex: none; }
+      .row .chev { width: 18px; height: 18px; stroke: var(--ink-400); /* v6.5 · darker (was ink-300) */ fill: none; stroke-width: 2; flex: none; }
       .row.link .t { color: var(--link-500); font-weight: 600; }
       .row.danger .t { color: var(--danger-500); font-weight: 600; }
       .row.center { justify-content: center; }
       .row .ico { width: 36px; height: 36px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; }
       .row .ico svg { width: 18px; height: 18px; stroke: var(--ink-700); fill: none; stroke-width: 1.8; }
+      .row .ico.don svg { stroke: none; fill: var(--ink-700); width: 20px; height: 20px; }
       .row .ico.red { background: var(--danger-50); } .row .ico.red svg { stroke: var(--danger-500); }
       .row .mono { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #fff; }
       .row.dim .t, .row.dim .v { color: var(--ink-500); }
@@ -187,22 +165,20 @@
       .swipe.open .row { transform: translateX(-88px); }
 
       /* ---------- chips & pills ---------- */
-      .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: var(--r-pill); font-size: 12px; font-weight: 600; white-space: nowrap; }
-      .chip.draft { background: var(--warning-50); color: var(--warning-700); }
-      .chip.sent { background: var(--warning-50); color: var(--warning-700); } /* v5.5 · sent = draft colour (amber), like leave "pending" */
-      .chip.approved, .chip.ok { background: var(--success-50); color: var(--success-700); }
-      .chip.declined, .chip.bad { background: var(--danger-50); color: var(--danger-700); }
-      .chip.neutral { background: var(--soft-2); color: var(--ink-700); }
-      .chip.nudge, .chip.pending { background: var(--warning-50); color: var(--warning-700); }
-      .chip.withdrawn { background: var(--brand-100); color: var(--brand-600); } /* Figma Chip/Tone=Brand */
-      .chip.closed { background: var(--soft-2); color: var(--ink-700); }
+      /* v6.5 · every chip has a 1px stroke (Figma Status chip values) */
+      .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: var(--r-pill); font-size: 12px; font-weight: 600; white-space: nowrap; border: 1px solid transparent; }
+      .chip.draft, .chip.sent, .chip.nudge, .chip.pending { background: #fff7e0; border-color: #e8c45a; color: #704f00; } /* sent = draft colour (amber), like leave "pending" */
+      .chip.approved, .chip.ok { background: #e6f7eb; border-color: #8bd3a8; color: #176b3a; }
+      .chip.declined, .chip.bad { background: #fad1d4; border-color: #f2989c; color: #9b1c1f; }
+      .chip.neutral, .chip.closed { background: var(--soft); border-color: var(--border-200); color: var(--ink-500); }
+      .chip.withdrawn { background: var(--brand-100); border-color: var(--brand-200); color: var(--brand-600); } /* Figma Chip/Tone=Brand */
       .pills { display: flex; gap: 8px; overflow-x: auto; margin: 14px calc(-1 * var(--gutter)) 0; padding: 0 var(--gutter) 2px; scrollbar-width: none; }
       .pills::-webkit-scrollbar { display: none; }
       .pill {
         flex: none; height: 36px; padding: 0 15px; border-radius: var(--r-pill); border: 1px solid var(--border-200);
         font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; background: var(--surface); white-space: nowrap;
       }
-      .pill[aria-pressed="true"] { background: var(--ink-900); border-color: var(--ink-900); color: #fff; }
+      .pill[aria-pressed="true"] { background: var(--ink-900); border-color: var(--ink-900); color: #fff; } /* stroke = same dark as the fill */
       .pill .n { font-size: 12px; opacity: .7; }
       .pill.choice { height: auto; padding: 8px 14px; flex-direction: column; align-items: flex-start; gap: 1px; border-radius: 14px; }
       .pill.choice small { font-size: 12px; color: var(--ink-500); font-weight: 400; }
@@ -235,7 +211,7 @@
         display: flex; align-items: center; gap: 8px;
       }
       textarea.input { height: 90px; padding: 12px 14px; resize: none; }
-      .input:focus, .input:focus-within { box-shadow: inset 0 0 0 2px var(--brand-500); background: var(--surface); }
+      .input:focus, .input:focus-within { box-shadow: inset 0 0 0 2px var(--info-500); /* v6.5 · blue (was orange) */ background: var(--surface); }
       .input input { flex: 1; border: 0; background: none; outline: none; font-size: 16px; min-width: 0; height: 100%; }
       .input .eye { width: 22px; height: 22px; stroke: var(--ink-500); fill: none; stroke-width: 1.8; }
       .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -250,7 +226,7 @@
       .rules div.ok { color: var(--success-700); } .rules div.ok svg { stroke: var(--success-500); }
       .codes { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 10px; }
       .codes input { width: 100%; min-width: 0; height: 56px; text-align: center; font-size: 22px; font-weight: 600; border: 0; border-radius: 12px; background: var(--soft); outline: none; }
-      .codes input:focus { box-shadow: inset 0 0 0 2px var(--brand-500); background: #fff; }
+      .codes input:focus { box-shadow: inset 0 0 0 2px var(--info-500); background: #fff; }
 
       /* toggle */
       .toggle { width: 50px; height: 30px; border-radius: 15px; background: var(--soft-2); position: relative; flex: none; transition: background .2s; }
@@ -268,7 +244,7 @@
       .hero .paid { font-size: 13px; margin-top: 4px; opacity: .95; }
       .stats { display: grid; grid-template-columns: 1fr 1fr; margin-top: 14px; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
       .stats > * { text-align: left; padding-right: 12px; }
-      .stats > * + * { border-left: 1px solid var(--line); padding-left: 16px; }
+      .stats > * + * { border-left: 1px solid var(--line); padding-left: 16px; padding-right: 0; text-align: right; } /* v6.5 · Total deductions right-aligned */
       .stats .l { font-size: 13px; color: var(--ink-500); }
       .stats .n { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin-top: 2px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
       .stats .u { font-size: 13px; color: var(--ink-500); margin-top: 1px; }
@@ -309,8 +285,8 @@
       .day.s-sent::after { background: var(--warning-500); } /* v5.5 · sent shows as draft (no blue) */
       .day.s-ok::after { background: var(--success-500); }
       /* v6 · selected day = rounded soft grey tile, no stroke, dark text (lighter than the black tile; status bar stays visible) */
-      .day[aria-pressed="true"] { background: var(--soft-2); } /* grey fill, no stroke */
-      .day[aria-pressed="true"] .dw, .day[aria-pressed="true"] .dh { color: var(--ink-900); }
+      .day[aria-pressed="true"] { background: var(--peach); } /* v6.5 · same peach as the leave date range (was light blue), no stroke */
+      .day[aria-pressed="true"] .dw, .day[aria-pressed="true"] .dn, .day[aria-pressed="true"] .dh { color: var(--ink-900); }
       .day[aria-pressed="true"] .dh { font-weight: 600; }
       .day.wkend .dn { color: var(--ink-300); }
 
@@ -325,8 +301,8 @@
       .cal .c.mine { background: var(--brand-100); font-weight: 600; }
       .cal .c.mine.s { border-radius: 10px 0 0 10px; } .cal .c.mine.e { border-radius: 0 10px 10px 0; } .cal .c.mine.s.e { border-radius: 10px; }
       .cal .c.away::after { content: ""; position: absolute; bottom: 5px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--ink-700); }
-      .cal .c.sel { background: var(--ink-900); color: #fff; font-weight: 600; }
-      .cal .c.rng { background: var(--soft-2); }
+      .cal .c.sel { background: var(--brand-500); color: #fff; font-weight: 600; } /* v6.5 · orange ends */
+      .cal .c.rng { background: var(--peach); } /* v6.5 · peach range */
       .cal .c.sel.s { border-radius: 12px 0 0 12px; } .cal .c.sel.e { border-radius: 0 12px 12px 0; } .cal .c.sel.s.e { border-radius: 12px; }
       .cal .c.today { box-shadow: inset 0 0 0 1.5px var(--ink-900); border-radius: 12px; }
       .cal button.c:disabled { cursor: default; }
@@ -412,8 +388,8 @@
       /* ---------- full-screen overlays: splash, login, browser, lock ---------- */
       .overlay { position: absolute; inset: 0; z-index: 40; background: var(--surface); display: flex; flex-direction: column; }
       .overlay[hidden] { display: none; }
-      .splash { align-items: center; justify-content: center; }
-      .splash img { height: 44px; }
+      .splash { align-items: center; justify-content: center; background: linear-gradient(180deg, #ff6c0e 0%, #ff9015 100%); } /* v6.5 · refresh = full orange screen */
+      .splash img { height: 44px; filter: brightness(0) invert(1); }
       .auth { padding: 0 28px 34px; }
       .auth .mid { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
       .auth .mid img { height: 40px; margin-bottom: 26px; }
@@ -475,6 +451,7 @@
       .pill:active, .btn:active:not(:disabled), .icon-btn:active, .key:active { transform: scale(.97); }
       .key:active { background: var(--soft-2); }
       :focus-visible { outline: 2px solid var(--brand-500); outline-offset: 2px; border-radius: 8px; }
+      .input:focus-visible, .input :focus-visible, .codes input:focus-visible { outline: none; } /* v6.5 · inputs show only the blue ring */
 
       /* ============================ v5.5 additions ============================ */
       /* picker: a soft filled dropdown trigger that opens an options sheet (optional ‹ › arrows) */
@@ -488,14 +465,17 @@
       /* filter dropdown: a pill with a chevron; pressed (ink) when it narrows the list */
       .pill.drop svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; margin-right: -4px; }
       /* text + icon header action (Pay history "Select") */
-      .btn-chip { height: 40px; padding: 0 16px; border-radius: var(--r-pill); background: var(--soft); display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; flex: none; }
-      .btn-chip svg { width: 18px; height: 18px; stroke: var(--ink-900); fill: none; stroke-width: 2; }
+      .btn-chip { height: 40px; padding: 0 16px; border-radius: var(--r-pill); background: var(--slate); color: #fff; border: 0; /* v6.5 · slate fill, white label (Figma) */ display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; flex: none; }
+      .btn-chip svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+      .btn-chip:active { background: var(--ink-900); }
       /* softer checkboxes (designer) */
       input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; margin: 0; flex: none; border: 1.5px solid var(--border-200); border-radius: 6px; background: var(--surface) center/16px no-repeat; }
       input[type="checkbox"]:checked { background-color: var(--ink-900); border-color: var(--ink-900); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5 12.5 10 17 19 7'/%3E%3C/svg%3E"); }
       /* empty states */
       .empty-state { text-align: center; padding: 44px 12px 20px; }
       .empty-state .ei { width: 56px; height: 56px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; margin: 0 auto; }
+      .empty-state .ei.ill { width: 72px; height: 72px; background: none; } /* v6.5 · colour illustration (Figma), carries its own grey circle */
+      .empty-state .ei.ill img { width: 72px; height: 72px; display: block; }
       .empty-state .ei svg { width: 26px; height: 26px; stroke: var(--ink-500); fill: none; stroke-width: 1.8; }
       .empty-state h3 { font-size: 16px; font-weight: 600; margin: 14px 0 4px; }
       .empty-state p { font-size: 14px; color: var(--ink-500); line-height: 1.45; margin: 0 auto; max-width: 290px; }
@@ -524,10 +504,12 @@
       .pay-sec .eye-btn { margin: 0 -8px 0 0; flex: none; }
       .tl-hrs { margin-top: 14px; }
       /* v6 · Home: section action as a compact pill in the header; leave = one balance + "Balances ›" */
-      .sec .sec-pill { height: 32px; padding: 0 12px; font-size: 13px; font-weight: 600; gap: 4px; align-self: center; background: var(--soft); border-color: var(--soft); } /* light grey fill, no stroke */
+      .sec .sec-pill { height: 32px; padding: 0 12px; font-size: 13px; font-weight: 600; gap: 4px; align-self: center; background: var(--soft); border-color: var(--border-200); } /* light grey fill + stroke (v6: without it the pill read too faint) */
       .sec .sec-pill:active { background: var(--soft-2); }
       .sec:has(.sec-pill) { align-items: center; }
-      .bal-row { display: flex; align-items: center; justify-content: space-between; width: 100%; text-align: left; padding: 6px 0 14px; border-bottom: 1px solid var(--line); }
+      /* v6 · Home "Away today" header link → Leave calendar; same look as "Balances ›" */
+      .sec .sec-link { display: flex; align-items: center; gap: 2px; color: var(--link-500); font-weight: 600; font-size: 15px; }
+      .sec .sec-link svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.2; }      .bal-row { display: flex; align-items: center; justify-content: space-between; width: 100%; text-align: left; padding: 6px 0 14px; border-bottom: 1px solid var(--line); }
       .bal-row .l, .bal-row .n, .bal-row .u { display: block; }
       .bal-row .l { font-size: 13px; color: var(--ink-500); }
       .bal-row .n { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin-top: 2px; font-variant-numeric: tabular-nums; }
@@ -537,6 +519,33 @@
       .bal-row:active { background: var(--soft); }
       .widget { position: relative; }
       .widget + .widget { margin-top: 6px; }
+      /* v6 · orange Home (Figma "Home — Alternative (orange)"), switched with ACT.homeOrange() or ?home=orange:
+         orange fade behind the top, white logo / avatar / title, latest payslip as a white floating card */
+      .screen.home-orange { background: var(--gradient-home-fade) no-repeat, var(--surface); }
+      /* the fade scrolls with the page: #view carries the rest of it (offset by the 60px brand bar) */
+      .home-orange #view { background: var(--gradient-home-fade) 0 -60px / 100% 338px no-repeat local, var(--surface); }
+      .home-orange .brand-bar, .home-orange .top-head { background: transparent; }
+      .home-orange #view.scrolled .top-head { background: var(--brand-500); box-shadow: none; }
+      .home-orange .brand-logo img { filter: brightness(0) invert(1); }
+      .home-orange .brand-bar .avatar { background: var(--surface); }
+      .on-account .brand-bar .avatar { visibility: hidden; }
+      .home-orange .top-head h1 { color: var(--surface); }
+      .home-orange .banner.info { background: linear-gradient(var(--info-50), var(--info-50)), var(--surface); }
+      .pay-card { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-float); padding: 16px 16px 4px; margin-top: 14px; }
+      .pay-card h2 { font-size: 16px; font-weight: 700; margin: 0 0 8px; font-family: var(--font-display); letter-spacing: -0.01em; }
+      .pay-card .bal-row { border-bottom: 0; }
+      .pay-card .empty-state { padding-top: 4px; }
+      .widget.pay-card + .widget { margin-top: 0; }
+      /* v6.5 · Home "v3": Leave and Timelogs as two half-width white cards (Figma "Half cards") */
+      .home-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 16px; }
+      .home-card { position: relative; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-float); padding: 16px 12px 16px; display: flex; flex-direction: column; text-align: left; min-width: 0; }
+      .home-card .hc-body { display: block; text-align: left; width: 100%; flex: 1; }
+      .home-card h2 { font-family: var(--font-display); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; line-height: 22px; margin: 0 0 8px; }
+      .home-card .l, .home-card .u { display: block; font-size: 14px; line-height: 20px; color: var(--ink-500); }
+      .home-card .n { display: block; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 34px; letter-spacing: -0.02em; margin: -1px 0 -2px; font-variant-numeric: tabular-nums; }
+      .home-card .hc-btn { margin-top: 14px; height: 28px; border-radius: var(--r-pill); background: var(--slate); color: #fff; font-size: 13px; font-weight: 500; width: 100%; }
+      .home-card .hc-btn:active { background: var(--ink-900); }
+      .home-card .hc-body:active { opacity: .7; }
       .seg.sm { margin-top: 10px; }
     </style>
   </head>
@@ -634,6 +643,7 @@
       };
       const ico = (n, cls = "") => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
       const CHEV = ico("chev", "chev");
+      const DONATE_ICO = () => $('.nav-item[data-nav="donate"] .ico-line').outerHTML.replace('class="ico-line"', ""); // v6.5 · same glyph as the Donate nav item
 
       // ---------- dates ----------
       const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -736,6 +746,9 @@
       const S = {
         route: "home",
         payTab: "my", payIdx: 0, payOpen: new Set(), payRange: "3M", masked: true,
+        // v6 · Home colour variant: "orange" (default, Figma "Home — Alternative (orange)") | "white" (plain grey Home);
+        // My account › Display › Orange Home, ?home=white|orange, or ACT.homeOrange()
+        homeTone: (() => { const q = new URLSearchParams(location.search).get("home"); if (q) return q === "white" ? "white" : "orange"; try { return localStorage.getItem("ipr-home-tone") === "white" ? "white" : "orange"; } catch { return "orange"; } })(),
         // v5.5 · no drafts. pending → approved | declined | withdrawn; approved leave becomes "closed" once it's paid.
         leaveTab: "requests", leaveType: "all", calMonth: D(2026, 6, 1),
         requests: [
@@ -834,7 +847,7 @@
         return `<${tag} class="row ${cls}" ${attrs}>${lead ? `<span class="lead">${lead}</span>` : ""}<span class="main"><span class="t">${t}</span>${s ? `<span class="s">${s}</span>` : ""}</span>${chipH || ""}${v != null ? `<span class="v">${v}${vs ? `<small>${vs}</small>` : ""}</span>` : ""}${after || ""}${chev ? CHEV : ""}</${tag}>`;
       }
       const swipe = (inner, kind, id) => `<div class="swipe" data-kind="${kind}" data-id="${id}"><button class="swipe-del" data-act="swipeDel" data-kind="${kind}" data-id="${id}">Delete</button>${inner}</div>`;
-      const TICK = `<span style="color:var(--brand-600);margin-left:4px">${ico("check").replace("<svg", '<svg width="20" height="20" stroke="currentColor" fill="none" stroke-width="2.4"')}</span>`;
+      const TICK = `<span style="color:var(--success-500);margin-left:4px;display:inline-flex">${ico("check").replace("<svg", '<svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"')}</span>`; // v6.5 · green 24px tick (Figma Option row)
       // v5.5 · picker: dropdown trigger. Pass `arrows: [prevAct, nextAct, prevDisabled, nextDisabled]` for the ‹ › variant.
       function picker({ value, meta = "", act, data = "", label = "", arrows }) {
         const btn = `<button class="picker" data-act="${act}" ${data} aria-haspopup="dialog"${label ? ` aria-label="${label}: ${value}"` : ""}><span class="pv">${value}</span>${meta ? `<span class="pm">${meta}</span>` : ""}${ico("down")}</button>`;
@@ -846,27 +859,38 @@
       // v5.5 · header action button: icon + label (replaces bare icon buttons / text links on top-level screens)
       const headBtn = (icon, label, act, data = "") => `<button class="btn-chip" data-act="${act}" ${data}>${ico(icon)}${label}</button>`;
       const filterDrop = (label, act, active) => `<button class="pill drop" aria-pressed="${!!active}" data-act="${act}" aria-haspopup="dialog">${label}${ico("down")}</button>`;
-      const emptyState = (icon, title, text, cta = "", sm) => `<div class="empty-state ${sm ? "sm" : ""}"><div class="ei">${ico(icon)}</div><h3>${title}</h3><p>${text}</p>${cta}</div>`;
+      // v6.5 · colour empty-state illustrations exported from the designer's Figma (72px, own grey circle); other keys keep the line icon
+      const ILL = { doc: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIiIGhlaWdodD0iNzIiIHZpZXdCb3g9IjAgMCA3MiA3MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcyIiBoZWlnaHQ9IjcyIiByeD0iMzYiIGZpbGw9IiNFRUVFRUUiLz4KPHBhdGggZD0iTTUwLjk4MjIgNTYuOTkxOUgyMC4xMDc5QzE5LjM3MTQgNTYuOTkxOSAxOC43NzQ2IDU2LjM3MDIgMTguNzc0NiA1NS42MDI5VjM0LjE3MjVDMTguNzc0NiAzMy4zODA1IDE5LjM5MDkgMzIuNzM4NSAyMC4xNTExIDMyLjczODVINTEuOTAxNUM1Mi42NjI1IDMyLjczODUgNTMuMjc4OCAzMy4zODA1IDUzLjI3ODggMzQuMTcyNVY1NC41OTk0QzUzLjI3ODggNTUuOTIwOSA1Mi4yNTA3IDU2Ljk5MTkgNTAuOTgyMiA1Ni45OTE5WiIgZmlsbD0iIzAwOURENiIvPgo8cGF0aCBkPSJNNTEuNTMwMiAxNi41MjU3QzUxLjUzMDIgMTUuNjgzNSA1MC44NTkyIDE1LjAwMDIgNTAuMDMxMyAxNS4wMDAySDIyLjgyNzNDMjEuOTk5NCAxNS4wMDAyIDIxLjMyOTEgMTUuNjgzNSAyMS4zMjkxIDE2LjUyNTdWNTUuNTAwOEMyMS4zMjkxIDU2LjMyODggMjEuOTczNSA1NyAyMi43NjkgNTdINTAuMDMxM0M1MC43ODY1IDU3IDUxLjUzMDIgNTYuMzc3NSA1MS41MzAyIDU1LjYwODhWMTYuNTI1N1oiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik01MC4wMzEzIDE1SDQ5LjMxMTRDNTAuMTM4NiAxNSA1MC44MTAzIDE1LjY3MiA1MC44MTAzIDE2LjUxNDJWNTUuNTg1M0M1MC44MTAzIDU2LjM1MzMgNTAuMDY1OSA1Ni45NzY1IDQ5LjMxMTQgNTYuOTc2NUg1MC4wMzEzQzUwLjc4NjUgNTYuOTc2NSA1MS41MzAyIDU2LjM1MzMgNTEuNTMwMiA1NS41ODUzVjE2LjUxNDJDNTEuNTMwMiAxNS42NzIgNTAuODU5MyAxNSA1MC4wMzEzIDE1WiIgZmlsbD0iI0Q4REZFMSIvPgo8cGF0aCBkPSJNNDIuNjA3NSAzNy40QzQyLjEwNzEgMzcuNCA0MS42NTA3IDM3LjEwMjMgNDEuNDMxOCAzNi42MzM1TDQwLjQ3NzkgMzQuNTg2OEM0MC4yNTk3IDM0LjExODEgMzkuODAyNiAzMy44MjAzIDM5LjMwMjIgMzMuODIwM0gzMC43OTY3QzMwLjA3NTQgMzMuODIwMyAyOS40OTA4IDM0LjQyOTMgMjkuNDkwOCAzNS4xODAxVjM3LjRINDIuNjA3NVoiIGZpbGw9IiMwMDlERDYiLz4KPHBhdGggZD0iTTQ5LjI4MDggNTUuNTU1NFYzNy42NDU1QzQ5LjI4MDggMzYuOTAwOCA0OC42OTc3IDM2LjI5NyA0Ny45Nzg0IDM2LjI5N0gzMS4xMThDMzAuNjE3NiAzNi4yOTcgMzAuMTYxMiAzNi4wMDE1IDI5Ljk0MjMgMzUuNTM1TDI4Ljk4ODQgMzMuNDk5NUMyOC43Njk1IDMzLjAzMzggMjguMzEzMSAzMi43Mzc1IDI3LjgxMjcgMzIuNzM3NUgyMC4wMjc5QzE5LjMwNjUgMzIuNzM3NSAxOC43MjEyIDMzLjM0MjggMTguNzIxMiAzNC4wODk4VjU1LjY0MzJDMTguNzIxMiA1Ni4zODc5IDE5LjMwNDQgNTYuOTkxNyAyMC4wMjM2IDU2Ljk5MTdINTAuNDA2OEM0OS43NjM5IDU2Ljg1MTQgNDkuMjgwOCA1Ni4yNjE5IDQ5LjI4MDggNTUuNTU1NFoiIGZpbGw9IiM2NkM0RTgiLz4KPC9zdmc+Cg==", cal: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIiIGhlaWdodD0iNzIiIHZpZXdCb3g9IjAgMCA3MiA3MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CjxyZWN0IHdpZHRoPSI3MiIgaGVpZ2h0PSI3MiIgcng9IjM2IiBmaWxsPSIjRUVFRUVFIi8+CjxyZWN0IHg9IjE2LjA4NTQiIHk9IjE5IiB3aWR0aD0iMzkuOTc0NiIgaGVpZ2h0PSIzNC44MTY2IiBmaWxsPSJ1cmwoI3BhdHRlcm4wXzIxNjZfMjMwNykiLz4KPHBhdGggZD0iTTE2LjY2NTkgMjguMjczOVY1Mi4xMTc5QzE2LjY2NTkgNTIuNTI1NSAxNy4wMTk5IDUyLjg1NjcgMTcuNDU3IDUyLjg1NjdINTQuNTYyNUM1NC45OTk2IDUyLjg1NjcgNTUuMzU0MiA1Mi41MjU1IDU1LjM1NDIgNTIuMTE3OVYyOC4yNzM5SDE2LjY2NTlaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNTIuNzc5OCAyMi4wNzMySDQ5LjExMTJWMjUuNzYwNkM0OS4xMTEyIDI2Ljk1OTIgNDguMTQwMiAyNy45MzA4IDQ2Ljk0MTYgMjcuOTMwOEM0NS43NDMgMjcuOTMwOCA0NC43NzE0IDI2Ljk1OTIgNDQuNzcxNCAyNS43NjA2VjIyLjA3MzJIMzcuODI2N1YyNS43NjA2QzM3LjgyNjcgMjYuOTU5MiAzNi44NTUxIDI3LjkzMDggMzUuNjU3MiAyNy45MzA4QzM0LjQ1ODYgMjcuOTMwOCAzMy40ODY5IDI2Ljk1OTIgMzMuNDg2OSAyNS43NjA2VjIyLjA3MzJIMjYuNTQyM1YyNS43NjA2QzI2LjU0MjMgMjYuOTU5MiAyNS41NzA3IDI3LjkzMDggMjQuMzcyMSAyNy45MzA4QzIzLjE3NDEgMjcuOTMwOCAyMi4yMDI1IDI2Ljk1OTIgMjIuMjAyNSAyNS43NjA2VjIyLjA3MzJIMTkuMjM3OUMxNy44MzU2IDIyLjA3MzIgMTYuNjk4OSAyMy4yMDk5IDE2LjY5ODkgMjQuNjEyM1YyOS42NjcxSDU1LjMxODlWMjQuNjEyM0M1NS4zMTg5IDIzLjIwOTkgNTQuMTgyMiAyMi4wNzMyIDUyLjc3OTggMjIuMDczMloiIGZpbGw9IiMwMDlERDYiLz4KPHBhdGggZD0iTTQ2Ljk0MTUgMjcuNDI4M0M0Ni4wMTgyIDI3LjQyODMgNDUuMjY5NiAyNi42Nzk3IDQ1LjI2OTYgMjUuNzU2NFYyMC45MjkyQzQ1LjI2OTYgMjAuMDA1OSA0Ni4wMTgyIDE5LjI1NzMgNDYuOTQxNSAxOS4yNTczQzQ3Ljg2NDcgMTkuMjU3MyA0OC42MTMzIDIwLjAwNTkgNDguNjEzMyAyMC45MjkyVjI1Ljc1NjRDNDguNjEzMyAyNi42Nzk3IDQ3Ljg2NDcgMjcuNDI4MyA0Ni45NDE1IDI3LjQyODNaIiBmaWxsPSIjNEE0RjU0Ii8+CjxwYXRoIGQ9Ik0zNS42MzM4IDI3LjQyODNDMzQuNzEwNiAyNy40MjgzIDMzLjk2MiAyNi42Nzk3IDMzLjk2MiAyNS43NTY0VjIwLjkyOTJDMzMuOTYyIDIwLjAwNTkgMzQuNzEwNiAxOS4yNTczIDM1LjYzMzggMTkuMjU3M0MzNi41NTcxIDE5LjI1NzMgMzcuMzA1NyAyMC4wMDU5IDM3LjMwNTcgMjAuOTI5MlYyNS43NTY0QzM3LjMwNTcgMjYuNjc5NyAzNi41NTcxIDI3LjQyODMgMzUuNjMzOCAyNy40MjgzWiIgZmlsbD0iIzRBNEY1NCIvPgo8cGF0aCBkPSJNMjQuMzcyNSAyNy40MjgzQzIzLjQ0OTIgMjcuNDI4MyAyMi43MDA3IDI2LjY3OTcgMjIuNzAwNyAyNS43NTY0VjIwLjkyOTJDMjIuNzAwNyAyMC4wMDU5IDIzLjQ0OTIgMTkuMjU3MyAyNC4zNzI1IDE5LjI1NzNDMjUuMjk1OCAxOS4yNTczIDI2LjA0NDMgMjAuMDA1OSAyNi4wNDQzIDIwLjkyOTJWMjUuNzU2NEMyNi4wNDQzIDI2LjY3OTcgMjUuMjk1OCAyNy40MjgzIDI0LjM3MjUgMjcuNDI4M1oiIGZpbGw9IiM0QTRGNTQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zOCAzM0MzOC41NTI1IDMzIDM5IDMzLjQ0OCAzOSAzNFYzOEMzOSAzOC41NTI1IDM4LjU1MjUgMzkgMzggMzlIMzRDMzMuNDQ3NSAzOSAzMyAzOC41NTI1IDMzIDM4VjM0QzMzIDMzLjQ0OCAzMy40NDc1IDMzIDM0IDMzSDM4WiIgZmlsbD0iI0Q4REZFMSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTI1IDMzQzI1LjU1MjUgMzMgMjYgMzMuNDQ4IDI2IDM0VjM4QzI2IDM4LjU1MjUgMjUuNTUyNSAzOSAyNSAzOUgyMUMyMC40NDc1IDM5IDIwIDM4LjU1MjUgMjAgMzhWMzRDMjAgMzMuNDQ4IDIwLjQ0NzUgMzMgMjEgMzNIMjVaIiBmaWxsPSIjRDhERkUxIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjUgNDNDMjUuNTUyNSA0MyAyNiA0My40NDggMjYgNDRWNDhDMjYgNDguNTUyNSAyNS41NTI1IDQ5IDI1IDQ5SDIxQzIwLjQ0NzUgNDkgMjAgNDguNTUyNSAyMCA0OFY0NEMyMCA0My40NDggMjAuNDQ3NSA0MyAyMSA0M0gyNVoiIGZpbGw9IiNEOERGRTEiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01MSA0M0M1MS41NTI1IDQzIDUyIDQzLjQ0OCA1MiA0NFY0OEM1MiA0OC41NTI1IDUxLjU1MjUgNDkgNTEgNDlINDdDNDYuNDQ3NSA0OSA0NiA0OC41NTI1IDQ2IDQ4VjQ0QzQ2IDQzLjQ0OCA0Ni40NDc1IDQzIDQ3IDQzSDUxWiIgZmlsbD0iI0Q4REZFMSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTM4IDQzQzM4LjU1MjUgNDMgMzkgNDMuNDQ4IDM5IDQ0VjQ4QzM5IDQ4LjU1MjUgMzguNTUyNSA0OSAzOCA0OUgzNEMzMy40NDc1IDQ5IDMzIDQ4LjU1MjUgMzMgNDhWNDRDMzMgNDMuNDQ4IDMzLjQ0NzUgNDMgMzQgNDNIMzhaIiBmaWxsPSIjRDhERkUxIi8+CjxkZWZzPgo8cGF0dGVybiBpZD0icGF0dGVybjBfMjE2Nl8yMzA3IiBwYXR0ZXJuQ29udGVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgd2lkdGg9IjEiIGhlaWdodD0iMSI+Cjx1c2UgeGxpbms6aHJlZj0iI2ltYWdlMF8yMTY2XzIzMDciIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTYxMjkgMC4wMTg1MTg1KSIvPgo8L3BhdHRlcm4+CjxpbWFnZSBpZD0iaW1hZ2UwXzIxNjZfMjMwNyIgd2lkdGg9IjYyIiBoZWlnaHQ9IjU0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB4bGluazpocmVmPSJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUQ0QUFBQTJDQVlBQUFDZmtpb3BBQUFBQ1hCSVdYTUFBQTdFQUFBT3hBR1ZLdzRiQUFBQ0pVbEVRVlJvZ2UyYjBYYURJQkJFcjJKTTJ2Ly8yS2FOMmdkMzZrb1RoZFkrTkREbmNEUWtEak1MdS9oQUd0TFFBQzNRMlJWZ0FHN0FaQzBGTFJDTXB3Rkc0eGd5T0E3UkVoSUhDMEFQdkZqcmJkQ0pXWHpLWUExd3N1ZGZnWXVKbjhnTDNoRmE2QklGQitCc2duc2pEOHlSSG16QVBXaVdYcGhOdHl5ekpJNDkwVWRwV1Jsdm9xdnY3NWhucTdlcm9uc0NQdGlmTVFrK3VkWmFmdzljVGZRZXZCYTFWQzJyZmhsWDNnUW55QWVnWThrcDlXc0dlOUpTeHVlbGVIek9TMWdjK0JpblRDM2lIWEVyUzBWR0QvV3Npd1lzU3lkRW92VGNoZStCdW9lUkpiQ2VvM1ZqNy9HTUxLc25SOHZJdkJyZXJRMGQ2NXc1czFSY1FWVzNaUTBKOE8wUkp1T1JjSStXZVJaOXRYOEVyeVUydnFWRnU4ZWJmYjVxQ1Yrc25WbEhiSExYZTRJVURBWHdrZWl0d2hVditUakFncy9SWEMwcWdEQUg0S1lmeFFVbkZyWTFDMDNVdG42emhUME9kcjdiMHFKNytReSt5S1NJKzgvd0s2dnhobjhhNlNNQ2x2cDg2dXJiKzc1SmZZRnAzYjBuOEZ0VENvZmZMZ1c5ZGVYdy9FWUxzRjlGL1VCK0VCV0xsUHdXNG5UUy9iMWcvS1dXckJtUHR3Y1JoK2p6RmtjcytrdkVuZjYvMUFLa3Y2dm45T2Z3SE1IeEU1NkhlK2JUb3hvdkRkVjRhYWpHUzBNMVhocXE4ZEpRalplR2FydzBWT09sb1JvdkRkVjRhYWpHUzBNMVhocXE4ZEpRalplR2FydzBWT09sb1JvdkRUS2Vla2orditQcldHakhmTTVVUjVxZkdmNFBBV1BIY3FyWG54ZDdSbWh5cjhEZy96bnd6S1lGbWI5OUFwSk5iYTc2S1Z5cUFBQUFBRWxGVGtTdVFtQ0MiLz4KPC9kZWZzPgo8L3N2Zz4K", heart: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIiIGhlaWdodD0iNzIiIHZpZXdCb3g9IjAgMCA3MiA3MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjcyIiBoZWlnaHQ9IjcyIiByeD0iMzYiIGZpbGw9IiNFRUVFRUUiLz4KPHBhdGggZD0iTTM1Ljk4NTQgMTkuMDAwN0MzMC42Mjg4IDE5LjAwMDcgMjYuMjg2NSAyMy4zNTAzIDI2LjI4NjUgMjguNzE1MUMyNi4yODY1IDM0LjA3OTggMzAuNjI4OCAzOC40Mjk0IDM1Ljk4NTQgMzguNDI5NEM0MS4zNDIxIDM4LjQyOTQgNDUuNjg0NCAzNC4wNzk4IDQ1LjY4NDQgMjguNzE1MUM0NS42ODQ0IDIzLjM1MDMgNDEuMzQyMSAxOS4wMDA3IDM1Ljk4NTQgMTkuMDAwN1oiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0zNi4wMDA4IDM3LjQ0OTlDMzEuMTc4NCAzNy40NDk5IDI3LjI2OTIgMzMuNTM0MiAyNy4yNjkyIDI4LjcwNDVDMjcuMjY5MiAyMy44NzQ5IDMxLjE3ODQgMTkuOTU5MiAzNi4wMDA4IDE5Ljk1OTJDNDAuODIzMSAxOS45NTkyIDQ0LjczMjMgMjMuODc0OSA0NC43MzIzIDI4LjcwNDVDNDQuNzMyMyAzMy41MzQyIDQwLjgyMzEgMzcuNDQ5OSAzNi4wMDA4IDM3LjQ0OTlaTTM2LjAwMDggMTkuMDAwN0MzMC42NDk4IDE5LjAwMDcgMjYuMzExNSAyMy4zNDU1IDI2LjMxMTUgMjguNzA0NUMyNi4zMTE1IDM0LjA2NDQgMzAuNjQ5OCAzOC40MDkxIDM2LjAwMDggMzguNDA5MUM0MS4zNTE3IDM4LjQwOTEgNDUuNjkgMzQuMDY0NCA0NS42OSAyOC43MDQ1QzQ1LjY5IDIzLjM0NTUgNDEuMzUxNyAxOS4wMDA3IDM2LjAwMDggMTkuMDAwN1oiIGZpbGw9IiNGRjZEMEUiLz4KPHBhdGggZD0iTTQxLjIwMDMgMjkuNTkzMkM0MC43MDk3IDI5LjU5MzIgNDAuMzExNCAyOS4xOTU3IDQwLjMxMTQgMjguNzA0M0M0MC4zMTE0IDI4LjIxMzcgNDAuNzA5NyAyNy44MTYzIDQxLjIwMDMgMjcuODE2M0M0MS42OTA4IDI3LjgxNjMgNDIuMDg5MSAyOC4yMTM3IDQyLjA4OTEgMjguNzA0M0M0Mi4wODkxIDI5LjE5NTcgNDEuNjkwOCAyOS41OTMyIDQxLjIwMDMgMjkuNTkzMlpNMzguOTkxMSAzMS4xNjI4QzM4LjkxMjUgMzEuNDE3OCAzOC43ODMgMzEuNjU0MiAzOC42MDA5IDMxLjg3MDRDMzguNDE4NyAzMi4wODczIDM4LjE4MzIgMzIuMjczNSAzNy44OTM0IDMyLjQyOTdDMzcuNjAxOSAzMi41ODUyIDM3LjI0NDEgMzIuNjk4NSAzNi44MTk5IDMyLjc2NzNWMzQuMzUzMkgzNS4xODIyVjMyLjgwNjJDMzQuNTUgMzIuNzU0NCAzNC4wMzYgMzIuNjU3MiAzMy42NDE3IDMyLjUxMzFDMzMuMjQ3NSAzMi4zNzA3IDMyLjk1NDQgMzIuMjUxNyAzMi43NjQyIDMyLjE1NjFMMzMuMzIyOCAzMC42NjA5QzMzLjYyNjMgMzAuODA4MyAzMy45ODgyIDMwLjk0MjYgMzQuNDA5MSAzMS4wNjQxQzM0LjgyOTMgMzEuMTg1NSAzNS4yNzM3IDMxLjI0NjIgMzUuNzQwOCAzMS4yNDYyQzM2LjI3MDMgMzEuMjQ2MiAzNi42MzIxIDMxLjE3NSAzNi44MjY0IDMxLjAzMTdDMzcuMDIxNSAzMC44ODg0IDM3LjExOTQgMzAuNjg2OCAzNy4xMTk0IDMwLjQyN0MzNy4xMTk0IDMwLjI2MjYgMzcuMDgwNiAzMC4xMjE4IDM3LjAwMjEgMzAuMDA0NEMzNi45MjM1IDI5Ljg4NzggMzYuODExOCAyOS43ODEgMzYuNjYzNyAyOS42ODYzQzM2LjUxNjMgMjkuNTkwNyAzNi4zMzAyIDI5LjQ5NzYgMzYuMTA1MSAyOS40MDdDMzUuODgwMSAyOS4zMTU1IDM1LjYxOTQgMjkuMjE3NSAzNS4zMjU1IDI5LjExMzlDMzUuMDM5IDI5LjAxMDMgMzQuNzU5NyAyOC44OTU0IDM0LjQ4NjEgMjguNzY5MUMzNC4yMTMyIDI4LjY0NDQgMzMuOTY3MSAyOC40ODk4IDMzLjc0NjEgMjguMzA4NEMzMy41MjQzIDI4LjEyNjMgMzMuMzQ3MSAyNy45MDI5IDMzLjIxMjcgMjcuNjM4MkMzMy4wNzgzIDI3LjM3NDMgMzMuMDExOSAyNy4wNTYxIDMzLjAxMTkgMjYuNjgyOUMzMy4wMTE5IDI2LjM5NzIgMzMuMDUxNiAyNi4xMjE5IDMzLjEzNDEgMjUuODU3MkMzMy4yMTY3IDI1LjU5MzMgMzMuMzQ0NiAyNS4zNTI5IDMzLjUxODcgMjUuMTM1OUMzMy42OTE5IDI0LjkxOTggMzMuOTE2MSAyNC43MzUyIDM0LjE5NDYgMjQuNTgzOEMzNC40NzE1IDI0LjQzMTYgMzQuODAxIDI0LjMyMTUgMzUuMTgyMiAyNC4yNTE5VjIyLjg0ODJIMzYuODE5OVYyNC4yMDAxQzM3LjI3MDggMjQuMjQzIDM3LjY1OTQgMjQuMzA4NiAzNy45ODQgMjQuMzk1MkMzOC4zMDg2IDI0LjQ4MTggMzguNTY2OSAyNC41Njg0IDM4Ljc1NzEgMjQuNjU1MUwzOC4zNTQgMjYuMjE1QzM4LjA2ODIgMjYuMDkzNiAzNy43MzYzIDI1Ljk5IDM3LjM1OTkgMjUuOTAyNUMzNi45ODM0IDI1LjgxNjcgMzYuNTg2OCAyNS43NzMgMzYuMTcwNyAyNS43NzNDMzUuNzUzOCAyNS43NzMgMzUuNDU1OSAyNS44NDI2IDM1LjI3MzcgMjUuOTgxMUMzNS4wOTE2IDI2LjExOTUgMzUuMDAwOSAyNi4zMDE2IDM1LjAwMDkgMjYuNTI2N0MzNS4wMDA5IDI2LjY2NTkgMzUuMDI3NiAyNi43ODQ5IDM1LjA4NDMgMjYuODg0NUMzNS4xNDEgMjYuOTg0MSAzNS4yMyAyNy4wNzMxIDM1LjM1MDYgMjcuMTUwOEMzNS40NzIxIDI3LjIyOTMgMzUuNjIxOCAyNy4zMDU0IDM1Ljc5OTEgMjcuMzc4M0MzNS45NzcyIDI3LjQ1MjggMzYuMTkxNyAyNy41MzI5IDM2LjQ0MzUgMjcuNjE5NUMzNi44MjQ4IDI3Ljc1ODggMzcuMTc3NyAyNy45MTEgMzcuNTAyNCAyOC4wNzYxQzM3LjgyNyAyOC4yNDEzIDM4LjEwODcgMjguNDI5OSAzOC4zNDgzIDI4LjY0MTJDMzguNTg2MyAyOC44NTQxIDM4Ljc3MjUgMjkuMTAzNCAzOC45MDY5IDI5LjM4OTJDMzkuMDQxMyAyOS42NzQxIDM5LjEwODUgMzAuMDA4NSAzOS4xMDg1IDMwLjM4ODlDMzkuMTA4NSAzMC42NDk2IDM5LjA2OTYgMzAuOTA3IDM4Ljk5MTEgMzEuMTYyOFpNMzAuNzg0OSAyOS41OTMyQzMwLjI5NDMgMjkuNTkzMiAyOS44OTY4IDI5LjE5NTcgMjkuODk2OCAyOC43MDQzQzI5Ljg5NjggMjguMjEzNyAzMC4yOTQzIDI3LjgxNjMgMzAuNzg0OSAyNy44MTYzQzMxLjI3NjMgMjcuODE2MyAzMS42NzM4IDI4LjIxMzcgMzEuNjczOCAyOC43MDQzQzMxLjY3MzggMjkuMTk1NyAzMS4yNzYzIDI5LjU5MzIgMzAuNzg0OSAyOS41OTMyWk0zNi4wMDA3IDIxLjI5OTZDMzEuOTE3NCAyMS4yOTk2IDI4LjYwNzMgMjQuNjE1NCAyOC42MDczIDI4LjcwNTFDMjguNjA3MyAzMi43OTQgMzEuOTE3NCAzNi4xMDk5IDM2LjAwMDcgMzYuMTA5OUM0MC4wODM5IDM2LjEwOTkgNDMuMzk0OSAzMi43OTQgNDMuMzk0OSAyOC43MDUxQzQzLjM5NDkgMjQuNjE1NCA0MC4wODM5IDIxLjI5OTYgMzYuMDAwNyAyMS4yOTk2WiIgZmlsbD0iI0ZGOTAxNSIvPgo8cGF0aCBkPSJNNTUuNDc1MSAyOS40MDQxSDE2LjUyNDlDMTUuNjgyOSAyOS40MDQxIDE1IDMwLjE0MDcgMTUgMzEuMDQ5VjUwLjgwNzlDMTUgNTEuNzE2MiAxNS42ODI5IDUyLjQ1MjEgMTYuNTI0OSA1Mi40NTIxSDU1LjQ3NTFDNTYuMzE3MSA1Mi40NTIxIDU3IDUxLjcxNjIgNTcgNTAuODA3OVYzMS4wNDlDNTcgMzAuMTQwNyA1Ni4zMTcxIDI5LjQwNDEgNTUuNDc1MSAyOS40MDQxWiIgZmlsbD0iIzY2QzRFOCIvPgo8cGF0aCBkPSJNNTUuNDc1MSAyOS40MDQxSDU1LjI1MjJWNTIuNDUyMUg1NS40NzUxQzU2LjMxNzEgNTIuNDUyMSA1NyA1MS43MTYyIDU3IDUwLjgwNzlWMzEuMDQ5QzU3IDMwLjE0MDcgNTYuMzE3MSAyOS40MDQxIDU1LjQ3NTEgMjkuNDA0MVoiIGZpbGw9IiMwMDlERDYiLz4KPHBhdGggZD0iTTQ0LjQ5NjkgNDYuMzU3NUgyOC41Njg0QzI4LjI5NDQgNDYuMzU3NSAyOC4wNzI0IDQ1Ljk0MjIgMjguMDcyNCA0NS40Mjk4VjM2LjQyNjNDMjguMDcyNCAzNS45MTM4IDI4LjI5NDQgMzUuNDk4NSAyOC41Njg0IDM1LjQ5ODVINDQuNDk2OUM0NC43NzA4IDM1LjQ5ODUgNDQuOTkzMyAzNS45MTM4IDQ0Ljk5MzMgMzYuNDI2M1Y0NS40Mjk4QzQ0Ljk5MzMgNDUuOTQyMiA0NC43NzA4IDQ2LjM1NzUgNDQuNDk2OSA0Ni4zNTc1WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==" };
+      const emptyState = (icon, title, text, cta = "", sm) => `<div class="empty-state ${sm ? "sm" : ""}">${ILL[icon] ? `<div class="ei ill"><img src="${ILL[icon]}" alt=""></div>` : `<div class="ei">${ico(icon)}</div>`}<h3>${title}</h3><p>${text}</p>${cta}</div>`;
 
       // ---------------- HOME ----------------
       // v6 · one Home (the former "Alternative Home"; the old list Home and its toggle were removed):
       // latest payslip (orange hero) → Leave → Timelogs → Away today. Each section's action is a "+" pill top-right.
-      const HOME_WIDGETS = ["leave", "timelogs", "away"]; // the payslip hero sits above these, under any notice
+      const HOME_WIDGETS = ["cards", "away"]; // v6.5 · Home "v3": Leave | Timelogs half cards, then Away today (the payslip card sits above, under any notice)
       const homeAct = (label, act, data = "") => `<button class="pill sec-pill" data-act="${act}" ${data}>${ico("plus").replace("<svg", '<svg width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.2"')} ${label}</button>`;
       const backOn = (end) => { let d = addDays(end, 1); while (isWeekend(d) || isHoliday(d)) d = addDays(d, 1); return d; };
       function widget(id) {
         const w = (title, right, body) => `<section class="widget" data-w="${id}">${sec(title, right)}${body}</section>`;
         const np = nextPay();
         if (id === "payslip") {
-          const p = PAYS[0];
-          if (!p) return w("Latest payslip", "", emptyState("doc", "No payslips yet", `Your first payslip will show here after payday on ${fd(np, { dow: true })}.`, "", true));
+          const p = PAYS[0], card = S.homeTone === "orange"; // orange Home: the same content in a white floating card
+          const empty = emptyState("doc", "No payslips yet", `Your first payslip will show here after payday on ${fd(np, { dow: true })}.`, "", true);
+          if (!p) return card ? `<section class="widget pay-card" data-w="payslip"><h2>Latest payslip</h2>${empty}</section>` : w("Latest payslip", "", empty);
           // v6 · exactly like Leave / Timelogs: title, then label / big number / detail line, with the show/hide eye far
           // right where "Balances ›" is; tapping the row opens the payslip.
-          return `<section class="widget pay-sec" data-w="payslip">${sec("Latest payslip")}
+          return `<section class="widget pay-sec${card ? " pay-card" : ""}" data-w="payslip">${card ? "<h2>Latest payslip</h2>" : sec("Latest payslip")}
             <div class="bal-row" role="button" tabindex="0" data-act="openPay" data-i="0" aria-label="Open payslip for ${fd(p.date, { dow: true, y: true })}">
               <span><span class="l">Take-home pay</span><span class="n" ${S.masked ? 'aria-label="Amount hidden"' : ""}>${S.masked ? "$********" : money(p.net)}</span><span class="u">Paid on ${fd(p.date)}</span></span>
               <button class="icon-btn plain eye-btn" data-act="mask" aria-label="${S.masked ? "Show" : "Hide"} take-home pay">${ico(S.masked ? "eye" : "eyeoff")}</button>
             </div>
+          </section>`;
+        }
+        if (id === "cards") { // v6.5 · Figma "Home · v6 - (v3)": two half-width white cards, each with a slate button
+          const cur = PERIODS.find((p) => TODAY >= p.start && TODAY <= p.end) || PERIODS[PERIODS.length - 1], st = periodStats(cur);
+          const card = (title, body, label, attrs, btn, btnAttrs) => `<div class="home-card"><h2>${title}</h2><button class="hc-body" ${attrs}>${body}</button><button class="hc-btn" ${btnAttrs}>${btn}</button></div>`;
+          return `<section class="widget home-cards" data-w="cards">
+            ${card("Leave", `<span class="l">Annual leave</span><span class="n">${num(annualAvail())}</span><span class="u">days available</span>`, "", `data-act="goBalances" aria-label="Annual leave ${num(annualAvail())} days available. Open leave balances"`, "Request leave", `data-act="requestLeave"`)}
+            ${card("Timelogs", `<span class="l">${st.drafts ? "Drafts to send" : "This period"}</span><span class="n">${st.drafts ? st.drafts : num(st.hrs)}</span><span class="u">${st.drafts ? `Totalling ${num(st.draftHrs)} hours` : "hours · nothing to send"}</span>`, "", `data-go="timelogs" aria-label="Open timelogs"`, "Add timelog", `data-act="addTime" data-v="${iso(TODAY)}"`)}
           </section>`;
         }
         if (id === "leave") return w("Leave", homeAct("Request leave", "requestLeave"), `<button class="bal-row" data-act="goBalances" aria-label="Annual leave ${num(annualAvail())} days available. Open leave balances">
@@ -881,7 +905,7 @@
         }
         if (id === "away") {
           const away = S.team.filter((t) => TODAY >= t.start && TODAY <= t.end);
-          return w("Away today", "", `<div class="list">${away.length ? away.map((t) => row({ t: t.name, s: `${sameDay(t.start, t.end) ? "All day" : range(t.start, t.end)} · back ${fd(backOn(t.end), { dow: true })}`, lead: mono(t.name, personColour(t.name)), act: "goCalendar" })).join("") : `<div class="empty" style="padding:14px 0 6px;text-align:left">Everyone is in today.</div>`}</div>`);
+          return w("Away today", `<button class="sec-link" data-act="goCalendar">Calendar ${ico("chev")}</button>`, `<div class="list">${away.length ? away.map((t) => row({ t: t.name, s: `${sameDay(t.start, t.end) ? "All day" : range(t.start, t.end)} · back ${fd(backOn(t.end), { dow: true })}`, lead: mono(t.name, personColour(t.name)), act: "goCalendar" })).join("") : `<div class="empty" style="padding:14px 0 6px;text-align:left">Everyone is in today.</div>`}</div>`);
         }
         return "";
       }
@@ -1096,7 +1120,7 @@
         // v6 · one stat, then Active and Ended sections (replaces the All / Recurring / One off pills)
         if (!S.donations.length) return `<div class="page">${topHead("Donate", headBtn("plus", "Add donation", "addDonation"))}
           ${emptyState("heart", "You're not giving through payroll yet", "Give to a charity straight from your pay. A third comes back to you as a tax credit in the same pay.", `<button class="btn primary" data-act="addDonation">Choose a charity</button>`)}
-          <div class="list">${row({ t: "How payroll giving works", cls: "link", act: "givingInfo", lead: `<span class="ico">${ico("heart")}</span>` })}</div></div>`;
+          <div class="list">${row({ t: "How payroll giving works", cls: "link", act: "givingInfo", lead: `<span class="ico don">${DONATE_ICO()}</span>` })}</div></div>`;
         const drow = (d) => { const c = charity(d.charity); return row({ t: c.name, s: donSub(d), v: money(d.amt), vs: d.status === "stopped" ? "" : `${money(donCredit(d.amt))} back`, lead: mono(c.name, c.c), act: "openDon", data: `data-id="${d.id}"`, cls: d.status === "stopped" ? "dim" : "" }); };
         const active = S.donations.filter((d) => d.status === "active"), ended = S.donations.filter((d) => d.status !== "active");
         const given = 734.12 + S.donations.filter((d) => d.status === "paid").reduce((a, d) => a + d.amt, 0) + 292.06;
@@ -1104,7 +1128,7 @@
           <div class="stats" style="grid-template-columns:1fr"><div><div class="l">Given in 2025–26</div><div class="n">${money(given)}</div></div></div>
           ${active.length ? sec("Active") + `<div class="list">${active.map(drow).join("")}</div>` : ""}
           ${ended.length ? sec("Ended") + `<div class="list">${ended.map(drow).join("")}</div>` : ""}
-          <div class="list">${row({ t: "How payroll giving works", cls: "link", act: "givingInfo", lead: `<span class="ico">${ico("heart")}</span>` })}</div>
+          <div class="list">${row({ t: "How payroll giving works", cls: "link", act: "givingInfo", lead: `<span class="ico don">${DONATE_ICO()}</span>` })}</div>
         </div>`;
       }
 
@@ -1117,11 +1141,11 @@
           <div class="list" style="margin-top:6px">${row({ t: ME.name, s: S.details.email, lead: `<span class="avatar lg">${$(".avatar").innerHTML}</span>`, go: "account/details" })}</div>
           ${g("Security", row({ t: "Change password", go: "account/password" })
             + row({ t: "Two-factor authentication", chipH: S.twofa ? chip("ok", "On") : chip("nudge", "Turn on"), go: "account/2fa" })
-            + `<div class="row"><span class="main"><span class="t">Face ID or PIN to open</span><span class="s">PIN is 12345 in this prototype</span></span>${toggleBtn(S.faceid, "faceid", "Face ID or PIN")}</div>`
-            + row({ t: "Lock app now", act: "lockNow" })
+            + `<div class="row"><span class="main"><span class="t">Lock app</span><span class="s">Ask for your PIN when you open iPayroll</span></span>${toggleBtn(S.faceid, "faceid", "Lock app")}</div>` // v6.5 · one switch (replaces "Face ID or PIN to open" + "Lock app now")
             + row({ t: "Sign-in activity", go: "account/activity" }))}
           ${g("Profile", row({ t: "Personal details", go: "account/details" })
             + `<div class="row"><span class="main"><span class="t">Email me when I've been paid</span></span>${toggleBtn(S.notifPaid, "notif", "Payday email")}</div>`)}
+          ${g("Display", `<div class="row"><span class="main"><span class="t">Orange Home</span><span class="s">Turn off for the plain grey Home</span></span>${toggleBtn(S.homeTone === "orange", "homeOrange", "Orange Home")}</div>`)}
           ${g("About", row({ t: "Privacy policy", go: "account/privacy" }) + row({ t: "Version", v: "2.2.34", chev: false, tag: "div" }))}
           ${g("", row({ t: "Sign out", cls: "danger", act: "signOut", chev: false }))}
         </div>`;
@@ -1178,7 +1202,7 @@
         return `<div class="page">${subHead("Sign-in activity")}
           ${sec("This device")}<div class="list">${row({ t: "iPhone · Christchurch", s: "Active now", lead: `<span class="ico">${ico("phone")}</span>`, chipH: chip("ok", "This device"), chev: false, tag: "div" })}</div>
           ${SIGNINS.map((g) => sec(g.day) + `<div class="list">${g.items.map(([t, s, bad]) => row({ t: bad ? `<span style="color:var(--danger-500)">${t}</span>` : t, s, lead: `<span class="ico ${bad ? "red" : ""}">${ico(bad ? "alert" : "phone")}</span>`, chev: false, tag: "div" })).join("")}</div>`).join("")}
-          <div class="list" style="margin-top:18px">${row({ t: "Not you? Change your password", cls: "link", go: "account/password", chev: false })}${row({ t: "Sign out other devices", cls: "danger", act: "signOutOthers", chev: false })}</div>
+          <div class="list" style="margin-top:18px">${row({ t: "Not you? Change your password", cls: "link", go: "account/password", chev: false })}</div>
         </div>`;
       }
       function scrPrivacy() {
@@ -1213,6 +1237,8 @@
       }
       function paintChrome() {
         const root = S.route.split("/")[0];
+        $(".screen").classList.toggle("home-orange", S.route === "home" && S.homeTone === "orange");
+        $(".screen").classList.toggle("on-account", root === "account"); // v6.5 · no profile icon on the profile screens
         $$(".nav-item").forEach((b) => (b.dataset.nav === root ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current")));
         const dots = { timelogs: periodStats(PERIODS[1]).drafts > 0 }; // v5.5 · no leave drafts, so no Leave dot
         $$(".nav-item").forEach((b) => (dots[b.dataset.nav] ? b.setAttribute("data-dot", "") : b.removeAttribute("data-dot")));
@@ -1622,7 +1648,7 @@
           S.donFilter = "all"; },
         givingInfo: () => openDialog({ title: "Payroll giving", text: "Donations come straight out of your pay before it reaches your bank. For every dollar you give to an approved charity you get a third back as a tax credit in the same pay — no receipts or year-end claim needed.", cancel: "", ok: "Got it" }),
 
-        faceid: () => { S.faceid = !S.faceid; render(); toast(S.faceid ? "Face ID or PIN will be asked when you open iPayroll" : "App lock turned off"); },
+        faceid: () => { S.faceid = !S.faceid; render(); toast(S.faceid ? "App lock on — your PIN is asked when you open iPayroll" : "App lock off", null, "Undo", "info"); },
         notif: () => { S.notifPaid = !S.notifPaid; render(); },
         lockNow: () => showLock(),
         signOut: () => { closeSheet(true); showLogin(); },
@@ -1833,6 +1859,7 @@
       Object.assign(ACT, {
         // v6 · no Prototype settings in My account; simOffline / simEmpty / resetDemo / errHelp stay callable from the console (ACT.simEmpty())
         simOffline: () => { S.offline = !S.offline; render(); toast(S.offline ? "Offline simulation on — saves will fail" : "Back online", null, "", "info"); },
+        homeOrange: () => { S.homeTone = S.homeTone === "orange" ? "white" : "orange"; try { localStorage.setItem("ipr-home-tone", S.homeTone); } catch {} render(); toast(S.homeTone === "orange" ? "Orange Home on" : "Orange Home off", null, "", "info"); },
         simEmpty: () => { setEmpty(!S.empty); render(); toast(S.empty ? "Empty account — every screen shows its empty state" : "Demo data is back", null, "", "info"); },
         resetDemo: () => openDialog({ title: "Reset demo data?", text: "Puts every screen back to how it started.", ok: "Reset", onOk: () => location.reload() }),
         errHelp: () => openDialog({ title: "Error states to try", cancel: "", ok: "Got it", html: `<div class="list">
