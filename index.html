@@ -47,6 +47,7 @@
         --font-display: "Sora", system-ui, sans-serif; --font-body: "Inter", system-ui, sans-serif;
         --gutter: 20px; --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-sheet: 24px; --r-pill: 999px;
         --shadow-float: 0 8px 24px rgba(27, 30, 35, 0.16); --shadow-hero: 0 6px 20px rgba(238, 95, 10, 0.24); /* Shadow/Float, Shadow/Hero */
+        --shadow-card: 0 1px 3px rgba(27, 30, 35, 0.08), 0 8px 22px rgba(27, 30, 35, 0.10); /* Shadow/card (Home cards) */
         --gradient-ipayroll: linear-gradient(30deg, #ff6c0e 30%, #ff9015 100%); /* Gradient/ipayroll */
       }
 
@@ -417,6 +418,94 @@
       .toast.err .t-ico { background: #fff; } .toast.err .t-ico svg { stroke: var(--danger-500); stroke-width: 2.6; }
       /* Figma Toast: Default = bg/inverse (grey-700), Error = error-dark. Success shows a green ✓ chip; neutral notes an i */
       .toast:not(.ok):not(.err) .t-ico { background: rgba(255,255,255,.18); } .toast:not(.ok):not(.err) .t-ico svg { stroke: #fff; stroke-width: 2.4; }
+
+      /* ==========================================================================
+         css/screens/home.css
+         Home dashboard cards (elevated), stacked or as a horizontal swipe carousel (My account › Home cards).
+         ========================================================================== */
+      /* payslip card = orange (brand gradient, white text; small white-on-orange intentionally fails AA, like .hero) */
+      .card.pay { background: var(--gradient-ipayroll); box-shadow: var(--shadow-hero); color: #fff; }
+      .card.pay .card-t, .card.pay .meta { color: rgba(255,255,255,.88); }
+      .card.pay .big.accent { color: #fff; }
+      .card.pay .icon-btn { background: #fff; } .card.pay .amt-line .icon-btn svg { stroke: var(--ink-900); } /* solid white + dark icon: readable on orange */
+      .card.pay .btn.secondary { background: #fff; color: var(--ink-900); }
+      /* quick actions: icon tile + label. "top" = row under the greeting; "nav" = bar pinned above the bottom nav */
+      .quick-t { margin: 12px 0 0; font: 600 13px/1.3 var(--font-body); color: var(--ink-500); letter-spacing: .02em; text-transform: uppercase; } /* same as .card-t */
+      .quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+      .quick.dark { margin-top: 16px; } /* top-dark: slate tiles (same 4-column size as the light row) */
+      .quick.dark .qa .qi { background: var(--slate); }
+      .quick.dark .qa .qi svg { stroke: #fff; }
+      .quick.dark .qa:active .qi { background: var(--ink-900); }
+      .qa.ph { color: var(--ink-400); } .qa.ph .qi { background: none; border: 1.5px dashed var(--border-200); font: 600 20px/1 var(--font-body); color: var(--ink-400); } /* placeholder slot (action to be decided) */
+      .qa { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--ink-700); text-align: center; line-height: 1.2; }
+      .qa .qi { width: 52px; height: 52px; border-radius: var(--r-md); background: var(--soft); display: grid; place-items: center; }
+      .qa .qi svg { width: 22px; height: 22px; stroke: var(--ink-900); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .qa:active .qi { background: var(--soft-2); }
+      .sticky.quick-bar { display: block; padding: 8px var(--gutter) 6px; box-shadow: 0 -6px 16px rgba(27,30,35,.06); }
+      .quick-bar .quick { margin: 0; }
+      .quick-bar .qa .qi { width: 40px; height: 40px; border-radius: var(--r-sm); }
+      .quick-bar .qa .qi svg { width: 20px; height: 20px; }
+      .quick-bar .qa { font-size: 11px; gap: 4px; }
+      .page.has-quick-bar { padding-bottom: 190px; }
+      /* quick actions card: two soft tiles side by side (icon + label) */
+      .qa-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+      .qa2 { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; border-radius: var(--r-md); background: var(--soft); font-size: 15px; font-weight: 600; color: var(--ink-900); text-align: left; }
+      .qa2 .qi { width: 40px; height: 40px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; }
+      .qa2 .qi svg { width: 20px; height: 20px; stroke: var(--ink-900); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .qa2:active { background: var(--soft-2); }
+      .quick-mobile .quick-t { margin-top: 4px; } /* Mobile: title sits close under the carousel dots */
+      .quick-solo { margin-top: 18px; } /* horizontal layout: quick actions above / under the carousel */
+      .home-tag + .quick-solo { margin-top: 16px; }
+      /* "line": the two actions as one row of header-style action buttons (+ icon), above the payslip */
+      .qa-line { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .qa-line .btn-chip { justify-content: center; height: 44px; }
+      .qa-line .btn-chip svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+      /* "tiles": no card, no title, no stroke; styled as the header action button (.btn-chip): slate fill, white label + icon */
+      .quick-plain .qa2 { background: var(--slate); color: #fff; }
+      .quick-plain .qa2 .qi { background: rgba(255,255,255,.14); }
+      .quick-plain .qa2 .qi svg { stroke: #fff; }
+      .quick-plain .qa2:active { background: var(--ink-900); }
+      a.row { color: inherit; text-decoration: none; } /* external-link rows (My account › Help) look like the other rows */
+      .home-tag { margin: -2px 0 0; font-size: 15px; color: var(--ink-500); }
+      /* floating + (quick actions = "fab"): bottom right above the nav; opens Request leave / Add time */
+      .fab-scrim { position: absolute; inset: 0; z-index: 6; background: rgba(255,255,255,.72); opacity: 0; pointer-events: none; transition: opacity .18s; }
+      .fab-wrap { position: absolute; right: var(--gutter); z-index: 7; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-bottom: 16px; }
+      .fab { width: 56px; height: 56px; border-radius: 50%; background: var(--ink-900); box-shadow: var(--shadow-float); display: grid; place-items: center; }
+      .fab svg { width: 26px; height: 26px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; transition: transform .2s; }
+      .fab-menu { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+      .fab-item { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--ink-900); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .18s, transform .18s; }
+      .fab-item .lbl { background: var(--surface); padding: 8px 12px; border-radius: var(--r-sm); box-shadow: var(--shadow-card); }
+      .fab-item .qi { width: 44px; height: 44px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-card); display: grid; place-items: center; }
+      .fab-item .qi svg { width: 20px; height: 20px; stroke: var(--ink-900); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .fab-open .fab-scrim { opacity: 1; pointer-events: auto; }
+      .fab-open .fab-item { opacity: 1; transform: none; pointer-events: auto; }
+      .fab-open .fab svg { transform: rotate(45deg); }
+      @media (prefers-reduced-motion: reduce) { .fab-scrim, .fab-item, .fab svg { transition: none; } }
+      .home-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+      .card { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-card); padding: 16px 18px 18px; display: flex; flex-direction: column; }
+      .card-t { margin: 0; font: 600 13px/1.3 var(--font-body); color: var(--ink-500); letter-spacing: .02em; text-transform: uppercase; }
+      .card-b { flex: 1; padding: 14px 0 4px; }
+      .card-f { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+      .card-f .btn { flex: 1 1 auto; }
+      .card .big { font: 700 28px/1.15 var(--font-display); letter-spacing: -.01em; font-variant-numeric: tabular-nums; text-align: left; }
+      .card .pair .big { font-size: 22px; white-space: nowrap; }
+      .card .big.accent { color: var(--brand-500); }
+      .card .meta { font-size: 13px; color: var(--ink-500); margin-top: 4px; }
+      .card .pair { display: grid; grid-template-columns: 1fr 1fr; }
+      .card .pair > div + div { border-left: 1px solid var(--line); padding-left: 16px; }
+      .card .tabs { margin: -6px -18px 0; padding: 0 18px; }
+      .card .list .row { min-height: 48px; padding: 9px 0; }
+      .card .none { font-size: 14px; color: var(--ink-400); margin: 6px 0 0; }
+      .card .amt-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+      .card .amt-line .icon-btn svg { stroke: var(--ink-500); }
+      /* horizontal: snap carousel bleeding to the screen edge; the next card peeks; padding keeps the shadow unclipped */
+      .home-cards.h { flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin: 12px calc(-1 * var(--gutter)) 0; padding: 6px var(--gutter) 22px; scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+      .home-cards.h::-webkit-scrollbar { display: none; }
+      .home-cards.h .card { flex: 0 0 84%; scroll-snap-align: start; min-height: 230px; }
+      .home-dots { display: flex; justify-content: center; gap: 6px; margin-top: -8px; }
+      .home-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border-200); transition: width .2s, background .2s; }
+      .home-dots i.on { width: 18px; border-radius: 3px; background: var(--ink-900); }
+      @media (prefers-reduced-motion: reduce) { .home-dots i { transition: none; } }
 
       /* ==========================================================================
          css/screens/timelogs.css
@@ -791,6 +880,11 @@
       let uid = 100;
       const S = {
         route: "home",
+        // Home cards: "vertical" stack or "horizontal" carousel (remembered per browser), leave card tab, payslip amount shown
+        homeLayout: (() => { try { return localStorage.getItem("ipr-home-layout") === "horizontal" ? "horizontal" : "vertical"; } catch (e) { return "vertical"; } })(),
+        // quick actions: "top" (under the greeting) | "nav" (bar above the bottom nav) | "off" (remembered per browser)
+        quickPos: (() => { try { const v = localStorage.getItem("ipr-quick-pos"); return ["top-dark", "nav", "fab", "header", "card", "tiles", "line", "bottom", "off"].includes(v) ? v : "top"; } catch (e) { return "top"; } })(), // + "fab" = floating + button
+        homeLeave: "annual", payShown: false,
         payTab: "my", payIdx: 0, payOpen: new Set(), payRange: "3M",
         // no drafts. pending → approved | declined | withdrawn; approved leave becomes "closed" once it's paid.
         leaveTab: "requests", leaveType: "all", calMonth: D(2026, 6, 1),
@@ -881,6 +975,9 @@
       const tabs = (list, cur, act) => `<div class="tabs" role="tablist">${list.map(([id, l]) => `<button class="tab" role="tab" aria-selected="${id === cur}" data-act="${act}" data-v="${id}">${l}</button>`).join("")}</div>`;
       const pills = (list, cur, act, extraCls = "") => `<div class="pills ${extraCls}">${list.map(([id, l, n]) => `<button class="pill" aria-pressed="${id === cur}" data-act="${act}" data-v="${id}">${l}${n != null ? ` <span class="n">${n}</span>` : ""}</button>`).join("")}</div>`;
       const sec = (title, right = "") => `<div class="sec"><h2>${title}</h2>${right}</div>`;
+      // elevated card: title, body, optional footer of buttons (Home dashboard)
+      const card = (title, body, foot = "", cls = "") => `<section class="card ${cls}"><h2 class="card-t">${title}</h2><div class="card-b">${body}</div>${foot ? `<div class="card-f">${foot}</div>` : ""}</section>`;
+      const cardBtn = (label, attrs) => `<button class="btn secondary sm" ${attrs}>${label}</button>`;
       const chip = (cls, l) => `<span class="chip ${cls}">${l}</span>`;
       const STATUS = { draft: ["draft", "Draft"], sent: ["sent", "Sent"], approved: ["approved", "Approved"], declined: ["declined", "Declined"] };
       const LSTATUS = { pending: ["pending", "Pending"], approved: ["approved", "Approved"], declined: ["declined", "Declined"], withdrawn: ["withdrawn", "Withdrawn"], closed: ["closed", "Closed"] };
@@ -915,11 +1012,74 @@
 
       // ==========================================================================
       // js/screens/home.js
-      // Home: the greeting.
+      // Home: greeting + elevated cards (mobile take on the live desktop Dashboard),
+      // stacked or as a horizontal carousel (S.homeLayout, set in My account).
       // ==========================================================================
-      // Home is the greeting only (no 2FA notice, payslip, cards or Away today)
+      const HOME_LAYOUTS = [["vertical", "Vertical", "Cards stacked, scroll down"], ["horizontal", "Horizontal", "Cards side by side, swipe across"]];
+      const QUICK_POS = [["top", "Top of Home", "Add time and Request leave under the welcome"], ["top-dark", "Top of Home, dark", "Same two actions as dark tiles; \"Welcome\" title"], ["nav", "Above the nav bar", "Pinned above the bottom bar while you scroll"], ["fab", "Floating + button", "Bottom right; opens Request leave and Add time"], ["header", "Header button", "\"Quick actions\" next to the title; opens a sheet"], ["card", "Own card", "After the payslip: Request leave and Add time"], ["bottom", "Mobile", "Quick actions title + Add time, Request leave below the cards; on with Horizontal"], ["tiles", "Tiles, no card", "Two dark tiles above the payslip"], ["line", "Buttons, one line", "\"+ Request leave\" and \"+ Add time\" above the payslip"], ["off", "Hidden", "No quick actions"]];
+      // quick actions (Home only): icon tile + label, wired to the existing actions
+      // dark = "top-dark" variant: slate (action button) tiles, three actions, no placeholder
+      const quickActs = (dark) => `<div class="quick ${dark ? "dark" : ""}">${[
+        ["cal", "Request leave", `data-act="requestLeave"`],
+        ["clock", "Add time", `data-act="addTime"`],
+        ["heart", "Donate", `data-act="addDonation"`],
+        ...(dark ? [] : [["?", "Placeholder", `data-act="quickPlaceholder"`, "ph"]]), // 4th slot: action still to be decided
+      ].map(([i, l, a, c = ""]) => `<button class="qa ${c}" ${a}><span class="qi">${i === "?" ? "?" : ico(i)}</span>${l}</button>`).join("")}</div>`;
+      // top of Home (light and dark): just Add time then Request leave, at the 4-column tile size (space on the right stays empty)
+      const topActs = (dark) => `<div class="quick top ${dark ? "dark" : ""}" role="group" aria-label="Quick actions">${[["clock", "Add time", "addTime"], ["cal", "Request leave", "requestLeave"]]
+        .map(([i, l, a]) => `<button class="qa" data-act="${a}"><span class="qi">${ico(i)}</span>${l}</button>`).join("")}</div>`;
+      const stickyQuick = () => `<div class="sticky quick-bar" role="toolbar" aria-label="Quick actions">${quickActs()}</div>`;
+      // floating + : speed dial with the two main actions; the white scrim closes it
+      const fabQuick = () => `<div class="fab-box"><button class="fab-scrim" data-act="fabToggle" aria-label="Close quick actions" tabindex="-1"></button>
+        <div class="fab-wrap"><div class="fab-menu" id="fab-menu">${[["cal", "Request leave", "requestLeave"], ["clock", "Add time", "addTime"]]
+          .map(([i, l, a]) => `<button class="fab-item" data-act="fabPick" data-v="${a}" tabindex="-1"><span class="lbl">${l}</span><span class="qi">${ico(i)}</span></button>`).join("")}</div>
+        <button class="fab" data-act="fabToggle" aria-expanded="false" aria-controls="fab-menu" aria-label="Quick actions">${ico("plus")}</button></div></div>`;
       function scrHome() {
-        return `<div class="page">${topHead(`Hi ${ME.first}`)}</div>`;
+        const h = S.homeLayout === "horizontal";
+        const p = PAYS[0], per = PERIODS[S.periodIdx], st = periodStats(per);
+        const pay = card("Latest payslip", p
+          ? `<div class="amt-line"><span class="big accent">${S.payShown ? money(p.net) : "$NZD***"}</span><button class="icon-btn" data-act="payReveal" aria-label="${S.payShown ? "Hide" : "Show"} amount">${ico(S.payShown ? "eyeoff" : "eye")}</button></div><div class="meta">Pay day ${fd(p.date, { dow: true, y: true })}</div>`
+          : `<p class="none">Your first payslip will show here after payday.</p>`,
+          p ? cardBtn("Go to payslip", `data-act="openPay" data-i="0"`) : "", "pay");
+        // number in ink (only the payslip card is orange); no approve from Home — drafts are sent on Timelogs
+        const logs = card("Timelogs", `<div class="big">${st.drafts}</div><div class="meta">Draft${st.drafts === 1 ? "" : "s"}${st.drafts ? ` · ${num(st.draftHrs)} hours` : ""} · ${fd(per.start)} – ${fd(per.end)}</div>`,
+          cardBtn("Go to timelogs", `data-go="timelogs"`));
+        const days = balanceOf(S.homeLeave) || 0;
+        const bal = card("Leave balances", `${tabs([["annual", "Annual"], ["sick", "Sick"]], S.homeLeave, "homeLeave")}
+          <div class="pair" style="margin-top:16px"><div><div class="big">${num(days * HRS_PER_DAY)} hrs</div></div><div><div class="big">${num(days)} days</div></div></div>
+          <div class="meta">${typeName(S.homeLeave)} · as at ${fd(LAST_PAY_END, { y: true })}</div>`,
+          cardBtn("Go to balances", `data-act="homeLeaveGo" data-v="balances"`));
+        const mine = S.requests.filter((r) => (r.status === "pending" || r.status === "approved") && r.end >= TODAY).sort((a, b) => a.start - b.start).slice(0, 2);
+        const myLeave = card("My leave", mine.length
+          ? `<div class="list">${mine.map((r) => row({ t: typeName(r.type), s: `${range(r.start, r.end)} · ${reqAmount(r)}`, chipH: chip(...LSTATUS[r.status]), act: "openReq", data: `data-id="${r.id}"`, chev: false })).join("")}</div>`
+          : `<p class="none">You have no leave requests to show.</p>`,
+          cardBtn("Go to leave requests", `data-act="homeLeaveGo" data-v="requests"`));
+        const away = S.team.filter((t) => t.start <= TODAY && t.end >= TODAY);
+        const people = card("People away", `<div class="meta" style="margin:0 0 4px">${fd(TODAY, { dow: true, y: true })}</div>${away.length
+          ? `<div class="list">${away.map((t) => row({ t: t.name, s: t.start.getTime() === t.end.getTime() ? "Today" : `${range(t.start, t.end)}`, lead: mono(t.name, personColour(t.name)), chev: false, tag: "div" })).join("")}</div>`
+          : `<p class="none">No one is away today.</p>`}`,
+          cardBtn("Go to leave calendar", `data-act="homeLeaveGo" data-v="calendar"`));
+        // two main actions (Request leave, Add time): "card" = own card after the payslip; "tiles" = slate tiles above the payslip;
+        // "line" = one row of slate "+" action buttons above the payslip
+        const QA2 = [["cal", "Request leave", "requestLeave"], ["clock", "Add time", "addTime"]];
+        const qaTwo = `<div class="qa-two">${QA2.map(([i, l, a]) => `<button class="qa2" data-act="${a}"><span class="qi">${ico(i)}</span>${l}</button>`).join("")}</div>`;
+        const quick = S.quickPos === "card" ? card("Quick actions", qaTwo)
+          : S.quickPos === "tiles" ? `<div class="quick-plain" role="group" aria-label="Quick actions">${qaTwo}</div>`
+          : S.quickPos === "bottom" ? `<div class="quick-mobile"><h2 class="quick-t">Quick actions</h2>${topActs()}</div>` // Mobile: the Top of Home tiles + small title
+          : S.quickPos === "line" ? `<div class="qa-line" role="group" aria-label="Quick actions">${QA2.map(([, l, a]) => `<button class="btn-chip" data-act="${a}">${ico("plus")}${l}</button>`).join("")}</div>` : "";
+        const above = S.quickPos === "tiles" || S.quickPos === "line";
+        // vertical: in the stack (above or after the payslip); horizontal: full width above / under the carousel (not swiped)
+        const carousel = [pay, logs, bal, myLeave, people];
+        const cards = h || !quick ? carousel : above ? [quick, ...carousel] : S.quickPos === "bottom" ? [...carousel, quick] : [pay, quick, logs, bal, myLeave, people]; // "bottom" ("Mobile") = dark tiles after every other card
+        return `<div class="page ${S.quickPos === "nav" ? "has-quick-bar" : ""}">${S.quickPos === "top-dark"
+            ? `${topHead(`Welcome ${ME.first}`)}<p class="home-tag">Dashboard</p>${topActs(true)}` // this variant: greeting as the title, "Dashboard" as the subline, no "Quick actions" title
+            : `${topHead("Dashboard", S.quickPos === "header" ? headBtn("plus", "Quick actions", "quickSheet") : "")}<p class="home-tag">Welcome ${ME.first}</p>`}
+          ${S.quickPos === "top" ? topActs() : ""}
+          ${quick && h && above ? `<div class="quick-solo">${quick}</div>` : ""}
+          <div class="home-cards ${h ? "h" : ""}" id="home-cards">${cards.join("")}</div>
+          ${h ? `<div class="home-dots" aria-hidden="true">${carousel.map((_, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</div>` : ""}
+          ${quick && h && !above ? `<div class="quick-solo">${quick}</div>` : ""}
+        </div>`;
       }
 
       // ==========================================================================
@@ -1157,9 +1317,12 @@
             + row({ t: "Two-factor authentication", chipH: S.twofa ? chip("ok", "On") : chip("nudge", "Turn on"), go: "account/2fa" })
             + row({ t: "Lock app now", act: "lockNow" }) // Figma shot: a row again (was the v6.5 Lock app switch)
             + row({ t: "Sign-in activity", go: "account/activity" }))}
+          ${g("Home", row({ t: "Card layout", v: HOME_LAYOUTS.find((l) => l[0] === S.homeLayout)[1], act: "homeLayoutPicker" })
+            + row({ t: "Quick actions", v: QUICK_POS.find((l) => l[0] === S.quickPos)[1], act: "quickPosPicker" }))}
           ${g("Profile", row({ t: "Personal details", go: "account/details" })
             + `<div class="row"><span class="main"><span class="t">Email me when I've been paid</span></span>${toggleBtn(S.notifPaid, "notif", "Payday email")}</div>`)}
-          ${g("About", row({ t: "Privacy policy", go: "account/privacy" }) + row({ t: "Version", v: "2.2.34", chev: false, tag: "div" }))}
+          ${g("About", `<a class="row" href="https://www.ipayroll.co.nz/help" target="_blank" rel="noopener" aria-label="Help (opens your browser)"><span class="main"><span class="t">Help</span></span>${ico("ext", "chev")}</a>`
+            + row({ t: "Privacy policy", go: "account/privacy" }) + row({ t: "Version", v: "2.2.34", chev: false, tag: "div" }))}
           ${g("", row({ t: "Sign out", cls: "danger", act: "signOut", chev: false }))}
         </div>`;
       }
@@ -1271,8 +1434,9 @@
         const st = view.scrollTop;
         view.innerHTML = SCREENS[S.route]();
         const hadSticky = !!$("#sticky-slot .sticky");
-        $("#sticky-slot").innerHTML = S.route === "timelogs" ? stickyTimelogs() : "";
+        $("#sticky-slot").innerHTML = S.route === "timelogs" ? stickyTimelogs() : S.route === "home" && S.quickPos === "nav" ? stickyQuick() : S.route === "home" && S.quickPos === "fab" ? fabQuick() : "";
         if (!hadSticky) animIn($("#sticky-slot .sticky"), "enter");
+        const stk = $("#sticky-slot .sticky, #sticky-slot .fab-wrap"); if (stk) stk.style.bottom = $(".bottom-nav").offsetHeight + "px"; // sit on the nav (no gap)
         paintChrome();
         view.scrollTop = toTop ? 0 : st;
         const th = $(".top-head", view); if (th) view.style.setProperty("--head-h", th.offsetHeight - ($(".screen").classList.contains("hide-brand") ? 10 : 0) + "px");
@@ -1300,7 +1464,7 @@
         t.querySelector(".t-ico").innerHTML = ico(kind === "err" ? "alert" : kind === "info" ? "info" : "check");
         const foot = SH && $(".sheet.show .sheet-foot", layer); t.style.bottom = foot ? foot.offsetHeight + 10 + "px" : ""; // stay above an open sheet's buttons
         const b = t.querySelector("button"); b.hidden = !undo; b.textContent = label; b.onclick = () => { t.classList.remove("show"); undo(); };
-        t.classList.toggle("high", S.route === "timelogs" && periodStats(PERIODS[S.periodIdx]).drafts > 0 && !SH);
+        t.classList.toggle("high", ((S.route === "timelogs" && periodStats(PERIODS[S.periodIdx]).drafts > 0) || (S.route === "home" && (S.quickPos === "nav" || S.quickPos === "fab"))) && !SH);
         t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), undo ? 6000 : 4000);
       }
 
@@ -1700,6 +1864,26 @@
           S.donFilter = "all"; },
         givingInfo: () => openDialog({ title: "Payroll giving", text: "Donations come straight out of your pay before it reaches your bank. For every dollar you give to an approved charity you get a third back as a tax credit in the same pay — no receipts or year-end claim needed.", cancel: "", ok: "Got it" }),
 
+        // Home cards
+        // floating + : open/close the speed dial in place (no re-render), pick = close then run the action
+        fabToggle: () => { const box = $(".fab-box"); if (!box) return; const open = box.classList.toggle("fab-open");
+          $(".fab", box).setAttribute("aria-expanded", open); $(".fab", box).setAttribute("aria-label", open ? "Close quick actions" : "Quick actions");
+          $$(".fab-item", box).forEach((b) => (b.tabIndex = open ? 0 : -1)); },
+        fabPick: (el) => { ACT.fabToggle(); ACT[el.dataset.v](el); },
+        // header "Quick actions" button → sheet of actions; picking one opens its own sheet in place of this one
+        quickSheet: () => openSheet(() => ({ title: "Quick actions",
+          body: `<div class="list">${[["cal", "Request leave", "requestLeave"], ["clock", "Add time", "addTime"], ["heart", "Donate", "addDonation"]]
+            .map(([i, t, a]) => row({ t, lead: `<span class="ico">${ico(i)}</span>`, act: a })).join("")}</div>` })),
+        quickPlaceholder: () => toast("Placeholder — this quick action is still to be decided", null, "", "info"),
+        payReveal: () => { S.payShown = !S.payShown; render(); },
+        homeLeave: (el) => { S.homeLeave = el.dataset.v; render(); }, // instant, no reload
+        homeLeaveGo: (el) => { S.leaveTab = el.dataset.v; go("leave"); },
+        homeLayoutPicker: () => pickOptions({ title: "Home card layout", cur: S.homeLayout, groups: [["", HOME_LAYOUTS.map(([id, t, s]) => ({ id, t, s }))]],
+          onPick: (v) => { S.homeLayout = v; if (v === "horizontal") S.quickPos = "bottom"; // horizontal turns on the "Mobile" quick actions (tiles below the cards)
+            try { localStorage.setItem("ipr-home-layout", v); localStorage.setItem("ipr-quick-pos", S.quickPos); } catch (e) {} render(); toast(v === "horizontal" ? "Home cards: horizontal · quick actions: mobile" : `Home cards: ${v}`); } }),
+        quickPosPicker: () => pickOptions({ title: "Quick actions", cur: S.quickPos, groups: [["", QUICK_POS.map(([id, t, s]) => ({ id, t, s }))]],
+          onPick: (v) => { S.quickPos = v; try { localStorage.setItem("ipr-quick-pos", v); } catch (e) {} render(); toast(`Quick actions: ${QUICK_POS.find((l) => l[0] === v)[1].toLowerCase()}`); } }),
+
         notif: () => { S.notifPaid = !S.notifPaid; render(); },
         lockNow: () => showLock(),
         signOut: () => { closeSheet(true); showLogin(); },
@@ -1825,6 +2009,14 @@
         const digits = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 6); if (!digits) return; e.preventDefault();
         const boxes = $$('[data-in="code"]'); digits.split("").forEach((d, i) => (boxes[i].value = d)); boxes[Math.min(5, digits.length)].focus(); $("#code-go").disabled = !boxes.every((b) => b.value);
       });
+
+      // Home carousel dots: inner scrolls don't bubble, so listen in the capture phase
+      view.addEventListener("scroll", (e) => {
+        const el = e.target; if (!el.classList || !el.classList.contains("home-cards")) return;
+        const w = el.firstElementChild ? el.firstElementChild.offsetWidth + 12 : 1;
+        const i = Math.round(el.scrollLeft / w);
+        $$(".home-dots i").forEach((d, k) => d.classList.toggle("on", k === i));
+      }, { capture: true, passive: true });
 
       // collapsing header: scrolling down hides the brand bar, scrolling up (or reaching the top) shows it.
       // Pages too short to scroll keep it. A short lock stops the bar's own height change from flipping it back.
