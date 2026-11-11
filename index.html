@@ -9,16 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
     <style>
-      /* iPayroll WebKiosk prototype v7 — styles.
-         Laid out as the CSS files of a traditional site would be, in cascade order:
-         tokens → base → layout → components → screens → states. See README.md. */
-
-      /* ==========================================================================
-         css/tokens.css
-         Design tokens. Values are the Figma "iPayroll styleguide styles" variables (named in comments).
-         ========================================================================== */
-      /* values from the Figma file's "iPayroll styleguide styles" collection (semantic variable in comments).
-         Prototype names are kept so the CSS below doesn't change; only the values are re-pointed. */
+     
       :root {
         --brand-600: #d95200;  /* orange/500 · semantic/text/brand, bg/accent-strong, icon/active */
         --brand-500: #ff6c0e;  /* orange/400 · semantic/bg/accent, border/focus */
@@ -506,6 +497,15 @@
       .home-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border-200); transition: width .2s, background .2s; }
       .home-dots i.on { width: 18px; border-radius: 3px; background: var(--ink-900); }
       @media (prefers-reduced-motion: reduce) { .home-dots i { transition: none; } }
+      /* "flat" layout: vertical stack, the payslip stays the orange card; everything under it is a plain
+         page section (no shadow, no radius, no side padding), split by a full-width hairline */
+      .home-cards.flat { gap: 0; }
+      .home-cards.flat .card:not(.pay) { background: none; box-shadow: none; border-radius: 0; padding: 20px 0; }
+      .home-cards.flat .card.pay { margin-bottom: 8px; }
+      .home-cards.flat .card:not(.pay) + .card:not(.pay) { border-top: 1px solid var(--line); }
+      .home-cards.flat .card:not(.pay) .card-t { font: 700 16px/1.3 var(--font-display); letter-spacing: -.01em; color: var(--ink-900); text-transform: none; } /* Title/Section */
+      .home-cards.flat .card:not(.pay) .tabs { margin: 0; padding: 0; }
+      .home-cards.flat .card:not(.pay) .card-b { padding-top: 10px; }
 
       /* ==========================================================================
          css/screens/timelogs.css
@@ -881,7 +881,7 @@
       const S = {
         route: "home",
         // Home cards: "vertical" stack or "horizontal" carousel (remembered per browser), leave card tab, payslip amount shown
-        homeLayout: (() => { try { return localStorage.getItem("ipr-home-layout") === "horizontal" ? "horizontal" : "vertical"; } catch (e) { return "vertical"; } })(),
+        homeLayout: (() => { try { const v = localStorage.getItem("ipr-home-layout"); return v === "horizontal" || v === "flat" ? v : "vertical"; } catch (e) { return "vertical"; } })(),
         // quick actions: "top" (under the greeting) | "nav" (bar above the bottom nav) | "off" (remembered per browser)
         quickPos: (() => { try { const v = localStorage.getItem("ipr-quick-pos"); return ["top-dark", "nav", "fab", "header", "card", "tiles", "line", "bottom", "off"].includes(v) ? v : "top"; } catch (e) { return "top"; } })(), // + "fab" = floating + button
         homeLeave: "annual", payShown: false,
@@ -1015,7 +1015,7 @@
       // Home: greeting + elevated cards (mobile take on the live desktop Dashboard),
       // stacked or as a horizontal carousel (S.homeLayout, set in My account).
       // ==========================================================================
-      const HOME_LAYOUTS = [["vertical", "Vertical", "Cards stacked, scroll down"], ["horizontal", "Horizontal", "Cards side by side, swipe across"]];
+      const HOME_LAYOUTS = [["vertical", "Vertical", "Cards stacked, scroll down"], ["horizontal", "Horizontal", "Cards side by side, swipe across"], ["flat", "Flat", "Payslip card, then plain sections (no cards)"]];
       const QUICK_POS = [["top", "Top of Home", "Add time and Request leave under the welcome"], ["top-dark", "Top of Home, dark", "Same two actions as dark tiles; \"Welcome\" title"], ["nav", "Above the nav bar", "Pinned above the bottom bar while you scroll"], ["fab", "Floating + button", "Bottom right; opens Request leave and Add time"], ["header", "Header button", "\"Quick actions\" next to the title; opens a sheet"], ["card", "Own card", "After the payslip: Request leave and Add time"], ["bottom", "Mobile", "Quick actions title + Add time, Request leave below the cards; on with Horizontal"], ["tiles", "Tiles, no card", "Two dark tiles above the payslip"], ["line", "Buttons, one line", "\"+ Request leave\" and \"+ Add time\" above the payslip"], ["off", "Hidden", "No quick actions"]];
       // quick actions (Home only): icon tile + label, wired to the existing actions
       // dark = "top-dark" variant: slate (action button) tiles, three actions, no placeholder
@@ -1076,7 +1076,7 @@
             : `${topHead("Dashboard", S.quickPos === "header" ? headBtn("plus", "Quick actions", "quickSheet") : "")}<p class="home-tag">Welcome ${ME.first}</p>`}
           ${S.quickPos === "top" ? topActs() : ""}
           ${quick && h && above ? `<div class="quick-solo">${quick}</div>` : ""}
-          <div class="home-cards ${h ? "h" : ""}" id="home-cards">${cards.join("")}</div>
+          <div class="home-cards ${h ? "h" : ""} ${S.homeLayout === "flat" ? "flat" : ""}" id="home-cards">${cards.join("")}</div>
           ${h ? `<div class="home-dots" aria-hidden="true">${carousel.map((_, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</div>` : ""}
           ${quick && h && !above ? `<div class="quick-solo">${quick}</div>` : ""}
         </div>`;
