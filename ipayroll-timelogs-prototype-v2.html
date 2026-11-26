@@ -1,0 +1,1667 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Timelogs — prototype</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDgyIDkxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA4MiA5MTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPiAuc3Qwe2ZpbGw6dXJsKCNTVkdJRF8xXyk7fSAuc3Qxe2ZpbGw6IzZFN0JBMDt9IC5zdDJ7ZmlsbDojMjAyOTQ1O30gLnN0M3tmaWxsOnVybCgjU1ZHSURfMl8pO30gPC9zdHlsZT4gPGcgdHJhbnNmb3JtPSJtYXRyaXgoIDEsIDAsIDAsIDEsIDAsMCkgIj4gPGc+IDxnIGlkPSJMYXllcjBfMF9GSUxMXzJfIj4gPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8xXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI2Ljk4Njg5OGUtMDIiIHkxPSI1Ni40Mzk3IiB4Mj0iNjQuMDc3MSIgeTI9IjU2LjQzOTciPiA8c3RvcCBvZmZzZXQ9IjMuNDM0NTI2ZS0wMyIgc3R5bGU9InN0b3AtY29sb3I6IzAwQTBERiIvPiA8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NkM0RTgiLz4gPC9saW5lYXJHcmFkaWVudD4gPHBhdGggY2xhc3M9InN0MCIgZD0iTTAuNSw0OC42bDAuMiwwLjdjMC45LDIuOCwyLjcsNSw1LjMsNi41bDU4LjEsMzMuNWMtMC44LTAuNS0xLjYtMS4xLTIuMy0xLjhjLTEuNy0xLjctMi44LTMuNy0zLjItNS45IGMtMC4xLTAuNC0wLjEtMC45LTAuMi0xLjN2LTAuMWMwLDAsMC0wLjEsMC0wLjFjMC0wLjIsMC0wLjUsMC0wLjdWNTguN0wzOC4zLDQ3LjFjLTAuMi0wLjEtMC4zLTAuMi0wLjUtMC4zIGMtMC4xLTAuMS0wLjEtMC4xLTAuMi0wLjJjLTAuNC0wLjQtMC42LTAuOS0wLjYtMS40YzAtMC41LDAuMi0xLDAuNS0xLjNjMCwwLDAtMC4xLDAuMS0wLjFjMCwwLDAsMCwwLjEtMC4xIGMwLjMtMC4zLDAuNi0wLjcsMC45LTEuMWMwLjktMS4yLDEuNi0yLjYsMi00LjJjMC45LTMuMiwwLjUtNi4yLTEuMi05Yy0xLjYtMi44LTQtNC43LTcuMi01LjVjLTMuMi0wLjgtNi4yLTAuNC05LDEuMkw2LDM1LjIgYy0yLjYsMS41LTQuNCwzLjctNS4zLDYuNWMtMC4xLDAuMi0wLjEsMC40LTAuMiwwLjZjLTAuMSwwLjMtMC4xLDAuNi0wLjIsMC44Yy0wLjEsMC4zLTAuMSwwLjYtMC4yLDAuOWwtMC4xLDEuNyBDMC4xLDQ2LjgsMC4yLDQ3LjcsMC41LDQ4LjZ6Ii8+IDxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik01OC40LDU0LjF2NC42bDE3LjcsMTAuMmMyLjgsMS42LDQuNyw0LDUuNSw3LjJjMC4xLDAuMywwLjEsMC42LDAuMiwwLjljMC4xLDAuNywwLjIsMS40LDAuMiwyLjF2LTQuNyBjMC0wLjktMC4yLTEuOS0wLjQtMi45Yy0wLjgtMy4yLTIuNy01LjYtNS41LTcuMkw1OC40LDU0LjF6Ii8+IDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik02NS44LDkwLjFjMC4zLDAuMSwwLjcsMC4zLDEsMC40YzEuNywwLjUsMy41LDAuNiw1LjMsMC4zYzAuMSwwLDAuMSwwLDAuMiwwYzAuMiwwLDAuNS0wLjEsMC43LTAuMiBjMC4xLDAsMC4xLDAsMC4yLDBjMC43LTAuMiwxLjQtMC40LDItMC43YzAuNi0wLjMsMS4yLTAuNiwxLjctMWMxLTAuNywxLjgtMS41LDIuNi0yLjVjMC4yLTAuMywwLjUtMC43LDAuNy0xYzAsMCwwLDAsMCwwbDAsMCBjMC40LTAuNiwwLjctMS4yLDAuOS0xLjhjMC4yLTAuNCwwLjQtMC45LDAuNS0xLjVjMC4yLTAuOSwwLjMtMS45LDAuMy0yLjljMCwwLDAtMC4xLDAtMC4xYzAtMC43LTAuMS0xLjQtMC4yLTIuMSBjLTAuMS0wLjMtMC4xLTAuNi0wLjItMC45Yy0wLjgtMy4yLTIuNy01LjYtNS41LTcuMkw1OC40LDU4Ljd2MjAuN2wwLDAuOHYwLjFjMCwwLjQsMC4xLDAuOSwwLjIsMS4zYzAuNCwyLjIsMS41LDQuMiwzLjIsNS45IGMwLjcsMC43LDEuNSwxLjMsMi4zLDEuOGMwLDAsMC4xLDAuMSwwLjIsMC4xQzY0LjcsODkuNyw2NS4yLDg5LjksNjUuOCw5MC4xeiIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzJfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjU4LjM1NDkiIHkxPSIzNy4xOTQ3IiB4Mj0iODIiIHkyPSIzNy4xOTQ3Ij4gPHN0b3Agb2Zmc2V0PSI5LjQ4MTgyMGUtMDQiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjZDMEUiLz4gPHN0b3Agb2Zmc2V0PSIwLjk5ODYiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjkwMTUiLz4gPC9saW5lYXJHcmFkaWVudD4gPHBhdGggY2xhc3M9InN0MyIgZD0iTTgxLjYsNzEuNWMwLjMsMSwwLjQsMS45LDAuNCwyLjlWMTEuOWMwLTMuMy0xLjItNi0zLjUtOC40Qzc2LjIsMS4yLDczLjQsMCw3MC4yLDBjLTMuMywwLTYsMS4yLTguNCwzLjUgYy0yLjMsMi4zLTMuNSw1LjEtMy41LDguNHY0Mi4ybDE3LjcsMTAuMkM3OC45LDY1LjksODAuNyw2OC4zLDgxLjYsNzEuNXoiLz4gPC9nPiA8L2c+IDwvZz4gPC9zdmc+" /> <!-- favicon.svg, embedded so the file opens on its own -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      /* Timelogs: a stand-alone app (today an old Angular app nested inside the core app). Started from the WebKiosk v7
+         tokens, now its own desktop-app language: dense rows, dropdown menus, keyboard first, works in a window that is
+         never full screen (1000–1400px is the target). Laid out as the CSS files of a traditional site, in cascade order:
+         tokens → base → layout → components → screens → states. */
+
+      /* ==========================================================================
+         css/tokens.css
+         Colours from v7 (Figma "iPayroll styleguide styles"); desktop sizes.
+         ========================================================================== */
+      :root {
+        --brand-600: #d95200; --brand-500: #ff6c0e; --brand-100: #ffe4d0; --brand-50: #fff3ea;
+        --ink-900: #2a2d30; --ink-700: #4a4f54; --ink-500: #5b6166; --ink-400: #6e7777; --ink-300: #9da8a2;
+        --surface: #ffffff; --soft: #f5f6f8; --soft-2: #eceef0; --line: #eceef0; --border-200: #c1cfc8;
+        --hl: rgba(16, 107, 218, 0.10);
+        --link-500: #0056b3; --link-on-dark: #a4d4fa;
+        --info-50: rgba(16, 107, 218, 0.16); --info-500: #106bda; --info-700: #124a8f;
+        --success-500: #27aa4c; --success-700: #116636;
+        --warning-50: rgba(217, 119, 6, 0.16); --warning-500: #d97706; --warning-700: #7c5300;
+        --danger-500: #da1e28; --danger-700: #a82a20;
+        --hold-50: #efe9fb; --hold-500: #7b5cc4; --hold-700: #5a3e9e; /* "On hold": its own colour, so orange stays brand only */
+        --scrim: rgba(11, 12, 12, 0.36);
+        --font-display: "Sora", system-ui, sans-serif; --font-body: "Inter", system-ui, sans-serif;
+        --gutter: 28px; --r-sm: 8px; --r-md: 10px; --r-lg: 14px; --r-sheet: 20px; --r-pill: 999px;
+        --shadow-float: 0 12px 32px rgba(27, 30, 35, 0.16);
+        --shadow-pop: 0 0 0 1px rgba(27, 30, 35, 0.07), 0 12px 32px rgba(27, 30, 35, 0.16);
+        --panel-w: 420px;
+      }
+      html[data-bp="md"] { --gutter: 22px; }
+      html[data-bp="sm"] { --gutter: 16px; }
+
+      /* ==========================================================================
+         css/base.css
+         ========================================================================== */
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      body { font-family: var(--font-body); font-size: 14px; color: var(--ink-900); background: var(--surface); -webkit-font-smoothing: antialiased; overflow: hidden; }
+      button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+      button:disabled { cursor: default; }
+      input, select, textarea { font: inherit; color: inherit; }
+      svg { display: block; }
+      [hidden] { display: none !important; }
+      :focus-visible { outline: 2px solid var(--info-500); outline-offset: 1px; }
+
+      /* ==========================================================================
+         css/layout.css
+         App bar (logo + "Timelogs", edit-mode switch, organisation, tools, user), scroller, sticky toolbar.
+         ========================================================================== */
+      /* the app sits in a bordered, centred frame (it never runs full screen); phones go edge to edge */
+      body { background: #e9ecef; }
+      .app { display: flex; width: min(1320px, calc(100vw - 48px)); height: calc(100vh - 48px); height: calc(100dvh - 48px); margin: 24px auto; background: var(--surface); border: 1px solid #d3d8dd; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgba(27,30,35,.04), 0 16px 48px rgba(27,30,35,.07); }
+      html[data-bp="md"] .app { width: calc(100vw - 24px); height: calc(100dvh - 24px); margin: 12px auto; }
+      html[data-bp="sm"] .app { width: 100%; height: 100dvh; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+      .app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; position: relative; transition: margin-right .24s cubic-bezier(.2,.8,.2,1); }
+      #view { flex: 1; overflow-y: auto; overflow-x: hidden; position: relative; scrollbar-width: thin; }
+      .page { padding: 0 var(--gutter) 56px; max-width: 1600px; }
+
+      /* sticky toolbar: title + main controls, then the filter row */
+      .toolbar { position: sticky; top: 0; z-index: 8; background: var(--surface); margin: 0 calc(-1 * var(--gutter)); padding: 20px var(--gutter) 10px; }
+      #view.scrolled .toolbar { box-shadow: 0 1px 0 var(--line); }
+      .tb-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+      .tb-row + .tb-row { margin-top: 10px; }
+      .tb-row h1 { font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: -0.02em; margin: 0 8px 0 0; line-height: 1.2; }
+      .tb-row .grow { flex: 1; }
+      .tb-row .today { font-size: 13px; color: var(--ink-500); white-space: nowrap; }
+      .ttl { min-width: 0; }
+      .ttl h1 { margin: 0; font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .ttl small { display: block; font-size: 12.5px; color: var(--ink-500); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      html[data-bp="sm"] .tb-row .today { display: none; }
+
+      /* ==========================================================================
+         css/components/list.css
+         Section headers, option rows, key-value lines.
+         ========================================================================== */
+      .sec { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 22px 0 2px; }
+      .sec h2 { font-size: 15px; font-weight: 700; margin: 0; font-family: var(--font-display); letter-spacing: -0.01em; }
+      .sec .tot { font-size: 12.5px; color: var(--ink-500); }
+      .list { margin: 0; }
+      .row { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 10px 0; min-height: 48px; position: relative; }
+      .list > * + *::before { content: ""; position: absolute; top: 0; right: 0; left: var(--div-left, 0); height: 1px; background: var(--line); }
+      .list > * { position: relative; }
+      .row .lead { flex: none; }
+      .row .main { flex: 1; min-width: 0; }
+      .row .main > .t, .row .main > .s { display: block; }
+      .row .t { font-size: 14px; font-weight: 500; line-height: 1.3; }
+      .row .s { font-size: 12.5px; color: var(--ink-500); margin-top: 1px; line-height: 1.3; }
+      .row .chev { width: 16px; height: 16px; stroke: var(--ink-400); fill: none; stroke-width: 2; flex: none; }
+      .row .ico { width: 30px; height: 30px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; }
+      .row .ico svg { width: 16px; height: 16px; stroke: var(--ink-700); fill: none; stroke-width: 1.8; }
+      .sel-list { --div-left: 10px; }
+      .sel-list .row { padding-left: 10px; padding-right: 10px; border-radius: var(--r-sm); }
+      .sel-list button.row:hover, .sel-list label.row:hover, .sel-list .row:focus-visible { background: var(--soft); outline: none; }
+      .kv { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; font-size: 14px; position: relative; }
+      .kv + .kv::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--line); }
+      .kv .k { color: var(--ink-500); } .kv .v { font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+      .kv.total .k, .kv.total .v { color: var(--ink-900); font-weight: 700; }
+
+      /* ==========================================================================
+         css/components/chips-pills.css
+         ========================================================================== */
+      .chip { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: var(--r-pill); font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+      .chip.draft { background: #fff4d6; color: #6b4b00; }
+      .chip.approved { background: #e3f5e8; color: #176b3a; }
+      .chip.missing { background: #ffe6c0; color: #7a4600; } /* no finish time: "not sent yet", like a draft */
+      .chip.closed { background: var(--soft-2); color: var(--ink-500); }
+      .chip.hold { background: var(--hold-50); color: var(--hold-700); }
+      .chip.submitted { background: #dfeafa; color: var(--info-700); } /* waiting for the approver */
+      .tag { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; border-radius: 5px; font-size: 11px; font-weight: 600; background: var(--soft-2); color: var(--ink-500); }
+      .pills { display: contents; }
+      .pill { flex: none; height: 32px; padding: 0 12px; border-radius: var(--r-pill); font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; background: var(--soft); white-space: nowrap; }
+      .pill:hover { background: var(--soft-2); }
+      .pill[aria-pressed="true"] { background: var(--ink-900); color: #fff; }
+      .pill .n { font-size: 11.5px; opacity: .65; font-variant-numeric: tabular-nums; }
+      .pill.drop svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; margin-right: -3px; }
+      .pill[aria-expanded="true"]:not([aria-pressed="true"]) { background: var(--soft-2); }
+      .vr { width: 1px; height: 20px; background: var(--line); margin: 0 2px; flex: none; }
+      html[data-bp="sm"] .tb-row.filters { flex-wrap: nowrap; overflow-x: auto; margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); padding: 0 var(--gutter); scrollbar-width: none; }
+
+      /* ==========================================================================
+         css/components/buttons.css
+         ========================================================================== */
+      .btn { height: 44px; width: 100%; border-radius: var(--r-pill); font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; }
+      .btn.primary { background: var(--ink-900); color: #fff; }
+      .btn.primary:hover:not(:disabled) { background: #000; }
+      .btn.primary:disabled { background: var(--soft-2); color: var(--ink-300); }
+      .btn.secondary { background: var(--soft); color: var(--ink-900); }
+      .btn.secondary:hover:not(:disabled) { background: var(--soft-2); }
+      .btn.danger { background: var(--danger-500); color: #fff; }
+      .btn.ghost-danger { color: var(--danger-500); }
+      .btn.ghost-danger:hover { background: rgba(218, 30, 40, .08); }
+      .btn.sm { height: 34px; font-size: 13.5px; width: auto; padding: 0 16px; }
+      .btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+      .btn-chip { height: 34px; padding: 0 14px; border-radius: var(--r-pill); background: var(--soft); color: var(--ink-900); display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 13.5px; flex: none; white-space: nowrap; }
+      .btn-chip svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+      .btn-chip:hover:not(:disabled) { background: var(--soft-2); }
+      .btn-chip:disabled { opacity: .45; }
+      .btn-chip.primary { background: var(--ink-900); color: #fff; }
+      .btn-chip.primary:hover:not(:disabled) { background: #000; }
+      .btn-chip.sm { height: 28px; padding: 0 10px; font-size: 12.5px; gap: 5px; }
+      .btn-chip.sm svg { width: 14px; height: 14px; }
+      .btn-chip.danger { color: var(--danger-500); }
+      .icon-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; flex: none; }
+      .icon-btn svg { width: 18px; height: 18px; stroke: var(--ink-900); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .icon-btn:hover:not(:disabled) { background: var(--soft-2); }
+      .icon-btn:disabled { opacity: .35; }
+      .icon-btn.plain { background: none; }
+      .icon-btn.plain:hover { background: var(--soft); }
+      .text-btn { color: var(--link-500); font-weight: 600; font-size: 13.5px; padding: 4px 2px; }
+      .text-btn:hover { text-decoration: underline; }
+      .muted { color: var(--ink-500); } .small { font-size: 12.5px; }
+
+      /* ==========================================================================
+         css/components/forms.css
+         Soft filled inputs (40px on desktop, 48px on phones), stepper, checkbox, toggle, picker.
+         ========================================================================== */
+      .field { margin-top: 14px; min-width: 0; }
+      .field label, .field .lbl { display: block; font-size: 12.5px; color: var(--ink-500); margin-bottom: 5px; font-weight: 500; }
+      .field .opt { font-weight: 400; color: var(--ink-300); }
+      .input { width: 100%; height: 40px; border: 0; border-radius: var(--r-md); background: var(--soft); padding: 0 12px; font-size: 14px; outline: none; display: flex; align-items: center; gap: 8px; }
+      textarea.input { height: 64px; padding: 10px 12px; resize: vertical; line-height: 1.4; }
+      .input:focus, .input:focus-within { box-shadow: inset 0 0 0 2px var(--info-500) !important; background: var(--surface); }
+      .input input { flex: 1; border: 0; background: none; outline: none; font-size: inherit; min-width: 0; height: 100%; }
+      .input svg { width: 16px; height: 16px; stroke: var(--ink-500); fill: none; stroke-width: 2; flex: none; }
+      input[type="time"].input { font-variant-numeric: tabular-nums; }
+      .field.err .input, .field.err .picker { box-shadow: inset 0 0 0 2px var(--danger-500) !important; }
+      .err-msg { color: var(--danger-500); font-size: 12.5px; margin-top: 5px; font-weight: 500; }
+      .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .sfx-wrap { padding-right: 12px; } .sfx-wrap input { font-variant-numeric: tabular-nums; width: 0; text-align: center; }
+      .sfx { font-size: 13px; color: var(--ink-500); flex: none; }
+      .stepper { display: flex; align-items: center; gap: 6px; }
+      .stepper .input { flex: 1; min-width: 64px; }
+      .stepper .icon-btn { width: 32px; height: 32px; }
+      .stepper .icon-btn svg { width: 16px; height: 16px; }
+      .field-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; font-size: 13px; }
+      .field-foot .count { font-size: 12px; color: var(--ink-500); font-variant-numeric: tabular-nums; }
+      .switch-row { display: flex; align-items: center; gap: 8px; }
+      input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; margin: 0; flex: none; border: 1.5px solid var(--border-200); border-radius: 5px; background: var(--surface) center/14px no-repeat; cursor: pointer; }
+      input[type="checkbox"]:hover { border-color: var(--ink-400); }
+      input[type="checkbox"]:checked, input[type="checkbox"]:indeterminate { background-color: var(--ink-900); border-color: var(--ink-900); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5 12.5 10 17 19 7'/%3E%3C/svg%3E"); }
+      input[type="checkbox"]:indeterminate { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='6' y1='12' x2='18' y2='12'/%3E%3C/svg%3E"); }
+      .toggle { width: 36px; height: 22px; border-radius: 11px; background: var(--border-200); position: relative; flex: none; transition: background .2s; }
+      .toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: left .2s; }
+      .toggle[aria-checked="true"] { background: var(--info-500); }
+      .toggle[aria-checked="true"]::after { left: 16px; }
+      .picker-wrap { display: flex; align-items: center; gap: 6px; }
+      .picker-wrap .icon-btn { width: 32px; height: 32px; background: none; }
+      .picker-wrap .icon-btn:hover:not(:disabled) { background: var(--soft); }
+      .picker { min-width: 0; width: 100%; height: 40px; border-radius: var(--r-md); background: var(--soft); padding: 0 10px 0 12px; display: flex; align-items: center; gap: 8px; text-align: left; }
+      .picker:hover { background: var(--soft-2); }
+      .picker[aria-expanded="true"] { box-shadow: inset 0 0 0 2px var(--info-500); background: var(--surface); }
+      .picker .pv { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+      .picker .pm { font-size: 12.5px; color: var(--ink-500); white-space: nowrap; }
+      .picker svg { width: 16px; height: 16px; stroke: var(--ink-700); fill: none; stroke-width: 2; flex: none; }
+      .tb-row .picker-wrap .picker { width: auto; min-width: 230px; }
+      .search { margin: 2px 0 6px; height: 36px; }
+      html[data-bp="sm"] .input, html[data-bp="sm"] .picker { height: 46px; font-size: 16px; }
+      html[data-bp="sm"] .picker .pv { font-size: 15px; }
+      html[data-bp="sm"] .tb-row .picker-wrap { flex: 1; } html[data-bp="sm"] .tb-row .picker-wrap .picker { min-width: 0; }
+      html[data-bp="sm"] .tb-row .pm { display: none; }
+
+      /* ==========================================================================
+         css/components/table.css
+         Dense data table: muted header, inset hairlines, tabular numbers, hover actions (quick approve, edit).
+         A container query reflows it: wide → narrow (times move under the code) → stacked rows.
+         ========================================================================== */
+      .tbl-wrap { container: tbl / inline-size; margin-top: 6px; }
+      .tbl { --cols: 28px minmax(150px, 1fr) 132px 68px 84px 60px 104px 60px; --lbl: span 2; }
+      .tr { display: grid; grid-template-columns: var(--cols); align-items: center; column-gap: 10px; min-height: 46px; padding: 0 8px; width: 100%; text-align: left; font-size: 13.5px; position: relative; border-radius: var(--r-sm); }
+      .tr > * { min-width: 0; }
+      .th { min-height: 34px; font-size: 12px; font-weight: 600; color: var(--ink-500); position: sticky; top: var(--head-h, 100px); z-index: 5; background: var(--surface); border-radius: 0; box-shadow: 0 1px 0 var(--line); }
+      .c-num { text-align: right; font-variant-numeric: tabular-nums; }
+      .c-chk { display: flex; align-items: center; }
+      .c-chk .lock svg { width: 14px; height: 14px; stroke: var(--ink-300); fill: none; stroke-width: 2; margin-left: 2px; }
+      .c-date { font-weight: 600; white-space: nowrap; }
+      .c-code { display: flex; flex-direction: column; justify-content: center; gap: 1px; }
+      .c-code .cl { display: flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
+      .c-code .code { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+      .c-code .cl > :not(.code) { flex: none; }
+      .c-code .mini svg { width: 14px; height: 14px; stroke: var(--ink-400); fill: none; stroke-width: 2; }
+      .c-code .mini.warn svg { stroke: var(--danger-500); }
+      .c-time { font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .c-time small, .grp .c-person small { display: block; font-size: 11.5px; color: var(--ink-500); margin-top: 1px; }
+      .c-sub { display: none; font-size: 12.5px; color: var(--ink-500); font-variant-numeric: tabular-nums; }
+      .c-act { display: flex; justify-content: flex-end; align-items: center; gap: 2px; }
+      .c-act .qe svg { width: 16px; height: 16px; stroke: var(--ink-400); fill: none; stroke-width: 2; }
+      .c-act .qe { width: 26px; height: 26px; display: grid; place-items: center; }
+      .c-act .qa { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: var(--success-700); }
+      .c-act .qa svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+      .c-act .qa:hover { background: #e3f5e8; }
+      .ent { cursor: pointer; outline: none; }
+      .ent::before { content: ""; position: absolute; top: 0; left: 8px; right: 8px; height: 1px; background: var(--line); }
+      .ent:hover { background: var(--soft); }
+      .ent:focus-visible { box-shadow: inset 0 0 0 2px var(--info-500); }
+      .ent.sel { background: var(--hl); border-radius: 0; }
+      .ent.sel:not(.ent.sel + .ent.sel) { border-top-left-radius: var(--r-sm); border-top-right-radius: var(--r-sm); }
+      .ent.sel:not(:has(+ .ent.sel)) { border-bottom-left-radius: var(--r-sm); border-bottom-right-radius: var(--r-sm); }
+      .ent.open { background: var(--soft); }
+      .ent:hover::before, .ent:hover + .ent::before, .ent.sel::before, .ent.sel + .ent::before, .ent.open::before, .ent.open + .ent::before, .tr-ed + .ent::before { opacity: 0; }
+      .ent.sel + .ent.sel::before { opacity: 1; background: rgba(16, 107, 218, .16); }
+      .ent .c-act > * { opacity: 0; transition: opacity .1s; }
+      .ent:hover .c-act > *, .ent:focus-visible .c-act > *, .ent.open .c-act > *, .ent:focus-within .c-act > * { opacity: 1; }
+      .dayl .c-act > .qa, .grp .c-act > .qa { opacity: 0; transition: opacity .1s; }
+      .dayl:hover .c-act > .qa, .dayl:focus-within .c-act > .qa, .grp:hover .c-act > .qa, .grp:focus-within .c-act > .qa { opacity: 1; }
+      /* day line inside a person: date + flags, day totals; the timelogs of that day sit under it */
+      .dayl { min-height: 36px; font-size: 12.5px; }
+      .dayl::before { content: ""; position: absolute; top: 0; left: 8px; right: 8px; height: 1px; background: var(--line); }
+      .dayl + .ent::before { opacity: 0; }
+      .dayl .dl { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+      .dayl .dl b { font-size: 13px; font-weight: 600; white-space: nowrap; }
+      .dayl .c-num { color: var(--ink-500); font-weight: 600; }
+      .flag { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+      .flag svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+      .flag.err { color: var(--danger-500); } .flag.warn { color: var(--warning-700); }
+      .tbl.list .dayl .c-code, .tbl.list .ent .c-code { padding-left: 24px; }
+      .grp .c-person .caret { width: 18px; height: 18px; display: grid; place-items: center; flex: none; margin-right: -4px; }
+      .grp .c-person .caret svg { width: 16px; height: 16px; stroke: var(--ink-500); fill: none; stroke-width: 2.2; }
+      .grp .c-person:hover b { text-decoration: none; }
+      .grp:hover { background: var(--soft); }
+      .grp-wrap.folded + .grp-wrap.folded { margin-top: 0; }
+      .grp-wrap.folded + .grp-wrap.folded .grp::before { content: ""; position: absolute; top: 0; left: 8px; right: 8px; height: 1px; background: var(--line); }
+      .grp-wrap { margin-top: 10px; border-radius: var(--r-lg); }
+      .grp { min-height: 54px; }
+      .grp-wrap.all-sel { background: var(--hl); }
+      .grp-wrap.all-sel .ent, .grp-wrap.all-sel .ent.sel { background: transparent; border-radius: 0; }
+      .grp-wrap.all-sel .ent:hover { background: rgba(16, 107, 218, .06); }
+      .grp-wrap.all-sel .ent::before { opacity: 1; background: rgba(16, 107, 218, .16); }
+      .grp .c-person { grid-column: var(--lbl); display: flex; align-items: center; gap: 10px; text-align: left; min-width: 0; }
+      .grp .c-person b { display: block; font-size: 14px; font-weight: 600; }
+            .grp .c-num { font-weight: 600; }
+      .grp .c-act .icon-btn { width: 28px; height: 28px; }
+      .tf { position: sticky; bottom: 0; z-index: 4; background: var(--soft); margin: 12px calc(-1 * var(--gutter)) 0; padding: 0 calc(var(--gutter) + 8px); width: calc(100% + 2 * var(--gutter)); border-radius: 0; border-top: 1px solid var(--line); font-weight: 700; min-height: 46px; }
+      .page:has(.tf) { padding-bottom: 0; }
+      .tf .c-lbl { grid-column: var(--lbl); font-size: 13px; }
+      .tbl:has(#ied) .tf { position: static; } /* an open row editor is never covered by the totals */
+      @container tbl (max-width: 840px) {
+        .tbl { --cols: 28px minmax(0, 1fr) 60px 104px 60px; --lbl: span 1; }
+        .c-time, .c-ord, .c-ot { display: none; }
+        .ent .c-code { padding: 7px 0; }
+        .c-sub { display: block; } .c-sub .sd { display: none; }
+      }
+      @container tbl (max-width: 540px) {
+        .th { display: none; }
+        .tr { padding: 0; column-gap: 10px; }
+        .ent { grid-template-columns: 26px minmax(0, 1fr) auto; grid-template-rows: auto auto; padding: 11px 6px; row-gap: 4px; }
+        .ent .c-chk { grid-row: 1 / 3; } .ent .c-code { grid-column: 2; grid-row: 1 / 3; padding: 0; }
+        .c-sub .sd { display: inline; }
+        .ent .c-tot { grid-column: 3; grid-row: 1; align-self: end; } .ent .c-st { grid-column: 3; grid-row: 2; text-align: right; align-self: start; }
+        .ent .c-date, .ent .c-act { display: none; }
+        .grp { grid-template-columns: 26px minmax(0, 1fr) auto 28px; padding: 0 6px; }
+        .grp .c-person { grid-column: auto; } .grp .c-st { display: none; }
+        .dayl { grid-template-columns: 26px minmax(0, 1fr) auto; padding: 0 6px; } .dayl .c-time, .dayl .c-st, .dayl .c-act { display: none; }
+        .tbl.list .dayl .c-code, .tbl.list .ent .c-code { padding-left: 0; }
+        .tbl.list .c-sub .sd { display: none; } /* the day line already says the date */
+        .tf { grid-template-columns: 1fr auto; padding: 0 calc(var(--gutter) + 6px); } .tf .c-lbl { grid-column: auto; } .tf .c-chk, .tf .blank { display: none; }
+      }
+
+      /* ==========================================================================
+         css/components/inline-editor.css
+         Desktop editing: the row opens in place. The open row and its editor read as one soft card; fields are white.
+         ========================================================================== */
+      .ent.open { border-radius: var(--r-md) var(--r-md) 0 0; }
+      .tr-ed { background: var(--soft); border-radius: 0 0 var(--r-lg) var(--r-lg); padding: 6px 16px 14px 46px; margin-bottom: 8px; }
+      .tr-ed.new { padding-left: 16px; }
+      .tr-ed.new { border-radius: var(--r-lg); margin: 8px 0; box-shadow: inset 0 0 0 1.5px var(--info-500); background: #f7faff; }
+      .tr-ed .input, .tr-ed .picker, .tr-ed .note-ro { background: var(--surface); box-shadow: inset 0 0 0 1px #e1e4e8; }
+      .tr-ed .picker:hover { box-shadow: inset 0 0 0 1px var(--border-200); }
+      .tr-ed .stepper .icon-btn { background: var(--surface); box-shadow: inset 0 0 0 1px #e1e4e8; }
+      .ied-head { display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap; min-height: 44px; padding: 4px 0 12px; border-bottom: 1px solid #e1e4e8; margin-bottom: 4px; }
+      .tr-ed.new .ied-head { border-bottom: 0; padding-bottom: 0; }
+      .ied-head .meta { font-size: 12.5px; color: var(--ink-500); }
+      .ied-state b { display: block; font-size: 14px; font-weight: 600; }
+      .ied-state small { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-500); margin-top: 1px; }
+      .ied-state .text-btn { font-size: 12.5px; padding: 0; }
+      .ed-acts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .ed-acts .btn.ghost-danger { padding: 0 12px; }
+      .btn.outline { background: var(--surface); color: var(--ink-900); box-shadow: inset 0 0 0 1px var(--border-200); }
+      .btn.outline:hover:not(:disabled) { background: var(--soft); }
+      .btn:disabled:not([aria-busy]) { opacity: .45; cursor: default; }
+      .btn.primary:disabled:not([aria-busy]) { opacity: 1; }
+      .btn.outline .spin { border-color: rgba(0,0,0,.15); border-top-color: var(--ink-900); }
+      .ied-head .grow { flex: 1; }
+      .ied-title { font-size: 14px; font-weight: 700; }
+      .ied-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 14px; margin-top: 6px; }
+      .ied-grid .field { margin-top: 0; }
+      .ied-grid .span2 { grid-column: span 2; } .ied-grid .span3 { grid-column: span 3; } .ied-grid .span4 { grid-column: 1 / -1; }
+      .ied-grid .banner { margin-top: 0; }
+      .ied-grid textarea.input { height: 40px; min-height: 40px; }
+      .ied-grid .note-ro { min-height: 40px; padding: 10px 12px; }
+      .ied-hist { margin-top: 12px; background: var(--surface); border-radius: var(--r-md); padding: 4px 14px; box-shadow: inset 0 0 0 1px #e1e4e8; }
+      .ied-foot { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+      .ied-foot .grow { flex: 1; }
+      .ied-foot .hint { font-size: 12px; color: var(--ink-500); }
+      .ied-ro { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 14px; margin-top: 8px; }
+      .ied-ro .lbl { display: block; font-size: 12px; color: var(--ink-500); } .ied-ro b { font-weight: 600; font-variant-numeric: tabular-nums; }
+      .hrs { height: 40px; border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px #e1e4e8; display: flex; align-items: center; gap: 8px; padding: 0 12px; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; }
+      .hrs b { font-size: 16px; font-family: var(--font-display); }
+      .hrs span { font-size: 12.5px; color: var(--ink-500); }
+      .hrs small { margin-left: auto; font-size: 12px; color: var(--ink-500); }
+      @container tbl (max-width: 840px) {
+        .tr-ed { padding-left: 16px; }
+        .ied-grid, .ied-ro { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .ied-grid .span3 { grid-column: 1 / -1; }
+      }
+
+      /* ==========================================================================
+         css/components/cards.css
+         Stats, banners, notes, empty state, skeletons.
+         ========================================================================== */
+      .mini-stats { display: flex; gap: 26px; flex-wrap: wrap; }
+      .mini-stats .l { font-size: 12px; color: var(--ink-500); }
+      .mini-stats .n { font-family: var(--font-display); font-weight: 700; font-size: 19px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+      .mini-stats .n small { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--ink-500); margin-left: 4px; letter-spacing: 0; }
+      .banner { display: flex; align-items: flex-start; gap: 10px; background: var(--warning-50); border-radius: var(--r-md); padding: 10px 12px; margin-top: 12px; font-size: 13px; line-height: 1.4; }
+      .banner > svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; flex: none; margin-top: 1px; }
+      .banner .main { flex: 1; } .banner b { display: block; font-size: 13.5px; }
+      .banner.err { background: rgba(218, 30, 40, .08); color: var(--danger-700); }
+      .banner .btn-chip { background: rgba(255,255,255,.8); }
+      .note { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--ink-500); margin: 10px 0 0; }
+      .note svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; flex: none; }
+      .note-ro { background: var(--soft); border-radius: var(--r-md); padding: 10px 12px; font-size: 14px; line-height: 1.45; min-height: 40px; }
+      .note-ro.empty { color: var(--ink-300); }
+      .empty-state { text-align: center; padding: 56px 12px 28px; }
+      .empty-state .ei { width: 52px; height: 52px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; margin: 0 auto; }
+      .empty-state .ei svg { width: 24px; height: 24px; stroke: var(--ink-500); fill: none; stroke-width: 1.8; }
+      .empty-state h3 { font-size: 15px; font-weight: 600; margin: 12px 0 4px; }
+      .empty-state p { font-size: 13.5px; color: var(--ink-500); line-height: 1.45; margin: 0 auto 16px; max-width: 340px; }
+      .empty-state .btn { width: auto; display: inline-flex; padding: 0 20px; height: 38px; font-size: 14px; }
+      .sk { height: 11px; border-radius: 6px; background: linear-gradient(90deg, var(--soft) 25%, var(--soft-2) 37%, var(--soft) 63%); background-size: 400% 100%; animation: sk 1.1s ease infinite; }
+      .sk-row { display: flex; gap: 16px; align-items: center; padding: 15px 8px; border-bottom: 1px solid var(--line); }
+      @keyframes sk { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+      /* ==========================================================================
+         css/components/calendar.css
+         ========================================================================== */
+      .cal-head { display: flex; align-items: center; justify-content: space-between; padding: 2px 2px 0; }
+      .cal-head b { font-size: 14px; font-weight: 600; }
+      .cal-head .icon-btn { width: 30px; height: 30px; background: none; }
+      .cal-head .icon-btn:hover { background: var(--soft); }
+      .cal { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 2px; margin-top: 6px; text-align: center; }
+      .cal .dow { font-size: 11px; color: var(--ink-500); font-weight: 600; padding: 4px 0; }
+      .cal .c { height: 36px; display: grid; place-items: center; font-size: 13px; position: relative; font-variant-numeric: tabular-nums; border-radius: 8px; }
+      .cal button.c:hover { background: var(--soft); }
+      .cal .c.wk { color: var(--ink-300); }
+      .cal .c.has::after { content: ""; position: absolute; bottom: 4px; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--ink-400); }
+      .cal .c.sel { background: var(--info-500); color: #fff; font-weight: 600; }
+      .cal .c.sel::after { background: #fff; }
+      .cal .c.today { box-shadow: inset 0 0 0 1.5px var(--ink-900); }
+      html[data-bp="sm"] .cal .c { height: 44px; font-size: 15px; }
+
+      /* ==========================================================================
+         css/components/overlays.css
+         Dropdown menu (desktop pickers + filters), bottom sheet (phones: editor + menus), dialog, toast.
+         ========================================================================== */
+      .pop { position: fixed; z-index: 45; background: var(--surface); border-radius: 12px; box-shadow: var(--shadow-pop); width: 320px; max-height: min(460px, calc(100vh - 16px)); display: flex; flex-direction: column; overflow: hidden; opacity: 0; transform: translateY(-4px); transition: opacity .12s, transform .12s; }
+      .pop.show { opacity: 1; transform: none; }
+      .pop-body { overflow-y: auto; padding: 8px; flex: 1; }
+      .pop-foot { padding: 10px; border-top: 1px solid var(--line); flex: none; }
+      .pop-foot .foot-row .btn { height: 34px; font-size: 13.5px; }
+      .pop .sec { margin: 10px 8px 4px; }
+      .pop .sec h2 { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--ink-500); }
+      .pop .list > * + *::before { display: none; }
+      .pop .row { min-height: 38px; padding: 6px 10px; border-radius: var(--r-sm); gap: 10px; }
+      .pop .row .s { font-size: 12px; }
+      .pop .note { margin: 8px 6px 2px; font-size: 12px; }
+      .pop .row-toggle { padding: 6px 10px 8px; margin-bottom: 4px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+      .pscrim { position: fixed; inset: 0; background: var(--scrim); opacity: 0; transition: opacity .2s; z-index: 30; }
+      #panel-layer.show .pscrim { opacity: 1; }
+      html[data-bp="xl"] .pscrim { display: none; }
+      .panel { position: fixed; top: 0; right: 0; bottom: 0; width: var(--panel-w); max-width: 100vw; background: var(--surface); z-index: 31; display: flex; flex-direction: column; transform: translateX(100%); transition: transform .24s cubic-bezier(.2,.8,.2,1); box-shadow: var(--shadow-float); }
+      html[data-bp="xl"] .panel { box-shadow: -1px 0 0 var(--line), -12px 0 32px rgba(27,30,35,.05); }
+      #panel-layer.show .panel { transform: none; }
+      .sheet-handle { display: none; width: 36px; height: 5px; border-radius: 3px; background: var(--soft-2); margin: 8px auto 0; flex: none; }
+      html[data-bp="sm"] .panel { top: auto; left: 0; width: auto; max-height: 92%; border-radius: var(--r-sheet) var(--r-sheet) 0 0; transform: translateY(100%); }
+      html[data-bp="sm"] .sheet-handle { display: block; }
+      .panel-head { display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; padding: 10px 12px 6px; flex: none; }
+      .panel-head h2 { margin: 0; text-align: center; font-size: 15px; font-weight: 600; }
+      .panel-head .icon-btn { background: none; }
+      .panel-head .icon-btn:hover { background: var(--soft); }
+      .panel-body { padding: 0 22px 24px; overflow-y: auto; flex: 1; }
+      .panel-foot { padding: 12px 22px 16px; flex: none; border-top: 1px solid var(--line); }
+      html[data-bp="sm"] .panel-body, html[data-bp="sm"] .panel-foot { padding-left: var(--gutter); padding-right: var(--gutter); }
+      html[data-bp="sm"] .panel-foot { padding-bottom: 24px; }
+      .foot-row { display: flex; gap: 8px; align-items: center; }
+      .foot-row .btn { flex: 1; }
+      .foot-row .btn.ghost-danger { flex: none; width: auto; padding: 0 16px; }
+      .dscrim { position: fixed; inset: 0; background: var(--scrim); z-index: 50; opacity: 0; transition: opacity .16s; }
+      .dscrim.show { opacity: 1; }
+      .dialog { position: fixed; left: 50%; top: 50%; width: min(400px, calc(100vw - 40px)); transform: translate(-50%, -46%) scale(.97); opacity: 0; z-index: 51; background: var(--surface); border-radius: var(--r-lg); padding: 22px 20px 18px; box-shadow: var(--shadow-float); transition: all .16s; }
+      .dialog.show { opacity: 1; transform: translate(-50%, -50%); }
+      .dialog h2 { margin: 0 0 6px; font-size: 17px; font-family: var(--font-display); }
+      .dialog p { margin: 0 0 8px; color: var(--ink-500); font-size: 14px; line-height: 1.45; }
+      .dialog .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+      .dialog .acts .btn { height: 40px; font-size: 14px; }
+      .toast { position: fixed; left: 50%; bottom: 20px; width: min(440px, calc(100vw - 32px)); z-index: 60; background: var(--ink-900); color: #fff; border-radius: var(--r-md); padding: 11px 14px; font-size: 14px; display: flex; align-items: center; gap: 12px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; box-shadow: var(--shadow-float); }
+      .toast.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+      .toast > span:not(.t-ico) { flex: 1; }
+      .toast small { display: block; font-size: 12.5px; opacity: .75; margin-top: 1px; }
+      .toast button { color: var(--link-on-dark); font-weight: 600; }
+      .toast .t-ico { width: 20px; height: 20px; border-radius: 50%; background: var(--success-500); display: grid; place-items: center; flex: none; }
+      .toast .t-ico svg { width: 12px; height: 12px; stroke: #fff; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .toast.err { background: var(--danger-700); } .toast.err .t-ico { background: #fff; } .toast.err .t-ico svg { stroke: var(--danger-500); stroke-width: 2.6; }
+      .toast.info .t-ico { background: rgba(255,255,255,.18); } .toast.info .t-ico svg { stroke: #fff; stroke-width: 2.4; }
+
+      /* ==========================================================================
+         css/screens/timelogs.css
+         Bulk action bar, week strip, panel editor bits, API request log, shortcuts.
+         ========================================================================== */
+      /* selection bar: docked full width along the bottom of the app; plain dark bar, outline buttons, white Approve */
+      #bulk-slot { flex: none; }
+      .bulk { display: flex; align-items: center; gap: 8px; min-height: 60px; padding: 10px var(--gutter); background: var(--ink-900); color: #fff; }
+      .bk-main { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+      .bk-main b { font-size: 14px; font-weight: 600; }
+      .bk-main span { font-size: 13px; color: rgba(255,255,255,.72); }
+      .bk-main .warn { color: #ffd27f; }
+      .bk-clear { color: var(--link-on-dark); font-weight: 600; font-size: 13px; }
+      .bk-clear:hover { text-decoration: underline; }
+      .bk-btn { height: 36px; padding: 0 16px; border-radius: var(--r-pill); font-weight: 600; font-size: 13.5px; color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.34); white-space: nowrap; flex: none; }
+      .bk-btn:hover { background: rgba(255,255,255,.1); }
+      .bk-primary { height: 36px; padding: 0 20px; border-radius: var(--r-pill); font-weight: 700; font-size: 13.5px; background: #fff; color: var(--ink-900); white-space: nowrap; flex: none; display: inline-flex; align-items: center; gap: 6px; }
+      .bk-primary:hover:not(:disabled) { background: #eceef0; }
+      .bk-primary:disabled { background: rgba(255,255,255,.16); color: rgba(255,255,255,.5); }
+      .bk-primary .spin { border-color: rgba(0,0,0,.15); border-top-color: var(--ink-900); }
+      .bulk.enter { animation: slideUp .18s cubic-bezier(.2,.8,.2,1); }
+      html[data-bp="sm"] .bulk { flex-wrap: wrap; }
+      html[data-bp="sm"] .bk-main { flex-basis: 100%; }
+      html[data-bp="sm"] .bk-btn, html[data-bp="sm"] .bk-primary { flex: 1; padding: 0 8px; justify-content: center; }
+      /* status tabs (underline; the indicator is ink, orange stays brand only) */
+      .tabs { display: flex; gap: 22px; margin: 12px calc(-1 * var(--gutter)) 0; padding: 0 var(--gutter); box-shadow: inset 0 -1px 0 var(--line); overflow-x: auto; scrollbar-width: none; }
+      .tab { height: 38px; display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 500; color: var(--ink-500); white-space: nowrap; position: relative; flex: none; }
+      .tab:hover { color: var(--ink-900); }
+      .tab[aria-selected="true"] { color: var(--ink-900); font-weight: 600; }
+      .tab[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--ink-900); }
+      .tab .n { min-width: 20px; height: 18px; padding: 0 6px; border-radius: 9px; background: var(--soft-2); color: var(--ink-700); font-size: 11.5px; font-weight: 600; display: inline-grid; place-items: center; font-variant-numeric: tabular-nums; }
+      .tab[aria-selected="true"] .n { background: var(--ink-900); color: #fff; }
+      .tabs + .tb-row { margin-top: 10px; }
+      .dialog .dlg-note { height: 76px; margin-top: 10px; }
+      .dialog .dlg-sw { margin-top: 10px; font-size: 13.5px; }
+      /* sortable column headers */
+      .th .c-num { display: flex; justify-content: flex-end; }
+      .th .sort { white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; font: inherit; color: inherit; padding: 4px 0; }
+      .th .c-num .sort { flex-direction: row-reverse; }
+      .th .sort svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.4; opacity: 0; transition: opacity .1s; }
+      .th .sort:hover { color: var(--ink-900); } .th .sort:hover svg { opacity: .5; }
+      .th .sort.on { color: var(--ink-900); } .th .sort.on svg { opacity: 1; }
+      /* "ready to approve" line above the table */
+      .summary { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--ink-500); min-height: 28px; margin-top: 2px; }
+      .summary b { color: var(--ink-900); font-weight: 600; }
+      .summary .grow { flex: 1; }
+      .summary .hint { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; }
+      .summary .hint svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; flex: none; }
+      .wk-row { display: flex; align-items: center; gap: 18px 32px; flex-wrap: wrap; margin-top: 4px; }
+      .strip { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; flex: 1 1 640px; min-width: 300px; }
+      .strip .sd:nth-child(8) { margin-left: 8px; } /* week 2 */
+      .strip .sd.wk .dn, .strip .sd.wk .dw { color: var(--ink-300); }
+      .strip .sd { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 7px 0 11px; border-radius: var(--r-sm); position: relative; }
+      .strip .sd:hover { background: var(--soft); }
+      .strip .sd[aria-pressed="true"] { background: var(--soft-2); }
+      .strip .dw { font-size: 11px; color: var(--ink-500); font-weight: 600; }
+      .strip .dn { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+      .strip .dn.today { color: var(--info-500); }
+      .strip .dh { font-size: 11px; color: var(--ink-500); font-variant-numeric: tabular-nums; }
+      .strip .sd i { position: absolute; left: 28%; right: 28%; bottom: 4px; height: 3px; border-radius: 2px; }
+      html[data-bp="sm"] .strip, html[data-bp="md"] .strip { flex-basis: 100%; min-width: 0; }
+      html[data-bp="sm"] .strip { grid-template-columns: repeat(7, minmax(0, 1fr)); } html[data-bp="sm"] .strip .sd:nth-child(8) { margin-left: 0; }
+      .ed-status { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 2px 0 12px; border-bottom: 1px solid var(--line); }
+      .ed-status .meta { font-size: 12.5px; color: var(--ink-500); flex: 1 1 140px; }
+      .ed-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+      .ro-person { display: flex; align-items: center; gap: 8px; height: 40px; font-weight: 600; }
+      .totals { margin-top: 12px; background: var(--soft); border-radius: var(--r-md); padding: 2px 12px; }
+      .totals .kv { font-size: 13.5px; padding: 7px 0; }
+      .totals .kv + .kv::before { background: var(--soft-2); }
+      .hist .kv, .ied-hist .kv { font-size: 13px; }
+      .hist .kv .k, .ied-hist .kv .k { color: var(--ink-900); } .hist .kv .v, .ied-hist .kv .v { color: var(--ink-500); font-weight: 400; }
+      .opt-check { cursor: pointer; }
+      .row-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0 6px; font-size: 14px; }
+
+      /* ==========================================================================
+         css/states/loading.css
+         ========================================================================== */
+      .spin { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; display: inline-block; animation: spin .7s linear infinite; }
+      .btn.secondary .spin, .btn-chip:not(.primary) .spin, .btn.ghost-danger .spin, .qa .spin { border-color: rgba(0,0,0,.15); border-top-color: currentColor; }
+      .btn.primary[aria-busy="true"]:disabled { background: var(--ink-900); color: #fff; }
+      .btn.danger[aria-busy="true"]:disabled { background: var(--danger-500); color: #fff; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      /* ==========================================================================
+         css/states/motion.css
+         ========================================================================== */
+      @keyframes pushIn { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+      @keyframes backIn { from { transform: translateX(-24px); opacity: 0; } to { transform: none; opacity: 1; } }
+      @keyframes slideUp { from { transform: translateY(100%); } to { transform: none; } }
+      @keyframes edIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+      .anim-push { animation: pushIn .2s cubic-bezier(.2,.8,.2,1); }
+      .anim-back { animation: backIn .2s cubic-bezier(.2,.8,.2,1); }
+      .tr-ed.enter { animation: edIn .16s ease-out; }
+      @media (prefers-reduced-motion: reduce) {
+        .anim-push, .anim-back, .bulk.enter, .tr-ed.enter, .spin, .sk { animation: none; }
+        .panel, .pscrim, .toast, .dialog, .app-main, .pop { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <main class="app-main">
+        <div id="view"></div>
+        <div id="bulk-slot"></div>
+      </main>
+    </div>
+    <div id="panel-layer"></div>
+    <div id="pop-layer"></div>
+    <div id="dlg-layer"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"><span class="t-ico"></span><span></span><button hidden>Undo</button></div>
+
+    <script>
+      // Timelogs (stand-alone app) prototype — one classic script, laid out as the JS files of a traditional site in
+      // load order: assets → core → data → api → state → selectors → components → screens → router → ui → editor →
+      // actions → events → responsive → demo → main.
+
+      // ==========================================================================
+      // js/assets.js
+      // Logo, embedded as a data URI so the file opens on its own.
+      // ==========================================================================
+      const LOGO_SRC = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDIzMS4zIDcwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyMzEuMyA3MDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPiAuc3Qwe2ZpbGw6IzRBNEY1NDt9IC5zdDF7ZmlsbDp1cmwoI1NWR0lEXzFfKTt9IC5zdDJ7ZmlsbDojNkU3QkEwO30gLnN0M3tmaWxsOiMyMDI5NDU7fSAuc3Q0e2ZpbGw6dXJsKCNTVkdJRF8yXyk7fSA8L3N0eWxlPiA8Zz4gPGc+IDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik05NywzOC43YzAsMS0wLjMsMS44LTEsMi40Yy0wLjYsMC42LTEuNCwwLjgtMi4zLDAuOHMtMS42LTAuMy0yLjMtMC44Yy0wLjYtMC42LTEtMS4zLTEtMi40IGMwLTEsMC4zLTEuOCwxLTIuNGMwLjYtMC42LDEuNC0wLjgsMi4zLTAuOHMxLjYsMC4zLDIuMywwLjhDOTYuNywzNi45LDk3LDM3LjcsOTcsMzguN3ogTTk2LjUsNjMuM2gtNS40VjQ0LjJoNS40VjYzLjN6Ii8+IDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDkuNSwzNy44YzMuNywwLDYuNiwwLjcsOC42LDJzMywzLjUsMyw2LjVjMCwzLTEsNS4yLTMuMSw2LjVjLTIsMS4zLTQuOSwyLTguNywyaC0xLjh2OC40SDEwMlYzOC41IGMxLjItMC4yLDIuNS0wLjQsMy45LTAuNUMxMDcuMiwzNy45LDEwOC40LDM3LjgsMTA5LjUsMzcuOHogTTEwOS44LDQyLjZjLTAuNCwwLTAuOCwwLTEuMiwwYy0wLjQsMC0wLjgsMC0xLDAuMVY1MGgxLjggYzIsMCwzLjQtMC4zLDQuNC0wLjhjMS0wLjUsMS41LTEuNSwxLjUtM2MwLTAuNy0wLjEtMS4zLTAuNC0xLjdjLTAuMy0wLjQtMC42LTAuOC0xLjEtMS4xcy0xLjEtMC41LTEuNy0wLjYgQzExMS40LDQyLjcsMTEwLjYsNDIuNiwxMDkuOCw0Mi42eiIvPiA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTMxLDQzLjdjMS42LDAsMi45LDAuMiw0LDAuNWMxLjEsMC40LDEuOSwwLjksMi42LDEuNmMwLjYsMC43LDEuMSwxLjUsMS40LDIuNWMwLjMsMSwwLjQsMiwwLjQsMy4ydjExLjIgYy0wLjgsMC4yLTEuOSwwLjQtMy4yLDAuNmMtMS40LDAuMi0zLjEsMC40LTUsMC40Yy0xLjIsMC0yLjQtMC4xLTMuNC0wLjNjLTEtMC4yLTEuOS0wLjYtMi42LTEuMWMtMC43LTAuNS0xLjMtMS4yLTEuNy0yIGMtMC40LTAuOC0wLjYtMS44LTAuNi0yLjljMC0xLjEsMC4yLTIsMC43LTIuOGMwLjQtMC44LDEuMS0xLjQsMS44LTEuOWMwLjgtMC40LDEuNi0wLjgsMi42LTFjMS0wLjIsMi0wLjMsMy0wLjMgYzAuNywwLDEuMywwLDEuOSwwLjFzMSwwLjEsMS4zLDAuMnYtMC41YzAtMC45LTAuMy0xLjYtMC44LTIuMmMtMC42LTAuNi0xLjUtMC44LTIuOS0wLjhjLTAuOSwwLTEuOCwwLjEtMi43LDAuMiBjLTAuOSwwLjEtMS43LDAuMy0yLjMsMC42bC0wLjctNC4zYzAuMy0wLjEsMC43LTAuMiwxLjItMC4zYzAuNS0wLjEsMS0wLjIsMS42LTAuM2MwLjYtMC4xLDEuMi0wLjIsMS44LTAuMiBDMTI5LjgsNDMuNywxMzAuNCw0My43LDEzMSw0My43eiBNMTMxLjUsNTkuNWMwLjUsMCwxLDAsMS41LDBjMC41LDAsMC45LDAsMS4yLTAuMXYtNC4xYy0wLjIsMC0wLjUtMC4xLTEtMC4xIGMtMC40LDAtMC44LTAuMS0xLjItMC4xYy0wLjUsMC0xLDAtMS40LDAuMXMtMC44LDAuMi0xLjIsMC40Yy0wLjQsMC4yLTAuNiwwLjQtMC44LDAuN3MtMC4zLDAuNy0wLjMsMS4xYzAsMC44LDAuMywxLjQsMC44LDEuOCBDMTI5LjcsNTkuMywxMzAuNSw1OS41LDEzMS41LDU5LjV6Ii8+IDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNjAuNyw0NC4yYy0xLjEsMy43LTIuMiw3LjEtMy40LDEwLjNjLTEuMiwzLjItMi41LDYuMy0zLjksOS40Yy0wLjUsMS4xLTEsMi0xLjUsMi44IGMtMC41LDAuOC0xLjEsMS40LTEuNywxLjljLTAuNiwwLjUtMS4zLDAuOC0yLDEuMWMtMC44LDAuMi0xLjYsMC40LTIuNywwLjRjLTAuOCwwLTEuNi0wLjEtMi40LTAuMmMtMC43LTAuMi0xLjMtMC40LTEuOC0wLjUgbDAuOS00LjNjMC42LDAuMiwxLjEsMC4zLDEuNSwwLjRjMC40LDAuMSwwLjksMC4xLDEuNCwwLjFjMSwwLDEuNy0wLjMsMi4yLTAuOGMwLjUtMC41LDEtMS4yLDEuMy0yLjJjLTEuMi0yLjQtMi41LTUuMS0zLjctOC4xIGMtMS4yLTMtMi40LTYuNC0zLjUtMTAuMWg1LjdjMC4yLDAuOSwwLjUsMiwwLjgsMy4xYzAuMywxLjEsMC43LDIuMiwxLDMuM2MwLjQsMS4xLDAuOCwyLjIsMS4xLDMuM3MwLjgsMiwxLjEsMi45IGMwLjMtMC45LDAuNi0xLjgsMS0yLjljMC40LTEuMSwwLjctMi4yLDEtMy4zYzAuMy0xLjEsMC42LTIuMiwwLjktMy4zYzAuMy0xLjEsMC42LTIuMSwwLjgtMy4xTDE2MC43LDQ0LjJMMTYwLjcsNDQuMkwxNjAuNyw0NC4yIHoiLz4gPHBhdGggY2xhc3M9InN0MCIgZD0iTTE3NS4xLDQ5Yy0wLjUtMC4xLTEuMS0wLjMtMS43LTAuNGMtMC43LTAuMS0xLjQtMC4yLTIuMS0wLjJjLTAuNCwwLTAuOCwwLTEuMiwwLjFjLTAuNSwwLTAuOCwwLjEtMS4xLDAuMiB2MTQuNWgtNS40di0xOGMxLTAuNCwyLjEtMC43LDMuNC0xYzEuMy0wLjMsMi44LTAuNCw0LjQtMC40YzAuMywwLDAuNiwwLDEuMSwwYzAuNCwwLDAuOCwwLjEsMS4yLDAuMWMwLjQsMCwwLjgsMC4xLDEuMiwwLjIgYzAuNCwwLjEsMC44LDAuMiwxLjEsMC4zTDE3NS4xLDQ5eiIvPiA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTk2LjMsNTMuN2MwLDEuNS0wLjIsMi45LTAuNyw0LjFjLTAuNCwxLjItMS4xLDIuMy0xLjksMy4yYy0wLjgsMC45LTEuOCwxLjYtMywyYy0xLjIsMC41LTIuNCwwLjctMy45LDAuNyBjLTEuNCwwLTIuNy0wLjItMy44LTAuN2MtMS4yLTAuNS0yLjEtMS4yLTMtMnMtMS41LTItMS45LTMuMmMtMC40LTEuMi0wLjctMi42LTAuNy00LjFzMC4yLTIuOSwwLjctNC4xYzAuNS0xLjIsMS4xLTIuMywyLTMuMSBjMC44LTAuOSwxLjgtMS42LDMtMmMxLjItMC41LDIuNC0wLjcsMy44LTAuN2MxLjQsMCwyLjcsMC4yLDMuOCwwLjdjMS4yLDAuNSwyLjEsMS4yLDMsMmMwLjgsMC45LDEuNSwxLjksMS45LDMuMSBDMTk2LjEsNTAuOCwxOTYuMyw1Mi4yLDE5Ni4zLDUzLjd6IE0xOTAuOCw1My43YzAtMS43LTAuMy0zLTEtMy45Yy0wLjctMS0xLjYtMS40LTIuOC0xLjRjLTEuMiwwLTIuMiwwLjUtMi45LDEuNCBjLTAuNywxLTEsMi4zLTEsMy45YzAsMS43LDAuNCwzLDEsMy45YzAuNywxLDEuNiwxLjUsMi45LDEuNWMxLjIsMCwyLjItMC41LDIuOC0xLjVDMTkwLjUsNTYuNywxOTAuOCw1NS4zLDE5MC44LDUzLjd6Ii8+IDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMDguMSw2My42Yy0xLjYsMC0yLjgtMC4yLTMuOC0wLjVjLTEtMC4zLTEuOC0wLjgtMi4zLTEuM2MtMC42LTAuNi0xLTEuMi0xLjItMi4xYy0wLjItMC44LTAuMy0xLjctMC4zLTIuNyBWMzZsNS40LTAuOXYyMC44YzAsMC41LDAsMC45LDAuMSwxLjNjMC4xLDAuNCwwLjIsMC43LDAuNCwxYzAuMiwwLjMsMC41LDAuNSwwLjksMC43YzAuNCwwLjIsMC45LDAuMywxLjYsMC4zTDIwOC4xLDYzLjZ6Ii8+IDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMTkuNiw2My42Yy0xLjYsMC0yLjgtMC4yLTMuOC0wLjVjLTEtMC4zLTEuOC0wLjgtMi4zLTEuM2MtMC42LTAuNi0xLTEuMi0xLjItMi4xYy0wLjItMC44LTAuMy0xLjctMC4zLTIuNyBWMzZsNS40LTAuOXYyMC44YzAsMC41LDAsMC45LDAuMSwxLjNjMC4xLDAuNCwwLjIsMC43LDAuNCwxYzAuMiwwLjMsMC41LDAuNSwwLjksMC43YzAuNCwwLjIsMC45LDAuMywxLjYsMC4zTDIxOS42LDYzLjZ6Ii8+IDwvZz4gPHBhdGggY2xhc3M9InN0MCIgZD0iTTIyNS42LDM4LjJjMC0xLjUsMS4xLTIuNiwyLjUtMi42YzEuNCwwLDIuNSwxLjEsMi41LDIuNnMtMS4xLDIuNi0yLjUsMi42QzIyNi43LDQwLjgsMjI1LjYsMzkuNywyMjUuNiwzOC4yIE0yMjQuOSwzOC4yYzAsMS44LDEuNCwzLjIsMy4yLDMuMnMzLjItMS40LDMuMi0zLjJzLTEuNC0zLjItMy4yLTMuMlMyMjQuOSwzNi41LDIyNC45LDM4LjIgTTIyNi45LDQwaDAuNnYtMS41aDAuNEwyMjksNDBoMC44IGwtMS4xLTEuNWMwLjUsMCwwLjktMC40LDAuOS0xLjFjMC0wLjgtMC40LTEuMS0xLjMtMS4xaC0xLjRMMjI2LjksNDBMMjI2LjksNDB6IE0yMjcuNSwzNi45aDAuNmMwLjQsMCwwLjgsMC4xLDAuOCwwLjUgYzAsMC41LTAuNSwwLjUtMSwwLjVoLTAuNFYzNi45eiIvPiA8ZyB0cmFuc2Zvcm09Im1hdHJpeCggMSwgMCwgMCwgMSwgMCwwKSAiPiA8Zz4gPGcgaWQ9IkxheWVyMF8wX0ZJTExfMV8iPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzFfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjEzLjc5MjIiIHkxPSI0ODEuNTgxNSIgeDI9IjYyLjg0OTUiIHkyPSI0ODEuNTgxNSIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxIDAgMCAtMSAwIDUwOC4wNDY4KSI+IDxzdG9wIG9mZnNldD0iMy4xMDU0MzNlLTA0IiBzdHlsZT0ic3RvcC1jb2xvcjojMDBBMERGIi8+IDxzdG9wIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6IzY2QzRFOCIvPiA8L2xpbmVhckdyYWRpZW50PiA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNjIuNiwzMi41TDYyLjQsMzJjLTAuNy0yLjEtMi0zLjgtNC01TDEzLjgsMS4zYzAuNiwwLjQsMS4yLDAuOCwxLjcsMS40QzE2LjksNCwxNy43LDUuNSwxOCw3LjIgYzAsMC4zLDAuMSwwLjcsMC4xLDF2MGMwLDAsMCwwLDAsMGMwLDAuMiwwLDAuNCwwLDAuNnYxNS45bDE1LjQsOC45YzAuMSwwLDAuMywwLjEsMC40LDAuMmMwLDAsMC4xLDAuMSwwLjEsMC4xIGMwLjMsMC4zLDAuNCwwLjcsMC40LDEuMWMwLDAuNC0wLjEsMC44LTAuNCwxYzAsMCwwLDAsMCwwbDAsMGMtMC4zLDAuMy0wLjUsMC41LTAuNywwLjhjLTAuNywwLjktMS4yLDItMS42LDMuMiBjLTAuNywyLjQtMC40LDQuNywwLjksNi45YzEuMiwyLjIsMy4xLDMuNiw1LjUsNC4yYzIuNCwwLjcsNC43LDAuNCw2LjktMC45bDEzLjMtNy43YzItMS4yLDMuNC0yLjgsNC4xLTUgYzAtMC4yLDAuMS0wLjMsMC4xLTAuNWMwLTAuMiwwLjEtMC40LDAuMS0wLjZjMC0wLjIsMC4xLTAuNSwwLjEtMC43bDAtMS4zQzYyLjksMzMuOSw2Mi44LDMzLjIsNjIuNiwzMi41eiIvPiA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMTguMiwyOC4zdi0zLjVMNC42LDE2LjljLTIuMi0xLjItMy42LTMuMS00LjItNS41YzAtMC4yLTAuMS0wLjQtMC4xLTAuN2MtMC4xLTAuNS0wLjItMS4xLTAuMi0xLjZ2My42IGMwLDAuNywwLjEsMS41LDAuNCwyLjJjMC43LDIuNCwyLDQuMyw0LjIsNS41TDE4LjIsMjguM3oiLz4gPHBhdGggY2xhc3M9InN0MyIgZD0iTTEyLjUsMC42Yy0wLjMtMC4xLTAuNS0wLjItMC44LTAuM0MxMC40LDAsOS0wLjEsNy42LDAuMmMwLDAtMC4xLDAtMC4yLDBjLTAuMiwwLTAuNCwwLjEtMC41LDAuMSBjMCwwLTAuMSwwLTAuMSwwQzYuMywwLjUsNS43LDAuNyw1LjIsMC45QzQuOCwxLjEsNC4zLDEuNCwzLjksMS43QzMuMSwyLjIsMi41LDIuOSwyLDMuNkMxLjgsMy45LDEuNiw0LjEsMS40LDQuNGMwLDAsMCwwLDAsMCBsMCwwQzEuMSw0LjksMC45LDUuMywwLjcsNS43QzAuNiw2LjEsMC40LDYuNCwwLjMsNi45QzAuMSw3LjYsMCw4LjQsMCw5LjFjMCwwLDAsMCwwLDAuMWMwLDAuNSwwLjEsMS4xLDAuMiwxLjYgYzAsMC4yLDAuMSwwLjQsMC4xLDAuN2MwLjcsMi40LDIsNC4zLDQuMiw1LjVsMTMuNiw3Ljh2LTE2bDAtMC42djBjMC0wLjQtMC4xLTAuNy0wLjEtMWMtMC40LTEuNy0xLjItMy4yLTIuNS00LjUgYy0wLjUtMC41LTEuMS0xLTEuNy0xLjRjMCwwLTAuMSwwLTAuMS0wLjFDMTMuMywxLDEyLjksMC44LDEyLjUsMC42eiIvPiA8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzJfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjMuNDkwMzkyZS0wMiIgeTE9IjQ2Ni43ODQyIiB4Mj0iMTguMTc1IiB5Mj0iNDY2Ljc4NDIiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoMSAwIDAgLTEgMCA1MDguMDQ2OCkiPiA8c3RvcCBvZmZzZXQ9IjEuMTk0ODg0ZS0wMyIgc3R5bGU9InN0b3AtY29sb3I6I0ZGNkMwRSIvPiA8c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjkwMTUiLz4gPC9saW5lYXJHcmFkaWVudD4gPHBhdGggY2xhc3M9InN0NCIgZD0iTTAuNCwxNUMwLjEsMTQuMiwwLDEzLjUsMCwxMi43djQ3LjljMCwyLjUsMC45LDQuNywyLjcsNi40YzEuOCwxLjgsMy45LDIuNyw2LjQsMi43YzIuNSwwLDQuNy0wLjksNi40LTIuNyBjMS44LTEuOCwyLjctMy45LDIuNy02LjRWMjguM0w0LjYsMjAuNEMyLjQsMTkuMiwxLDE3LjQsMC40LDE1eiIvPiA8L2c+IDwvZz4gPC9nPiA8L2c+IDwvc3ZnPg==";
+      document.querySelectorAll("img[data-logo]").forEach((i) => (i.src = LOGO_SRC));
+
+      // ==========================================================================
+      // js/core/utils.js
+      // DOM shortcuts, escaping, number formatting, seeded random.
+      // ==========================================================================
+      const $ = (s, r = document) => r.querySelector(s);
+      const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+      const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      const r2 = (n) => Math.round(n * 100) / 100;
+      const num = (n, d = 2) => Number(n || 0).toFixed(d);
+      const sum = (a, f) => r2(a.reduce((t, x) => t + f(x), 0));
+      const plural = (n, w, p = w + "s") => `${n} ${n === 1 ? w : p}`;
+      const clone = (o) => (o == null ? o : JSON.parse(JSON.stringify(o)));
+      function mulberry32(a) { return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+      // ==========================================================================
+      // js/core/icons.js
+      // Stroke icons (24x24 paths, v7 set + admin nav) and the ico() renderer.
+      // ==========================================================================
+      const P = {
+        chev: '<polyline points="9 6 15 12 9 18"/>', back: '<polyline points="15 6 9 12 15 18"/>',
+        down: '<polyline points="6 9 12 15 18 9"/>', up: '<polyline points="6 15 12 9 18 15"/>',
+        close: '<line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>',
+        plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+        minus: '<line x1="5" y1="12" x2="19" y2="12"/>',
+        lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+        check: '<polyline points="5 12.5 10 17 19 7"/>',
+        doc: '<path d="M6 3h9l5 5v13H6z"/><polyline points="14 3 14 9 20 9"/>',
+        clock: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
+        cal: '<rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/>',
+        alert: '<path d="M12 3 2 20h20z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17" r=".6"/>',
+        search: '<circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/>',
+        info: '<circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r=".6"/>',
+        edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/>',
+        note: '<path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/>',
+        grid: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
+        pay: '<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/>',
+        people: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-6 6.5-6s5.9 2.4 6.5 6"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8M18 14.3c1.9.8 3.2 2.9 3.5 5.7"/>',
+        chart: '<line x1="5" y1="20" x2="5" y2="11"/><line x1="12" y1="20" x2="12" y2="5"/><line x1="19" y1="20" x2="19" y2="14"/>',
+        gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M2.5 12h3M18.5 12h3M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/>',
+        help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".6"/>',
+        code: '<polyline points="8 7 3 12 8 17"/><polyline points="16 7 21 12 16 17"/>',
+        undo: '<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
+        ban: '<circle cx="12" cy="12" r="9"/><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"/>',
+        pause: '<line x1="9" y1="6" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="18"/>',
+        send: '<path d="M21 3 10 14"/><path d="M21 3 14 21l-4-7-7-4z"/>',
+      };
+      const ico = (n, cls = "") => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${P[n] || ""}</svg>`;
+      $$("i[data-ico]").forEach((i) => (i.outerHTML = ico(i.dataset.ico)));
+
+      // ==========================================================================
+      // js/core/dates.js
+      // Fixed "today" (Thu 19 Nov 2026, as in the live screenshots), weeks, fortnightly pay periods, formatting.
+      // The API sends wall-clock times with a Z suffix ("2026-11-19T08:00:00.000Z" = 8:00 am), so they are read as text.
+      // ==========================================================================
+      const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const DOWL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const D = (y, m, d) => new Date(y, m - 1, d);
+      const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      const fromIso = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+      const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+      const daysBetween = (a, b) => Math.round((fromIso(b) - fromIso(a)) / 864e5);
+      const isWeekend = (d) => d.getDay() === 0 || d.getDay() === 6;
+      const fd = (d, o = {}) => `${o.dow ? DOW[d.getDay()] + " " : ""}${d.getDate()} ${MON[d.getMonth()]}${o.y ? " " + d.getFullYear() : ""}`;
+      const fdl = (s) => fd(fromIso(s), { dow: true }); // "Thu 19 Nov"
+      const TODAY = D(2026, 11, 19);
+      const TODAY_ISO = iso(TODAY);
+      const weekStart = (d) => addDays(d, -((d.getDay() + 6) % 7)); // Monday
+      const PAY_ANCHOR = D(2026, 11, 2); // fortnightly pay periods start on Mondays: 2–15 Nov, 16–29 Nov…
+      const payPeriod = (d) => { const n = Math.floor(Math.round((d - PAY_ANCHOR) / 864e5) / 14); const a = addDays(PAY_ANCHOR, n * 14); return [iso(a), iso(addDays(a, 13))]; };
+      function rangeLabel(a, b) {
+        const A = fromIso(a), B = fromIso(b);
+        if (a === b) return fd(A, { dow: true, y: true });
+        if (A.getMonth() === B.getMonth() && A.getFullYear() === B.getFullYear()) return `${A.getDate()} – ${B.getDate()} ${MON[B.getMonth()]} ${B.getFullYear()}`;
+        return `${fd(A)} – ${fd(B, { y: true })}`;
+      }
+      const t12 = (t) => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "pm" : "am"; h = h % 12 || 12; return [`${h}:${String(m).padStart(2, "0")}`, ap]; };
+      const time12 = (t) => (t ? t12(t).join(" ") : "");
+      const trange = (a, b) => { if (!a) return "—"; if (!b) return `${time12(a)} – ?`; const [x, ax] = t12(a), [y, ay] = t12(b); return ax === ay ? `${x} – ${y} ${ay}` : `${x} ${ax} – ${y} ${ay}`; };
+      const hoursBetween = (a, b) => { if (!a || !b) return 0; const [h1, m1] = a.split(":").map(Number), [h2, m2] = b.split(":").map(Number); return Math.max(0, (h2 * 60 + m2 - h1 * 60 - m1) / 60); };
+      const mins = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+      const nowStamp = () => { const n = new Date(); return `${fd(TODAY, { dow: true })}, ${time12(`${n.getHours()}:${String(n.getMinutes()).padStart(2, "0")}`)}`; };
+
+      // ==========================================================================
+      // js/data.js
+      // Organisation, people, time codes (activities), settings, and the seeded entries (mock database).
+      // Entry shape = the live GET /timecard/entry response (see the network screenshots).
+      // ==========================================================================
+      const ORG = { number: 63149, name: "DC Time" };
+      const EMPLOYEES = [
+        { id: "1", name: "WAYNE, Bruce (Batman)", inactive: false },
+        { id: "2", name: "PRINCE, Diana", inactive: false },
+        { id: "3", name: "KYLE, Selina", inactive: false },
+        { id: "4", name: "KENT, Clark", inactive: false },
+        { id: "5", name: "GORDON, Barbara", inactive: false },
+        { id: "6", name: "PENNYWORTH, Alfred", inactive: false },
+        { id: "7", name: "FOX, Lucius", inactive: false },
+        { id: "8", name: "DENT, Harvey", inactive: true },
+      ];
+      const ACTS = [
+        { id: 4983, code: "21-115 113 0 Korokoro & Boulcott Road", type: "regular" },
+        { id: 4984, code: "21-118 204 0 Petone Esplanade upgrade", type: "regular" },
+        { id: 4985, code: "21-120 310 0 Hutt Road cycleway", type: "regular" },
+        { id: 4986, code: "21-131 101 0 Melling Bridge survey", type: "regular" },
+        { id: 4980, code: "00-001 General admin", type: "regular" },
+        { id: 4990, code: "OT-150 Overtime (time and a half)", type: "overtime" },
+        { id: 4991, code: "PEN-02 Night shift penal", type: "overtime" },
+        { id: 4995, code: "Annual leave", type: "leave" },
+        { id: 4996, code: "Sick leave", type: "leave" },
+      ];
+      const SETTINGS = { standardHoursPerDay: 8, breakStepMinutes: 5, approverNoteMaxLength: 140, payFrequency: "Fortnightly", activities: ACTS };
+      // the line under the status in the editor (labels: LABEL in js/selectors.js)
+      const STATUS_INFO = {
+        Draft: "Not sent yet", Submitted: "Waiting for your approval", Suspended: "On hold until you approve it",
+        Incomplete: "Sent without a finish time", Approved: "Approved, ready for the next pay", Accepted: "Paid, so it can't be changed",
+      };
+
+      const DB = { entries: [], logs: {}, hist: {}, nextId: 18800 };
+      function mkEntry(emp, d, s, en, actId, brk, status, extra = {}) {
+        const a = ACTS.find((x) => x.id === actId), hours = en ? r2(hoursBetween(s, en)) : 0;
+        return { id: DB.nextId++, employee: { id: emp.id, name: emp.name, inactive: emp.inactive }, date: `${d}T00:00:00.000Z`,
+          startTime: s ? `${d}T${s}:00.000Z` : null, endTime: en ? `${d}T${en}:00.000Z` : null, activity: { ...a }, status, hours, version: 0,
+          createdBy: null, linkedResourceId: null, kioskNote: "", approverNote: "", breakMinutes: brk, onlyLeaveRequests: false,
+          viewApproverNoteInKiosk: false, createdByKiosk: true, hoursWorked: r2(Math.max(0, hours - brk / 60)), ...extra };
+      }
+      function seedLog(e) {
+        const first = personFirst(e.employee), day = fdl(e.date.slice(0, 10)), L = [];
+        L.push({ at: `${day}, 5:0${e.id % 10} pm`, text: e.createdByKiosk ? `Added by ${first}` : "Added by an approver" });
+        if (e.status !== "Draft") L.push({ at: `${day}, 5:1${e.id % 10} pm`, text: e.status === "Incomplete" ? `Sent by ${first} without a finish time` : `Submitted by ${first}` });
+        if (["Approved", "Accepted"].includes(e.status)) L.push({ at: `${fdl(iso(addDays(fromIso(e.date.slice(0, 10)), 1)))}, 9:3${e.id % 10} am`, text: "Approved by you" });
+        if (e.status === "Suspended") L.push({ at: `${fdl(iso(addDays(fromIso(e.date.slice(0, 10)), 1)))}, 10:12 am`, text: "Suspended by you" });
+        if (e.status === "Accepted") L.push({ at: "Mon 16 Nov, 11:00 am", text: "Accepted into the pay for 2 – 15 Nov" });
+        DB.logs[e.id] = L;
+      }
+      function seed() {
+        DB.entries = []; DB.logs = {}; DB.hist = {}; DB.nextId = 18800;
+        const rnd = mulberry32(11), add = (e) => DB.entries.push(e);
+        const days = []; for (let d = D(2026, 11, 2); d <= TODAY; d = addDays(d, 1)) if (!isWeekend(d)) days.push(iso(d));
+        const statusFor = (d) => (d < "2026-11-09" ? "Accepted" : d < "2026-11-16" ? "Approved" : d === TODAY_ISO ? (rnd() < 0.5 ? "Draft" : "Submitted") : "Submitted");
+        EMPLOYEES.forEach((emp, ei) => days.forEach((d) => {
+          if (emp.inactive && d >= "2026-11-09") return;
+          if (emp.id === "1" && d === TODAY_ISO) return; // the two live-screenshot entries are added below
+          if (d === TODAY_ISO && ["5", "7"].includes(emp.id)) return; // haven't logged today yet
+          if (emp.id !== "1" && rnd() < 0.06) return;
+          const st = statusFor(d);
+          if (emp.id === "3" && (d === "2026-11-10" || d === "2026-11-11")) { add(mkEntry(emp, d, "08:30", "17:00", 4995, 30, "Approved", { linkedResourceId: 8801, createdByKiosk: false })); return; }
+          const job = ACTS[(ei + Math.floor(rnd() * 2)) % 4].id, job2 = ACTS[(ei + 2) % 4].id, p = rnd();
+          if (p < 0.46) add(mkEntry(emp, d, "08:00", "16:30", job, 30, st));
+          else if (p < 0.72) { add(mkEntry(emp, d, "07:30", "12:00", job, 0, st)); add(mkEntry(emp, d, "12:30", "16:00", job2, 0, st)); }
+          else if (p < 0.87) add(mkEntry(emp, d, "07:00", "17:00", job, 30, st)); // 9.5 h — over standard
+          else add(mkEntry(emp, d, "09:00", "14:00", job, 0, st)); // 5 h — under standard
+        }));
+        const E = (id) => EMPLOYEES.find((e) => e.id === id);
+        const on = (empId, d) => DB.entries.filter((e) => e.employee.id === empId && e.date.startsWith(d));
+        // situations worth showing
+        on("5", "2026-11-16").forEach((e) => Object.assign(e, { status: "Suspended", approverNote: "This job closed on Friday — check the time code.", viewApproverNoteInKiosk: true }));
+        const inc = on("6", "2026-11-17")[0]; if (inc) Object.assign(inc, { status: "Incomplete", endTime: null, hours: 0, hoursWorked: 0, breakMinutes: 0 });
+        on("2", "2026-11-18").forEach((e) => (e.status = "Draft"));
+        add(mkEntry(E("4"), "2026-11-17", "17:00", "19:30", 4990, 0, "Submitted", { kioskNote: "Concrete pour ran late." }));
+        add(mkEntry(E("7"), "2026-11-18", "18:00", "22:00", 4991, 15, "Submitted", { kioskNote: "Night works at the bridge." }));
+        add(mkEntry(E("4"), "2026-11-12", "17:00", "18:30", 4990, 0, "Approved"));
+        on("6", "2026-11-13").forEach((e) => { e.kioskNote = "Left early, dentist."; });
+        // Bruce Wayne, Thu 19 Nov: the two overlapping entries from the live screenshots (ids 19096 / 19097)
+        DB.nextId = 19096;
+        add(mkEntry(E("1"), TODAY_ISO, "08:00", "11:00", 4983, 10, "Submitted", { version: 1 }));
+        add(mkEntry(E("1"), TODAY_ISO, "08:00", "11:00", 4983, 5, "Submitted", { kioskNote: "Logged this twice by mistake?" }));
+        add(mkEntry(E("1"), TODAY_ISO, "11:30", "16:30", 4984, 30, "Draft"));
+        DB.entries.forEach(seedLog);
+      }
+
+      // ==========================================================================
+      // js/api.js
+      // Mock of the timecard endpoints (Swagger: timecard-entry / timecard-log / timecard-settings), same paths,
+      // query params and payloads. Every call waits LOAD_MS like the slow live API and is logged to the console
+      // . Server rules live here too (version check, undo).
+      // ==========================================================================
+      const LOAD_MS = 700;
+      const api = (() => {
+        const q = (o = {}) => "?" + new URLSearchParams(Object.entries({ ...o, orgNumber: ORG.number }).filter(([, v]) => v !== undefined && v !== "")).toString();
+        const find = (id) => DB.entries.find((e) => e.id === id);
+        const snap = (id) => { (DB.hist[id] ||= []).push(clone(find(id) || null)); };
+        const log = (id, text) => (DB.logs[id] ||= []).push({ at: nowStamp(), text });
+        const fail = (status, message) => { const e = new Error(message); e.status = status; throw e; };
+        function req(method, path, fn, ms = LOAD_MS) {
+          const r = { method, path: "/timecard" + path, at: new Date(), status: "…" };
+          console.log(`%c${method}%c /timecard${path}`, "font-weight:700;color:#0878b8", "color:inherit");
+          return new Promise((res, rej) => setTimeout(() => { try { const out = clone(fn()); r.status = 200; res(out); } catch (e) { r.status = e.status || 500; rej(e); } }, ms));
+        }
+        const recalc = (e) => { const s = e.startTime?.slice(11, 16), en = e.endTime?.slice(11, 16); e.hours = r2(hoursBetween(s, en)); e.hoursWorked = r2(Math.max(0, e.hours - (e.breakMinutes || 0) / 60)); };
+        return {
+          settings: () => req("GET", "/settings" + q(), () => SETTINGS, 0),
+          // GET /timecard/entry?employeeId&startTime&endTime&status
+          list: (p, ms) => req("GET", "/entry/" + q(p), () => {
+            const st = p.status ? p.status.split(",") : null, a = p.startTime?.slice(0, 10), b = p.endTime?.slice(0, 10);
+            return DB.entries.filter((e) => (!p.employeeId || e.employee.id === p.employeeId) && (!st || st.includes(e.status)) && e.status !== "Void"
+              && (!a || e.date.slice(0, 10) >= a) && (!b || e.date.slice(0, 10) <= b) && (p.includeInactive || !e.employee.inactive || p.employeeId));
+          }, ms),
+          get: (id) => req("GET", `/entry/${id}` + q(), () => find(id) || fail(404, "Not found")),
+          create: (body) => req("POST", "/entry" + q(), () => {
+            const e = { ...body, id: DB.nextId++, version: 0, createdBy: "approver", createdByKiosk: false, linkedResourceId: null, onlyLeaveRequests: false };
+            recalc(e); DB.entries.push(e); DB.hist[e.id] = [null]; log(e.id, "Added by you"); return e;
+          }),
+          update: (id, body) => req("PUT", `/entry/${id}` + q({ version: body.version }), () => {
+            const e = find(id); if (!e) fail(404, "Not found"); if (e.version !== body.version) fail(409, "Version conflict");
+            snap(id); Object.assign(e, body, { id, version: e.version + 1 }); recalc(e); log(id, "Edited by you"); return e;
+          }),
+          remove: (id, version) => req("DELETE", `/entry/${id}` + q({ version }), () => {
+            const e = find(id); if (!e) fail(404, "Not found"); if (e.version !== version) fail(409, "Version conflict");
+            snap(id); DB.entries = DB.entries.filter((x) => x.id !== id); return null;
+          }),
+          undo: (id, ms) => req("GET", `/entry/${id}/undo` + q(), () => {
+            const h = DB.hist[id]; if (!h || !h.length) fail(400, "Nothing to undo");
+            const prev = h.pop(); DB.entries = DB.entries.filter((x) => x.id !== id);
+            if (prev) { prev.version = (prev.version || 0) + 1; DB.entries.push(prev); log(id, "Change undone by you"); }
+            return prev;
+          }, ms),
+          // PUT /timecard/entry/updateStatus { ids, status }
+          // (prototype: `extra` carries the hold note; live, the note goes with PUT /entry/{id})
+          updateStatus: (ids, status, extra = {}, ms) => req("PUT", "/entry/updateStatus" + q(), () => ids.map((id) => {
+            const e = find(id); if (!e) return null; snap(id); Object.assign(e, extra); e.status = status; e.version++; log(id, `${{ Approved: "Approved", Suspended: "Put on hold", Void: "Voided" }[status] || status} by you${extra.approverNote ? `: “${extra.approverNote}”` : ""}`); return e;
+          }), ms),
+          // PUT /timecard/entry/submitDraftsOnBehalf { ids }
+          submitDraftsOnBehalf: (ids) => req("PUT", "/entry/submitDraftsOnBehalf" + q(), () => ids.map((id) => {
+            const e = find(id); if (!e || e.status !== "Draft") return e; snap(id); e.status = "Submitted"; e.version++; log(id, `Submitted by you for ${personFirst(e.employee)}`); return e;
+          })),
+          // GET /timecard/log?entryId
+          log: (id) => req("GET", "/log" + q({ entryId: id }), () => DB.logs[id] || [], 450),
+        };
+      })();
+      const apiStart = (d) => `${d}T00:00:00.000Z`;
+      const apiEnd = (d) => `${d}T23:59:59.999Z`;
+
+      // ==========================================================================
+      // js/state.js
+      // UI state. Every status for the range is cached in S.rows (the tabs filter it locally); S.period holds one
+      // person's pay period. S.fold = people folded against their tab's default (open, or folded on "All").
+      // ==========================================================================
+      const S = {
+        route: "timelogs", empId: null, day: TODAY_ISO, tab: "todo",
+        f: { person: "all", inactive: false, from: payPeriod(TODAY)[0], to: payPeriod(TODAY)[1] },
+        quick: "all", sel: new Set(), fold: new Set(), rows: [], period: [], loading: true, openId: null, bulkShown: false,
+        sort: { key: "date", dir: 1 },
+      };
+
+      // ==========================================================================
+      // js/selectors.js
+      // Derived values: names, labels, hours split, day totals, rules (selectable, fully submitted, overlaps),
+      // tabs, the person → day → timelog layout and its display order.
+      // ==========================================================================
+      const EMP = (id) => EMPLOYEES.find((e) => e.id === id);
+      const nameParts = (emp) => { const m = emp.name.match(/^([^,]+),\s*([^(]+?)\s*(?:\((.+)\))?$/); return m ? { last: m[1][0] + m[1].slice(1).toLowerCase(), first: m[2], nick: m[3] || "" } : { last: "", first: emp.name, nick: "" }; };
+      const personName = (emp) => { const p = nameParts(emp); return `${p.first} ${p.last}`.trim(); };
+      const personFirst = (emp) => nameParts(emp).first;
+      const ex = (e) => {
+        const type = e.activity.type, net = e.hoursWorked || 0;
+        return { date: e.date.slice(0, 10), start: e.startTime?.slice(11, 16) || "", end: e.endTime?.slice(11, 16) || "", net, leave: type === "leave",
+          ord: type === "overtime" ? 0 : net, ot: type === "overtime" ? net : 0 };
+      };
+      const selectable = (e) => e.activity.type !== "leave" && e.status !== "Accepted";
+      const readOnly = (e) => !selectable(e);
+      const dayKey = (e) => e.employee.id + "|" + e.date.slice(0, 10);
+      // server rule (live: "Only fully-submitted days may be approved"): no drafts or entries without a finish time that day
+      const dayEntries = (empId, d) => DB.entries.filter((x) => x.employee.id === empId && x.date.startsWith(d) && x.status !== "Void");
+      const dayBlockers = (empId, d) => dayEntries(empId, d).filter((x) => ["Draft", "Incomplete"].includes(x.status));
+      const dayFullySubmitted = (empId, d) => !dayBlockers(empId, d).length;
+      const waiting = (e) => ["Submitted", "Suspended"].includes(e.status);
+      const canApprove = (e) => waiting(e) && dayFullySubmitted(e.employee.id, e.date.slice(0, 10));
+      const readyIds = (rows) => rows.filter(canApprove).map((e) => e.id);
+      function overlaps({ id, empId, date, start, end }) {
+        if (!start || !end) return [];
+        return dayEntries(empId, date).filter((x) => x.id !== id && x.startTime && x.endTime && x.activity.type !== "leave")
+          .filter((x) => mins(start) < mins(x.endTime.slice(11, 16)) && mins(x.startTime.slice(11, 16)) < mins(end));
+      }
+      const entryOverlaps = (e) => { const x = ex(e); return overlaps({ id: e.id, empId: e.employee.id, date: x.date, start: x.start, end: x.end }); };
+      function personDays(rows) {
+        const m = new Map();
+        rows.forEach((e) => { const k = dayKey(e); if (!m.has(k)) m.set(k, { key: k, entries: [] }); m.get(k).entries.push(e); });
+        m.forEach((g) => { g.net = sum(g.entries, (e) => ex(e).net); g.ot = sum(g.entries, (e) => ex(e).ot); });
+        return m;
+      }
+      // statuses: the API values stay; the UI says them one way everywhere
+      const LABEL = { Draft: "Draft", Submitted: "To approve", Suspended: "On hold", Incomplete: "No finish time", Approved: "Approved", Accepted: "Paid", Void: "Voided" };
+      const STATUS_CHIP = { Draft: "draft", Submitted: "submitted", Suspended: "hold", Incomplete: "missing", Approved: "approved", Accepted: "closed", Void: "closed" };
+      const BAR = { Draft: "var(--warning-500)", Incomplete: "var(--warning-700)", Submitted: "var(--info-500)", Suspended: "var(--hold-500)", Approved: "var(--success-500)", Accepted: "var(--success-500)" };
+      const WORST = ["Incomplete", "Draft", "Suspended", "Submitted", "Approved", "Accepted"];
+      const worst = (es) => WORST.find((s) => es.some((e) => e.status === s));
+      const TABS = [["todo", "To approve", ["Submitted"]], ["notsent", "Not sent yet", ["Draft", "Incomplete"]], ["hold", "On hold", ["Suspended"]], ["approved", "Approved", ["Approved"]], ["all", "All", null]];
+      const inTab = (e, t = S.tab) => { const st = TABS.find((x) => x[0] === t)[2]; return !st || st.includes(e.status); };
+      const QUICK = {
+        all: () => true,
+        ot: (g) => g.ot > 0,
+        over: (g) => g.net > SETTINGS.standardHoursPerDay,
+        under: (g) => g.net < SETTINGS.standardHoursPerDay,
+      };
+      const tabRows = () => S.rows.filter((e) => inTab(e));
+      function visibleRows() {
+        const rows = tabRows(), days = personDays(rows), keep = new Set([...days.values()].filter(QUICK[S.quick]).map((g) => g.key));
+        return rows.filter((e) => keep.has(dayKey(e)));
+      }
+      const findRow = (id) => (S.route === "person" ? S.period : S.rows).find((e) => e.id === id) || clone(DB.entries.find((e) => e.id === id));
+      const sortEntries = (a, b) => a.date.localeCompare(b.date) || (a.startTime || "").localeCompare(b.startTime || "") || a.id - b.id;
+      const whoLine = (es) => { const n = [...new Set(es.map((e) => personName(e.employee)))]; return n.length <= 2 ? n.join(" and ") : `${n.slice(0, 2).join(", ")} + ${n.length - 2} more`; };
+      // sorting: timelogs sort within their day, days within their person; numeric / status sorts also order the people
+      const SORTS = { date: (e) => e.date.slice(0, 10) + (e.startTime || ""), code: (e) => e.activity.code.toLowerCase(), time: (e) => (e.startTime ? e.startTime.slice(11, 16) : "~"),
+        ord: (e) => ex(e).ord, ot: (e) => ex(e).ot, tot: (e) => ex(e).net, status: (e) => WORST.indexOf(e.status) };
+      const NUMERIC = ["ord", "ot", "tot"];
+      const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+      const sortRows = (list) => { const { key, dir } = S.sort, f = SORTS[key]; return [...list].sort((a, b) => cmp(f(a), f(b)) * dir || sortEntries(a, b)); };
+      const setKey = (es) => { const { key } = S.sort; return NUMERIC.includes(key) ? sum(es, SORTS[key]) : key === "status" ? Math.min(...es.map(SORTS.status)) : null; };
+      function byKey(items, esOf, tie) {
+        const { key, dir } = S.sort;
+        return items.sort((a, b) => { const ka = setKey(esOf(a)), kb = setKey(esOf(b)); return (ka == null ? 0 : cmp(ka, kb) * dir) || tie(a, b); });
+      }
+      // person → day → timelogs, in display order
+      function layout(rows) {
+        const groups = new Map();
+        rows.forEach((e) => { if (!groups.has(e.employee.id)) groups.set(e.employee.id, []); groups.get(e.employee.id).push(e); });
+        const people = byKey([...groups.keys()], (id) => groups.get(id), (a, b) => cmp(nameParts(EMP(a)).last, nameParts(EMP(b)).last));
+        return people.map((id) => {
+          const es = groups.get(id), dm = new Map();
+          es.forEach((e) => { const d = e.date.slice(0, 10); if (!dm.has(d)) dm.set(d, []); dm.get(d).push(e); });
+          const dateDir = S.sort.key === "date" ? S.sort.dir : 1;
+          const days = byKey([...dm.entries()].map(([date, des]) => ({ date, es: sortRows(des) })), (d) => d.es, (a, b) => cmp(a.date, b.date) * dateDir);
+          return { id, emp: EMP(id), es, days };
+        });
+      }
+      const folded = (id) => (S.tab === "all") !== S.fold.has(id);
+      function visibleOrder() {
+        if (S.route === "person") return sortRows(S.period.filter((e) => e.date.startsWith(S.day))).map((e) => e.id);
+        return layout(visibleRows()).filter((g) => !folded(g.id)).flatMap((g) => g.days.flatMap((d) => d.es.map((e) => e.id)));
+      }
+      // the next timelog below `id` that can be approved ("Approve and next")
+      function nextReady(id, skip = []) {
+        const order = visibleOrder(), i = order.indexOf(id);
+        if (i < 0) return null;
+        return order.slice(i + 1).find((x) => !skip.includes(x) && (() => { const e = DB.entries.find((y) => y.id === x); return e && canApprove(e); })()) || null;
+      }
+      const deadline = () => { const end = payPeriod(TODAY)[1], n = daysBetween(TODAY_ISO, end); return `Pay period closes ${fdl(end)} · ${n === 0 ? "today" : plural(n, "day") + " left"}`; };
+
+      // ==========================================================================
+      // js/components.js
+      // String-returning UI helpers + table rows (person, day, timelog, totals).
+      // ==========================================================================
+      const pill = (id, l, n, cur, act) => `<button class="pill" aria-pressed="${id === cur}" data-act="${act}" data-v="${id}">${l}${n != null ? ` <span class="n">${n}</span>` : ""}</button>`;
+      const tabs = (list, cur, act) => `<div class="tabs" role="tablist">${list.map(([id, l, n]) => `<button class="tab" role="tab" aria-selected="${id === cur}" data-act="${act}" data-v="${id}">${l}${n != null ? `<span class="n">${n}</span>` : ""}</button>`).join("")}</div>`;
+      const sec = (title, right = "") => `<div class="sec"><h2>${title}</h2>${right}</div>`;
+      const chip = (cls, l) => `<span class="chip ${cls}">${l}</span>`;
+      const stChip = (s) => chip(STATUS_CHIP[s], LABEL[s] || s);
+      const CHEV = ico("chev", "chev");
+      const TICK = `<span style="color:var(--success-500);display:inline-flex">${ico("check").replace("<svg", '<svg width="20" height="20" stroke="currentColor" fill="none" stroke-width="2.4"')}</span>`;
+      function row({ t, s, v, lead, after, chev = true, act, data = "", cls = "", tag = "button" }) {
+        return `<${tag} class="row ${cls}" ${act ? `data-act="${act}"` : ""} ${data}>${lead ? `<span class="lead">${lead}</span>` : ""}<span class="main"><span class="t">${t}</span>${s ? `<span class="s">${s}</span>` : ""}</span>${v != null ? `<span class="v">${v}</span>` : ""}${after || ""}${chev ? CHEV : ""}</${tag}>`;
+      }
+      // picker: dropdown trigger (opens a menu on desktop, a sheet on phones); `arrows` adds ‹ ›
+      function picker({ value, meta = "", act, data = "", label = "", arrows, err, cls = "" }) {
+        const btn = `<button class="picker" data-act="${act}" ${data} aria-haspopup="dialog"${label ? ` aria-label="${label}: ${esc(value)}"` : ""}><span class="pv">${value}</span>${meta ? `<span class="pm">${meta}</span>` : ""}${ico("down")}</button>`;
+        if (!arrows) return label ? `<div class="field ${cls}${err ? " err" : ""}"><span class="lbl">${label}</span>${btn}${err ? `<div class="err-msg">${err}</div>` : ""}</div>` : `<div class="picker-wrap">${btn}</div>`;
+        const [pa, na, pd, nd] = arrows;
+        return `<div class="picker-wrap"><button class="icon-btn" data-act="${pa}" data-v="-1" aria-label="Previous" title="Previous" ${pd ? "disabled" : ""}>${ico("back")}</button>${btn}<button class="icon-btn" data-act="${na}" data-v="1" aria-label="Next" title="Next" ${nd ? "disabled" : ""}>${ico("chev")}</button></div>`;
+      }
+      const headBtn = (icon, label, act, data = "", cls = "") => `<button class="btn-chip ${cls}" data-act="${act}" ${data}>${ico(icon)}${label}</button>`;
+      const filterDrop = (label, act, active) => `<button class="pill drop" aria-pressed="${!!active}" data-act="${act}" aria-haspopup="dialog">${label}${ico("down")}</button>`;
+      const emptyState = (icon, title, text, cta = "") => `<div class="empty-state"><div class="ei">${ico(icon)}</div><h3>${title}</h3><p>${text}</p>${cta}</div>`;
+      const toggleBtn = (on, act, label) => `<button class="toggle" role="switch" aria-checked="${on}" data-act="${act}" aria-label="${label}"></button>`;
+      const skRows = (n = 5) => `<div aria-hidden="true">${'<div class="sk-row"><div class="sk" style="width:18px;height:18px;border-radius:5px"></div><div style="flex:1"><div class="sk" style="width:44%"></div><div class="sk" style="width:26%;margin-top:8px"></div></div><div class="sk" style="width:56px"></div><div class="sk" style="width:72px;height:20px;border-radius:10px"></div></div>'.repeat(n)}</div>`;
+      const kvs = (rows) => `<div class="list">${rows.map(([k, v]) => `<div class="kv"><span class="k">${k}</span><span class="v">${v}</span></div>`).join("")}</div>`;
+      // the one approve control inside the table (timelog, day and person level): a green tick, shown on hover
+      const approveTick = (ids, title) => (ids.length ? `<button class="qa" data-act="approveIds" data-v="${ids.join(",")}" title="${title}" aria-label="${title}" tabindex="-1">${ico("check")}</button>` : "");
+      const checkbox = (attr, ids, label) => {
+        if (!ids.length) return "";
+        const n = ids.filter((id) => S.sel.has(id)).length;
+        return `<input type="checkbox" ${attr} ${n && n === ids.length ? "checked" : ""} ${n && n < ids.length ? "data-ind" : ""} aria-label="${label}">`;
+      };
+
+      // table rows
+      const inlineOpenFor = (id) => ED && ED.mode === "row" && ED.id === id;
+      function entRow(e) {
+        const x = ex(e), sel = S.sel.has(e.id), can = selectable(e), clash = entryOverlaps(e).length > 0, open = S.openId === e.id;
+        const lockTip = x.leave ? "Leave requests are read-only." : "Paid, so it can't be changed.";
+        return `<div class="tr ent${sel ? " sel" : ""}${open ? " open" : ""}" role="row" data-act="openEntry" data-v="${e.id}" tabindex="0" aria-expanded="${inlineOpenFor(e.id)}">
+          <span class="c-chk">${can ? `<input type="checkbox" data-sel="${e.id}" ${sel ? "checked" : ""} aria-label="Select timelog" tabindex="-1">` : `<span class="lock" title="${lockTip}">${ico("lock")}</span>`}</span>
+          <span class="c-code"><span class="cl"><span class="code" title="${esc(e.activity.code)}">${esc(e.activity.code)}</span>${x.leave ? '<span class="tag">Leave</span>' : ""}${e.kioskNote ? `<span class="mini" title="Note from ${esc(personFirst(e.employee))}: ${esc(e.kioskNote)}">${ico("note")}</span>` : ""}${clash ? `<span class="mini warn" title="Overlaps another timelog">${ico("alert")}</span>` : ""}</span><span class="c-sub"><span class="sd">${fdl(x.date)} · </span>${trange(x.start, x.end)}${e.breakMinutes ? ` · ${e.breakMinutes} min break` : ""}</span></span>
+          <span class="c-time">${trange(x.start, x.end)}${e.breakMinutes ? `<small>${e.breakMinutes} min break</small>` : ""}</span>
+          <span class="c-num c-ord">${num(x.ord)}</span>
+          <span class="c-num c-ot">${x.ot ? num(x.ot) : '<span class="muted">0.00</span>'}</span>
+          <span class="c-num c-tot"><b>${e.endTime ? num(x.net) : "—"}</b></span>
+          <span class="c-st">${stChip(e.status)}</span>
+          <span class="c-act">${canApprove(e) ? approveTick([e.id], "Approve") : ""}<span class="qe" aria-hidden="true">${ico(open && ED && ED.mode === "row" ? "up" : can ? "edit" : "chev")}</span></span></div>${inlineOpenFor(e.id) ? edInline() : ""}`;
+      }
+      // day line inside a person: the unit every rule works on (approval, standard hours, overlaps)
+      function blockParts(bl) {
+        const d = bl.filter((x) => x.status === "Draft").length, i = bl.length - d;
+        return [d ? plural(d, "draft") : "", i ? `${i} without a finish time` : ""].filter(Boolean).join(" and ");
+      }
+      const blockText = (bl) => `${blockParts(bl)} · can't approve yet`;
+      function dayRow(empId, d) {
+        const ids = d.es.filter(selectable).map((e) => e.id), ready = d.es.filter(canApprove).map((e) => e.id);
+        const bl = dayEntries(empId, d.date).some(waiting) ? dayBlockers(empId, d.date) : [], clash = d.es.some((e) => entryOverlaps(e).length);
+        const flags = `${clash ? `<span class="flag err">${ico("alert")}Overlap</span>` : ""}${bl.length ? `<span class="flag warn">${blockText(bl)}</span>` : ""}`;
+        return `<div class="tr dayl" role="row"><span class="c-chk">${checkbox(`data-selday="${empId}|${d.date}"`, ids, `Select ${fdl(d.date)}`)}</span>
+          <span class="c-code"><span class="dl"><b>${fdl(d.date)}</b>${flags}</span></span><span class="c-time"></span>
+          <span class="c-num c-ord">${num(sum(d.es, (e) => ex(e).ord))}</span><span class="c-num c-ot">${num(sum(d.es, (e) => ex(e).ot))}</span><span class="c-num c-tot">${num(sum(d.es, (e) => ex(e).net))}</span>
+          <span class="c-st"></span><span class="c-act">${approveTick(ready, `Approve ${fdl(d.date)} (${plural(ready.length, "timelog")})`)}</span></div>`;
+      }
+      function groupChip(es) {
+        const n = (s) => es.filter((e) => e.status === s).length;
+        if (n("Submitted")) return chip("submitted", `${n("Submitted")} to approve`);
+        if (n("Incomplete")) return chip("missing", LABEL.Incomplete);
+        if (n("Draft")) return chip("draft", plural(n("Draft"), "draft"));
+        if (n("Suspended")) return chip("hold", `${n("Suspended")} on hold`);
+        return n("Approved") ? chip("approved", "Approved") : chip("closed", LABEL.Accepted);
+      }
+      function personRow(g) {
+        const { id, emp, es, days } = g, f = folded(id), ready = es.filter(canApprove).map((e) => e.id), to = `timelogs/person/${id}/${es[es.length - 1].date.slice(0, 10)}`;
+        return `<div class="tr grp" role="row"><span class="c-chk">${checkbox(`data-selgrp="${id}"`, es.filter(selectable).map((e) => e.id), `Select all for ${esc(personName(emp))}`)}</span>
+          <button class="c-person" data-act="fold" data-v="${id}" aria-expanded="${!f}"><span class="caret">${ico(f ? "chev" : "down")}</span><span><b>${personName(emp)}</b><small>${plural(days.length, "day")} · ${plural(es.length, "timelog")}${emp.inactive ? " · Inactive" : ""}</small></span></button>
+          <span class="c-num c-ord">${num(sum(es, (e) => ex(e).ord))}</span><span class="c-num c-ot">${num(sum(es, (e) => ex(e).ot))}</span><span class="c-num c-tot">${num(sum(es, (e) => ex(e).net))}</span>
+          <span class="c-st">${groupChip(es)}</span><span class="c-act">${approveTick(ready, `Approve everything ready for ${esc(personFirst(emp))} (${plural(ready.length, "timelog")})`)}<button class="icon-btn plain" data-go="${to}" aria-label="Open ${esc(personName(emp))}" title="Open ${esc(personFirst(emp))}'s pay period">${ico("cal")}</button></span></div>`;
+      }
+      const headRow = (list, ids) => {
+        const selN = ids.filter((id) => S.sel.has(id)).length, all = ids.length && selN === ids.length;
+        const sb = (k, l, cls = "") => { const on = S.sort.key === k; return `<span class="${cls}" role="columnheader" aria-sort="${on ? (S.sort.dir > 0 ? "ascending" : "descending") : "none"}"><button class="sort${on ? " on" : ""}" data-act="sort" data-v="${k}" title="Sort by ${l.toLowerCase()}">${l}${ico(on && S.sort.dir < 0 ? "down" : "up")}</button></span>`; };
+        return `<div class="tr th" role="row"><span class="c-chk">${ids.length ? `<input type="checkbox" data-selall="1" ${all ? "checked" : ""} ${selN && !all ? "data-ind" : ""} aria-label="Select all">` : ""}</span>${list ? sb("date", "Day · time code") : sb("code", "Time code")}${sb("time", "Start – finish", "c-time")}${sb("ord", "Ordinary", "c-num c-ord")}${sb("ot", "OT / penal", "c-num c-ot")}${sb("tot", "Total", "c-num c-tot")}${sb("status", "Status", "c-st")}<span></span></div>`;
+      };
+      // totals; while something is selected the selection bar takes their place
+      const totRow = (label, es) => (S.sel.size ? "" : `<div class="tr tf" role="row"><span class="c-chk"></span><span class="c-lbl">${label}</span><span class="c-num c-ord">${num(sum(es, (e) => ex(e).ord))}</span><span class="c-num c-ot">${num(sum(es, (e) => ex(e).ot))}</span><span class="c-num c-tot">${num(sum(es, (e) => ex(e).net))}</span><span class="blank"></span><span class="blank"></span></div>`);
+      function summaryLine() {
+        if (S.loading) return '<div class="summary"><span class="sk" style="width:240px"></span></div>';
+        const vis = visibleRows(), ids = readyIds(vis), hrs = sum(vis.filter((e) => ids.includes(e.id)), (e) => ex(e).net), allSel = ids.length && ids.every((id) => S.sel.has(id));
+        const blocked = new Set(vis.filter((e) => waiting(e) && !canApprove(e)).map(dayKey)).size;
+        const people = [...new Set(vis.map((e) => e.employee.id))], anyOpen = people.some((id) => !folded(id));
+        return `<div class="summary"><span>${ids.length ? `<b>${plural(ids.length, "timelog")} ready to approve</b> · ${num(hrs)} hours` : "Nothing here is ready to approve"}</span>${ids.length && !allSel ? '<button class="text-btn" data-act="selReady">Select them</button>' : ""}
+          ${blocked ? `<span class="hint">${ico("info")}${plural(blocked, "day")} can't be approved until drafts are sent and finish times added</span>` : ""}<span class="grow"></span>
+          ${people.length > 1 ? `<button class="text-btn" data-act="foldAll" data-v="${anyOpen ? 1 : 0}">${anyOpen ? "Collapse all" : "Expand all"}</button>` : ""}</div>`;
+      }
+      const newInline = () => (ED && ED.mode === "row" && !ED.id ? edInline() : "");
+
+      // ==========================================================================
+      // js/screens/timelogs.js
+      // All timelogs: date range, status tabs, person + quick filters, table grouped by person and day, totals.
+      // ==========================================================================
+      const PRESETS = () => {
+        const w = weekStart(TODAY), cur = payPeriod(TODAY), last = payPeriod(addDays(fromIso(cur[0]), -1));
+        return [["today", "Today", TODAY_ISO, TODAY_ISO], ["week", "This week", iso(w), iso(addDays(w, 6))], ["pay", "Current pay period", ...cur], ["lastpay", "Last pay period", ...last], ["4w", "Last 4 weeks", iso(addDays(TODAY, -27)), TODAY_ISO]];
+      };
+      const presetOf = (a, b) => PRESETS().find((p) => p[2] === a && p[3] === b);
+      const personLabel = () => (S.f.person === "all" ? (S.f.inactive ? "All people, incl. inactive" : "All people") : personName(EMP(S.f.person)));
+      const QUICK_LABELS = [["all", "All days"], ["ot", "Overtime / penal"], ["over", "More than standard"], ["under", "Less than standard"]];
+
+      function screenTimelogs() {
+        const p = presetOf(S.f.from, S.f.to);
+        const days = S.loading ? null : personDays(tabRows()), qn = (k) => (days ? [...days.values()].filter(QUICK[k]).length : null);
+        const tn = (st) => (S.loading ? null : S.rows.filter((e) => !st || st.includes(e.status)).length);
+        const toolbar = `<div class="toolbar">
+          <div class="tb-row"><h1>Timelogs</h1>${picker({ value: rangeLabel(S.f.from, S.f.to), meta: p ? p[1] : "", act: "fRange", arrows: ["rangeStep", "rangeStep", false, false] })}<span class="grow"></span><span class="today">${deadline()}</span>${headBtn("plus", "Add timelog", "addEntry")}</div>
+          ${tabs(TABS.map(([id, l, st]) => [id, l, id === "all" ? null : tn(st)]), S.tab, "tab")}
+          <div class="tb-row filters">${filterDrop(personLabel(), "fPerson", S.f.person !== "all" || S.f.inactive)}<span class="vr"></span>${QUICK_LABELS.map(([k, l]) => pill(k, l, k === "all" ? null : qn(k), S.quick, "quick")).join("")}</div>
+        </div>`;
+        return toolbar + summaryLine() + `<div class="tbl-wrap">${S.loading ? skRows(7) : listTable()}</div>`;
+      }
+      const TAB_EMPTY = {
+        todo: ["check", "Nothing to approve", (r) => `You're all caught up for ${r}.`],
+        notsent: ["send", "Everyone has sent their time", (r) => `No drafts or timelogs without a finish time for ${r}.`],
+        hold: ["pause", "Nothing on hold", (r) => `No timelogs are on hold for ${r}.`],
+        approved: ["check", "Nothing approved yet", (r) => `Approved timelogs for ${r} show here until they're paid.`],
+        all: ["clock", "No timelogs", (r) => `Nobody has logged time for ${r}.`],
+      };
+      function listTable() {
+        const vis = visibleRows(), add = newInline();
+        if (!vis.length && !add) {
+          const filtered = S.quick !== "all" || S.f.person !== "all";
+          if (filtered) return emptyState("clock", "No timelogs match", "Try another person or quick filter.", '<button class="btn secondary" data-act="clearFilters">Clear filters</button>');
+          const [icon, title, text] = TAB_EMPTY[S.tab];
+          return emptyState(icon, title, text(rangeLabel(S.f.from, S.f.to)), S.tab === "all" ? headBtn("plus", "Add timelog", "addEntry") : "");
+        }
+        let html = `<div class="tbl list" role="table">${headRow(true, vis.filter(selectable).map((e) => e.id))}${add}`;
+        layout(vis).forEach((g) => {
+          const ids = g.es.filter(selectable).map((e) => e.id), allSel = ids.length && ids.every((x) => S.sel.has(x));
+          html += `<div class="grp-wrap${allSel ? " all-sel" : ""}${folded(g.id) ? " folded" : ""}" role="rowgroup">${personRow(g)}`;
+          if (!folded(g.id)) g.days.forEach((d) => { html += dayRow(g.id, d) + d.es.map(entRow).join(""); });
+          html += "</div>";
+        });
+        return html + (vis.length ? totRow("Totals", vis) : "") + "</div>";
+      }
+
+      // ==========================================================================
+      // js/screens/person.js
+      // One person: day picker (‹ › + Today), pay-period strip (two weeks) + stats, the day's timelogs + daily totals.
+      // ==========================================================================
+      function screenPerson() {
+        const emp = EMP(S.empId), d = fromIso(S.day), [pa, pb] = payPeriod(d), start = fromIso(pa);
+        const dayEs = sortRows(S.period.filter((e) => e.date.startsWith(S.day)));
+        const toolbar = `<div class="toolbar"><div class="tb-row">
+          <button class="icon-btn plain" data-go="timelogs" aria-label="Back to all timelogs" title="All timelogs">${ico("back")}</button>
+          <div class="ttl"><h1>${personName(emp)}</h1><small>Pay period ${rangeLabel(pa, pb)} · Standard day ${num(SETTINGS.standardHoursPerDay, 0)} hours${emp.inactive ? " · Inactive" : ""}</small></div>
+          <span class="grow"></span>
+          ${picker({ value: fd(d, { dow: true, y: true }), act: "pickDay", arrows: ["dayStep", "dayStep", false, false] })}
+          <button class="btn-chip" data-act="goToday" ${S.day === TODAY_ISO ? "disabled" : ""}>Today</button>
+          ${headBtn("plus", "Add timelog", "addEntry")}</div></div>`;
+        const strip = `<div class="strip" role="group" aria-label="Pay period ${rangeLabel(pa, pb)}">${[...Array(14).keys()].map((i) => {
+          const di = addDays(start, i), k = iso(di), es = S.loading ? [] : S.period.filter((e) => e.date.startsWith(k)), bar = BAR[worst(es)];
+          return `<button class="sd${isWeekend(di) ? " wk" : ""}" aria-pressed="${k === S.day}" data-act="stripDay" data-v="${k}" aria-label="${fd(di, { dow: true })}"><span class="dw">${DOW[di.getDay()]}</span><span class="dn${k === TODAY_ISO ? " today" : ""}">${di.getDate()}</span><span class="dh">${es.length ? num(sum(es, (e) => ex(e).net)) : "–"}</span>${bar ? `<i style="background:${bar}"></i>` : ""}</button>`;
+        }).join("")}</div>`;
+        if (S.loading) return toolbar + `<div class="wk-row">${strip}</div><div class="tbl-wrap">${skRows(3)}</div>`;
+        const pNet = sum(S.period, (e) => ex(e).net), sub = S.period.filter((e) => e.status === "Submitted"), appr = S.period.filter((e) => e.status === "Approved");
+        const stats = `<div class="mini-stats"><div><div class="l">This pay period</div><div class="n">${num(pNet)}<small>hours</small></div></div><div><div class="l">To approve</div><div class="n">${num(sum(sub, (e) => ex(e).net))}<small>${plural(sub.length, "timelog")}</small></div></div><div><div class="l">Approved</div><div class="n">${num(sum(appr, (e) => ex(e).net))}<small>hours</small></div></div></div>`;
+        const clashes = dayEs.filter((e) => entryOverlaps(e).length);
+        const warn = clashes.length ? `<div class="banner err">${ico("alert")}<div class="main"><b>${plural(clashes.length, "timelog")} overlap</b>${clashes.map((e) => `${trange(ex(e).start, ex(e).end)} · ${esc(e.activity.code)}`).filter((v, i, a) => a.indexOf(v) === i).join("<br>")}</div></div>` : "";
+        const bl = dayBlockers(S.empId, S.day), drafts = bl.filter((e) => e.status === "Draft");
+        const notSub = bl.length && dayEs.some(waiting) ? `<p class="note">${ico("info")}<span>This day has ${blockParts(bl)}, so it can't be approved yet.${drafts.length ? ` <button class="text-btn" data-act="submitDayDrafts">Submit ${plural(drafts.length, "draft")} for ${esc(nameParts(emp).first)}</button>` : ""}</span></p>` : "";
+        const add = newInline();
+        const table = dayEs.length || add ? `<div class="tbl" role="table">${headRow(false, dayEs.filter(selectable).map((e) => e.id))}${dayEs.map(entRow).join("")}${add}${dayEs.length ? totRow("Daily totals", dayEs) : ""}</div>`
+          : emptyState("clock", `No timelogs on ${fdl(S.day)}`, `${esc(nameParts(emp).first)} hasn't logged any time for this day.`, headBtn("plus", "Add timelog", "addEntry"));
+        return toolbar + `<div class="wk-row">${strip}${stats}</div>` + sec(`${DOWL[d.getDay()]} ${d.getDate()} ${MONTH[d.getMonth()]}`, `<span class="tot">${plural(dayEs.length, "timelog")} · ${num(sum(dayEs, (e) => ex(e).net))} hours</span>`) + warn + notSub + `<div class="tbl-wrap">${table}</div>`;
+      }
+
+      // ==========================================================================
+      // js/router.js
+      // Hash routes: #/timelogs and #/timelogs/person/{employeeId}/{yyyy-mm-dd}. Loads data, renders.
+      // ==========================================================================
+      const SCREENS = { timelogs: screenTimelogs, person: screenPerson };
+      function parseHash() {
+        const p = location.hash.replace(/^#\/?/, "").split("/");
+        if (p[0] === "timelogs" && p[1] === "person" && EMP(p[2])) { S.route = "person"; S.empId = p[2]; S.day = /^\d{4}-\d\d-\d\d$/.test(p[3] || "") ? p[3] : TODAY_ISO; }
+        else S.route = "timelogs";
+      }
+      const go = (r) => { location.hash = "#/" + r; };
+      const setDayHash = () => history.replaceState(null, "", `#/timelogs/person/${S.empId}/${S.day}`);
+      let LOADTOK = 0;
+      async function load(quiet) {
+        const tok = ++LOADTOK;
+        if (!quiet) { S.loading = true; render(); }
+        try {
+          if (S.route === "person") {
+            const [a, b] = payPeriod(fromIso(S.day));
+            const rows = await api.list({ employeeId: S.empId, startTime: apiStart(a), endTime: apiEnd(b) }, quiet ? 0 : undefined);
+            if (tok !== LOADTOK) return; S.period = rows;
+          } else {
+            // every status: the tabs (and their counts) filter locally
+            const rows = await api.list({ employeeId: S.f.person === "all" ? undefined : S.f.person, startTime: apiStart(S.f.from), endTime: apiEnd(S.f.to), includeInactive: S.f.inactive || undefined }, quiet ? 0 : undefined);
+            if (tok !== LOADTOK) return; S.rows = rows;
+          }
+        } catch (err) { if (tok === LOADTOK) toast("Couldn't load timelogs", () => load(), "Retry", "err"); }
+        if (tok !== LOADTOK) return;
+        S.loading = false;
+        const ids = new Set((S.route === "person" ? S.period : S.rows).filter(selectable).map((e) => e.id)); [...S.sel].forEach((id) => ids.has(id) || S.sel.delete(id));
+        render();
+      }
+      function render() {
+        const v = $("#view"), st = v.scrollTop, fid = document.activeElement?.closest?.(".ent")?.dataset.v;
+        v.innerHTML = `<div class="page">${SCREENS[S.route]()}</div>`; v.scrollTop = st;
+        $$("[data-ind]", v).forEach((i) => (i.indeterminate = true));
+        const h = $(".toolbar", v); if (h) v.style.setProperty("--head-h", h.offsetHeight + "px");
+        $("#bulk-slot").innerHTML = bulkBar(); v.classList.toggle("has-bulk", S.sel.size > 0); if ($("#toast").classList.contains("show")) placeToast(); // keep a visible toast above the bar
+        if (fid && !document.activeElement?.closest?.("#ied")) $(`.ent[data-v="${fid}"]`)?.focus({ preventScroll: true });
+        document.title = S.route === "person" ? `${personName(EMP(S.empId))} · Timelogs` : "Timelogs";
+      }
+      function bulkBar() {
+        if (!S.sel.size) { S.bulkShown = false; return ""; }
+        const es = [...S.sel].map(findRow).filter(Boolean), enter = !S.bulkShown; S.bulkShown = true;
+        const blocked = [...new Set(es.filter((e) => !dayFullySubmitted(e.employee.id, e.date.slice(0, 10))).map(dayKey))];
+        const toApprove = es.filter(waiting), drafts = es.filter((e) => e.status === "Draft");
+        const fb = blocked[0] && blocked[0].split("|");
+        const hint = blocked.length ? `<span class="warn">${blocked.length === 1 ? `${esc(personFirst(EMP(fb[0])))}, ${fdl(fb[1])} isn't fully submitted` : `${blocked.length} days aren't fully submitted`}, so they can't be approved</span>` : `<span>${num(sum(es, (e) => ex(e).net))} hours</span>`;
+        return `<div class="bulk${enter ? " enter" : ""}" role="toolbar" aria-label="Selected timelogs">
+          <div class="bk-main"><b>${plural(es.length, "timelog")} selected</b>${hint}<button class="bk-clear" data-act="clearSel">Clear</button></div>
+          ${drafts.length ? `<button class="bk-btn" data-act="bulkSubmit">Submit ${plural(drafts.length, "draft")}</button>` : ""}
+          <button class="bk-btn" data-act="bulk" data-v="Suspended">Put on hold</button>
+          <button class="bk-btn" data-act="bulk" data-v="Void">Void</button>
+          <button class="bk-primary" data-act="bulk" data-v="Approved" ${toApprove.length && !blocked.length ? "" : `disabled title="${blocked.length ? "Days with drafts or timelogs without a finish time can't be approved" : "Nothing selected is waiting for approval"}"`}>Approve${toApprove.length ? ` ${toApprove.length}` : ""}</button></div>`;
+      }
+
+      // ==========================================================================
+      // js/ui/motion.js
+      // ==========================================================================
+      const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function animIn(el, cls) { if (!el || reduced()) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); el.addEventListener("animationend", () => el.classList.remove(cls), { once: true }); }
+
+      // ==========================================================================
+      // js/ui/toast.js
+      // Success ✓ / error ! / info i, optional Undo or Retry and a second line. Centred over the page.
+      // ==========================================================================
+      let toastTimer;
+      function toast(msg, undo, label = "Undo", kind = "", sub = "") {
+        const t = $("#toast"), sp = t.children[1]; sp.textContent = msg;
+        if (sub) { const sm = document.createElement("small"); sm.textContent = sub; sp.append(sm); }
+        t.classList.toggle("err", kind === "err"); t.classList.toggle("info", kind === "info");
+        t.querySelector(".t-ico").innerHTML = ico(kind === "err" ? "alert" : kind === "info" ? "info" : "check");
+        const b = t.querySelector("button"); b.hidden = !undo; b.textContent = label; b.onclick = () => { t.classList.remove("show"); undo(); };
+        placeToast(); t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), undo ? 6000 : 4000);
+      }
+      function placeToast() {
+        const t = $("#toast"), m = $(".app-main").getBoundingClientRect();
+        t.style.left = m.left + m.width / 2 + "px";
+        const sheetFoot = BP() === "sm" && PN && $("#panel-layer .panel-foot");
+        const bar = $(".bulk"); t.style.bottom = (sheetFoot ? sheetFoot.offsetHeight + 16 : innerHeight - m.bottom + (bar ? bar.offsetHeight + 16 : 18)) + "px";
+      }
+
+      // ==========================================================================
+      // js/ui/loading.js
+      // ==========================================================================
+      function busy(btn, label) { if (!btn) return () => {}; const html = btn.innerHTML; btn.disabled = true; btn.setAttribute("aria-busy", "true"); btn.innerHTML = `<span class="spin"></span>${label}`; return () => { if (btn.isConnected) { btn.disabled = false; btn.removeAttribute("aria-busy"); btn.innerHTML = html; } }; }
+
+      // ==========================================================================
+      // js/ui/panel.js
+      // Bottom sheet on phones (the editor and every menu). A stacked sheet (a picker opened from the editor) shows a
+      // back arrow on the left instead of the close ×.
+      // ==========================================================================
+      let PN = null; const PSTACK = [];
+      function openPanel(fn) {
+        closeDialog(); closePop(); PSTACK.length = 0; PN = { render: fn };
+        const L = $("#panel-layer"); L.innerHTML = `<div class="pscrim" data-act="closePanel"></div><aside class="panel" role="dialog" aria-modal="true"></aside>`;
+        document.documentElement.classList.add("panel-open"); paintPanel();
+        requestAnimationFrame(() => L.classList.add("show"));
+      }
+      function paintPanel(anim) {
+        const el = $("#panel-layer .panel"); if (!PN || !el) return;
+        const c = PN.render(), body = $(".panel-body", el), st = anim ? 0 : body ? body.scrollTop : 0;
+        el.setAttribute("aria-label", c.title);
+        el.innerHTML = `<div class="sheet-handle"></div><div class="panel-head">${PSTACK.length ? `<button class="icon-btn" data-act="panelBack" aria-label="Back">${ico("back")}</button><h2>${c.title}</h2><span></span>` : `<span></span><h2>${c.title}</h2><button class="icon-btn" data-act="closePanel" aria-label="Close" title="Close">${ico("close")}</button>`}</div><div class="panel-body">${c.body}</div>${c.foot ? `<div class="panel-foot">${c.foot}</div>` : ""}`;
+        $(".panel-body", el).scrollTop = st;
+        if (anim) [".panel-head h2", ".panel-body", ".panel-foot"].forEach((s) => animIn($(s, el), anim));
+      }
+      function pushPanel(fn) { PSTACK.push(PN.render); PN.render = fn; paintPanel("anim-push"); }
+      function panelBack() { if (!PSTACK.length) return closePanel(); PN.render = PSTACK.pop(); paintPanel("anim-back"); }
+      function closePanel(now) {
+        if (!PN) return; PN = null; PSTACK.length = 0;
+        if (ED && ED.mode === "panel") { ED = null; S.openId = null; $$(".ent.open").forEach((r) => r.classList.remove("open")); }
+        const L = $("#panel-layer"); L.classList.remove("show"); document.documentElement.classList.remove("panel-open");
+        if (now) L.innerHTML = ""; else setTimeout(() => { if (!PN) L.innerHTML = ""; }, 260);
+      }
+
+      // ==========================================================================
+      // js/ui/menu.js
+      // Dropdown menu anchored to its trigger (desktop filters + pickers). On phones the same content opens as a
+      // sheet instead (or is pushed onto the open sheet). choose() picks the right one; chosen() closes it.
+      // ==========================================================================
+      let POP = null;
+      function openPop(anchor, fn, w = 320) {
+        closePop(); POP = { anchor, render: fn, w };
+        const el = document.createElement("div"); el.className = "pop"; el.setAttribute("role", "dialog"); $("#pop-layer").append(el);
+        anchor.setAttribute("aria-expanded", "true");
+        paintPop(); requestAnimationFrame(() => el.classList.add("show"));
+        setTimeout(() => { const f = $(".pop input[data-q]"); if (f) f.focus(); else ($(".pop-body .row:has(.tick)") || $(".pop-body .row, .pop-body .cal .sel, .pop-body button"))?.focus({ preventScroll: true }); });
+      }
+      function paintPop() {
+        const el = $("#pop-layer .pop"); if (!POP || !el) return;
+        const c = POP.render(), st = $(".pop-body", el)?.scrollTop || 0;
+        el.setAttribute("aria-label", c.title);
+        el.innerHTML = `<div class="pop-body">${c.body}</div>${c.foot ? `<div class="pop-foot">${c.foot}</div>` : ""}`;
+        $(".pop-body", el).scrollTop = st; placePop();
+      }
+      function placePop() {
+        const el = $("#pop-layer .pop"); if (!POP || !el || !POP.anchor.isConnected) return;
+        const r = POP.anchor.getBoundingClientRect(), w = Math.min(innerWidth - 16, Math.max(r.width, POP.w)); el.style.width = w + "px";
+        const h = el.offsetHeight; let top = r.bottom + 6; if (top + h > innerHeight - 8) top = Math.max(8, r.top - h - 6);
+        el.style.left = Math.max(8, Math.min(r.left, innerWidth - w - 8)) + "px"; el.style.top = top + "px";
+      }
+      function closePop() { if (!POP) return; POP.anchor?.removeAttribute("aria-expanded"); POP = null; $("#pop-layer").innerHTML = ""; }
+      function choose(anchor, fn, w) {
+        if (POP && POP.anchor === anchor) return closePop();
+        if (BP() === "sm") { PN ? pushPanel(fn) : openPanel(fn); return; }
+        openPop(anchor, fn, w);
+      }
+      function chosen() { if (POP) { const a = POP.anchor; closePop(); a.isConnected && a.focus({ preventScroll: true }); return; } if (PSTACK.length) panelBack(); else closePanel(); }
+      const repaintChooser = () => (POP ? paintPop() : paintPanel());
+
+      // ==========================================================================
+      // js/ui/dialog.js
+      // Centred confirmation dialog. onOk may return a promise: OK spins until it settles.
+      // ==========================================================================
+      function openDialog({ title, text = "", html = "", cancel = "Cancel", ok = "OK", danger, onOk }) {
+        closePop(); const L = $("#dlg-layer"), back = document.activeElement;
+        L.innerHTML = `<div class="dscrim" data-act="closeDialog"></div><div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dlg-t"><h2 id="dlg-t">${title}</h2>${text ? `<p>${text}</p>` : ""}${html}<div class="acts">${cancel ? `<button class="btn secondary" data-act="closeDialog">${cancel}</button>` : ""}<button class="btn ${danger ? "danger" : "primary"}" id="dlg-ok" ${cancel ? "" : 'style="grid-column:1/-1"'}>${ok}</button></div></div>`;
+        DLG_BACK = back;
+        $("#dlg-ok").onclick = async (e) => {
+          if (!onOk) return closeDialog();
+          $$(".dialog .acts .btn", L).forEach((b) => (b.disabled = true)); busy(e.currentTarget, "");
+          try { await onOk(); } finally { closeDialog(true); }
+        };
+        requestAnimationFrame(() => { $(".dscrim", L).classList.add("show"); $(".dialog", L).classList.add("show"); $("#dlg-ok").focus(); });
+      }
+      let DLG_BACK = null;
+      function closeDialog(keepFocus) { if (!$("#dlg-layer .dialog")) return; $("#dlg-layer").innerHTML = ""; if (!keepFocus && DLG_BACK?.isConnected) DLG_BACK.focus({ preventScroll: true }); DLG_BACK = null; }
+
+      // ==========================================================================
+      // js/menus/options.js
+      // Menus: person, date range, calendar, time code. Each returns { title, body, foot } for a menu or sheet.
+      // ==========================================================================
+      let PQ = "", TCQ = "", CAL = null;
+      const tickIf = (on) => (on ? `<span class="tick">${TICK}</span>` : "");
+      const personOpts = (cur, act, withAll) => {
+        const list = EMPLOYEES.filter((e) => (act === "pickPerson" ? S.f.inactive || !e.inactive : !e.inactive) && personName(e).toLowerCase().includes(PQ.toLowerCase()));
+        return (withAll && !PQ ? row({ t: "All people", lead: `<span class="ico">${ico("people")}</span>`, after: tickIf(cur === "all"), chev: false, act, data: 'data-v="all"' }) : "")
+          + list.map((e) => row({ t: personName(e), s: e.inactive ? "Inactive" : "", after: tickIf(cur === e.id), chev: false, act, data: `data-v="${e.id}"` })).join("")
+          || `<p class="muted small" style="padding:10px">No one matches “${esc(PQ)}”.</p>`;
+      };
+      const searchBox = (id, q, val, ph) => `<div class="input search">${ico("search")}<input id="${id}" data-q="${q}" placeholder="${ph}" value="${esc(val)}" autocomplete="off"></div>`;
+      const personMenu = () => ({ title: "Person", body: `${searchBox("pq", "pq", PQ, "Search people")}<div class="row-toggle"><span>Include inactive people</span>${toggleBtn(S.f.inactive, "fInactive", "Include inactive people")}</div><div class="list sel-list" id="pq-list">${personOpts(S.f.person, "pickPerson", true)}</div>` });
+      const edPersonMenu = () => ({ title: "Person", body: `${searchBox("pq", "pq2", PQ, "Search people")}<div class="list sel-list" id="pq-list">${personOpts(ED.empId, "edPickPerson")}</div>` });
+      const rangeMenu = () => ({ title: "Dates", body: `<div class="list sel-list">${PRESETS().map(([id, l, a, b]) => row({ t: l, s: rangeLabel(a, b), after: tickIf(S.f.from === a && S.f.to === b), chev: false, act: "pickRange", data: `data-v="${id}"` })).join("")}</div><p class="note">${ico("info")}Ranges are limited to a year.</p>` });
+      function calMenu() {
+        const m = CAL.m, first = new Date(m.getFullYear(), m.getMonth(), 1), off = (first.getDay() + 6) % 7, n = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
+        const has = new Set(CAL.empId ? DB.entries.filter((e) => e.employee.id === CAL.empId && e.status !== "Void").map((e) => e.date.slice(0, 10)) : []);
+        let cells = ["M", "T", "W", "T", "F", "S", "S"].map((d) => `<div class="dow">${d}</div>`).join("") + "<div></div>".repeat(off);
+        for (let i = 1; i <= n; i++) { const d = new Date(m.getFullYear(), m.getMonth(), i), k = iso(d); cells += `<button class="c${isWeekend(d) ? " wk" : ""}${k === CAL.cur ? " sel" : ""}${k === TODAY_ISO ? " today" : ""}${has.has(k) ? " has" : ""}" data-act="calPick" data-v="${k}" aria-label="${fd(d, { dow: true, y: true })}">${i}</button>`; }
+        return { title: CAL.title, body: `<div class="cal-head"><button class="icon-btn" data-act="calStep" data-v="-1" aria-label="Previous month">${ico("back")}</button><b>${MONTH[m.getMonth()]} ${m.getFullYear()}</b><button class="icon-btn" data-act="calStep" data-v="1" aria-label="Next month">${ico("chev")}</button></div><div class="cal">${cells}</div>${CAL.empId ? `<p class="note">${ico("info")}Dots mark days with timelogs.</p>` : ""}` };
+      }
+      const tcOpts = () => {
+        const q = TCQ.toLowerCase(), groups = [["Jobs", "regular"], ["Overtime and penal", "overtime"]];
+        const out = groups.map(([h, type]) => { const l = ACTS.filter((a) => a.type === type && a.code.toLowerCase().includes(q)); return l.length ? `${sec(h)}<div class="list sel-list">${l.map((a) => row({ t: esc(a.code), after: tickIf(ED && ED.actId === a.id), chev: false, act: "pickCode", data: `data-v="${a.id}"` })).join("")}</div>` : ""; }).join("");
+        return out || `<p class="muted small" style="padding:10px">No time code matches “${esc(TCQ)}”.</p>`;
+      };
+      const tcMenu = () => ({ title: "Time code", body: `${searchBox("tcq", "tcq", TCQ, "Search time codes")}<div id="tc-list">${tcOpts()}</div><p class="note">${ico("info")}Leave codes aren't listed: leave requests are read-only.</p>` });
+
+      // ==========================================================================
+      // js/editor.js
+      // Add / edit a timelog. On desktop the row opens in place under itself (edInline); on phones the same
+      // fields open as a bottom sheet (editorPanel). Same fields, rules and API calls in both.
+      let ED = null;
+      const edMode = () => (BP() === "sm" ? "panel" : "row"); // phones: sheet; everything else: in the row
+      function guardDirty(then) {
+        if (ED && ED.dirty) openDialog({ title: "Discard your changes?", text: "You've changed this timelog but haven't saved it.", ok: "Discard", danger: true, onOk: () => { ED.dirty = false; then(); } });
+        else then();
+      }
+      function openEditor(id, preset = {}) {
+        if (id && ED && ED.mode === "row" && ED.id === id) return guardDirty(closeEditor); // the open row toggles closed
+        guardDirty(() => {
+          const mode = edMode(), e = id ? findRow(id) : null;
+          if (ED && ED.mode === "panel" && mode === "row") closePanel(true);
+          if (e) {
+            const x = ex(e);
+            ED = { id, empId: e.employee.id, date: x.date, actId: e.activity.id, start: x.start, end: x.end, brk: e.breakMinutes || 0, kioskNote: e.kioskNote, approverNote: e.approverNote || "",
+              show: !!e.viewApproverNoteInKiosk, status: e.status, version: e.version, createdByKiosk: e.createdByKiosk, ro: readOnly(e), leave: x.leave, err: {}, log: null, dirty: false, stale: false };
+          } else {
+            ED = { id: null, empId: preset.empId || null, date: preset.date || TODAY_ISO, actId: null, start: "08:00", end: "16:30", brk: 30, kioskNote: "", approverNote: "", show: false, status: "Submitted", version: 0, ro: false, err: {}, log: [], dirty: false, lockPerson: !!preset.empId };
+          }
+          ED.mode = mode; ED.histOpen = false; S.openId = id;
+          if (mode === "panel") { $$(".ent.open").forEach((r) => r.classList.remove("open")); id && $(`.ent[data-v="${id}"]`)?.classList.add("open"); openPanel(editorPanel); }
+          else {
+            render(); animIn($("#ied"), "enter");
+            setTimeout(() => { (ED && !ED.ro ? $(ED.id ? "#ed-start" : "#ied .picker") : $('#ied [data-act="edCancel"]'))?.focus({ preventScroll: true }); revealEditor(); }, 30);
+          }
+          if (id) api.log(id).then((l) => { if (ED && ED.id === id) { ED.log = l; const h = $("#ed-hist"); if (h) h.innerHTML = histHtml(); } });
+        });
+      }
+      function closeEditor() {
+        if (!ED) return; const id = ED.id;
+        if (ED.mode === "panel") return closePanel();
+        ED = null; S.openId = null; render(); id && $(`.ent[data-v="${id}"]`)?.focus({ preventScroll: true });
+      }
+      // keep the open row + its editor in view, below the pinned toolbar and table header
+      function revealEditor() {
+        const box = $("#ied"), v = $("#view"); if (!box) return;
+        const top = ($(".ent.open") || box).getBoundingClientRect().top, bottom = box.getBoundingClientRect().bottom, vr = v.getBoundingClientRect();
+        const head = (parseFloat(v.style.getPropertyValue("--head-h")) || 100) + 40, room = vr.bottom - 12;
+        let d = 0;
+        if (top < vr.top + head) d = top - vr.top - head;
+        else if (bottom > room) d = Math.min(bottom - room, top - vr.top - head);
+        if (d) v.scrollTo({ top: v.scrollTop + d, behavior: reduced() ? "auto" : "smooth" });
+      }
+      const endEditor = () => { if (!ED) return; if (ED.mode === "panel") closePanel(); else { ED = null; S.openId = null; } };
+      function paintEditor() { if (!ED) return; if (ED.mode === "panel") return paintPanel(); const el = $("#ied"); if (el) el.outerHTML = edInline(); }
+      const edCalc = () => { const gross = r2(hoursBetween(ED.start, ED.end)); return { gross, net: r2(Math.max(0, gross - (Number(ED.brk) || 0) / 60)) }; };
+      function totalsHtml() {
+        const { gross, net } = edCalc(), act = ACTS.find((a) => a.id === ED.actId), kind = act ? (act.type === "overtime" ? "OT / penal" : "ordinary") : "";
+        if (ED.mode === "row") return `<div class="field"><span class="lbl">Hours</span><div class="hrs" title="${num(gross)} gross − ${num((Number(ED.brk) || 0) / 60)} break"><b>${num(net)}</b><span>net${kind ? ` · ${kind}` : ""}</span><small>${num(gross)} − ${num((Number(ED.brk) || 0) / 60)}</small></div></div>`;
+        return `<div class="totals"><div class="kv"><span class="k">Gross hours</span><span class="v">${num(gross)}</span></div><div class="kv"><span class="k">Break</span><span class="v">− ${num((Number(ED.brk) || 0) / 60)}</span></div><div class="kv total"><span class="k">Net hours${kind ? ` · ${kind}` : ""}</span><span class="v">${num(net)}</span></div></div>`;
+      }
+      const clashHtml = () => { if (!ED.empId) return ""; const c = overlaps({ id: ED.id, empId: ED.empId, date: ED.date, start: ED.start, end: ED.end }); return c.length ? `<div class="banner err">${ico("alert")}<div class="main"><b>Overlaps ${plural(c.length, "other timelog")}</b>${c.map((x) => `${trange(x.startTime.slice(11, 16), x.endTime.slice(11, 16))} · ${esc(x.activity.code)} · ${LABEL[x.status]}`).join("<br>")}</div></div>` : ""; };
+      const histHtml = () => (ED.log == null ? '<div class="sk" style="width:70%;margin:12px 0"></div><div class="sk" style="width:50%;margin-bottom:12px"></div>' : ED.log.length ? `<div class="list">${[...ED.log].reverse().map((l) => `<div class="kv"><span class="k">${esc(l.text)}</span><span class="v">${esc(l.at)}</span></div>`).join("")}</div>` : '<p class="muted small">Nothing yet.</p>');
+      function edParts(span = {}) {
+        const e = ED, emp = e.empId && EMP(e.empId), act = ACTS.find((a) => a.id === e.actId), who = emp ? esc(personFirst(emp)) : "the person";
+        const isWaiting = ["Submitted", "Suspended"].includes(e.status), dayOk = e.id && dayFullySubmitted(e.empId, e.date), dis = e.dirty ? 'disabled title="Save your changes first"' : "";
+        const next = e.id && e.mode === "row" && isWaiting && dayOk ? nextReady(e.id) : null;
+        // status actions, lighter to heavier; paused while there are unsaved edits (Save and approve takes over)
+        const acts = !e.id ? "" : `<div class="ed-acts">${["Submitted", "Approved"].includes(e.status) ? `<button class="btn sm outline" data-act="edStatus" data-v="Suspended" ${dis}>Put on hold</button>` : ""}${e.status === "Draft" ? `<button class="btn sm primary" data-act="edSubmit" ${dis}>Submit for ${who}</button>` : ""}${isWaiting ? `<button class="btn sm primary" data-act="edStatus" data-v="Approved" ${dayOk ? dis : `disabled title="The day isn't fully submitted"`}>${next ? "Approve and next" : "Approve"}</button>` : ""}</div>`;
+        const why = e.id && isWaiting && !dayOk ? `<p class="note" style="flex-basis:100%;margin:4px 0 0">${ico("info")}Approve is off: ${who} has a draft or a timelog without a finish time on this day.</p>` : "";
+        // one destructive action: Delete for a timelog you added that nobody has acted on, Void for anything the employee sent
+        const canDelete = e.id && !e.createdByKiosk && e.status !== "Approved";
+        const kill = (sz) => (!e.id ? "" : canDelete ? `<button class="${sz} ghost-danger" data-act="edDelete">Delete timelog</button>` : `<button class="${sz} ghost-danger" data-act="edStatus" data-v="Void">Void timelog</button>`);
+        // save buttons: data-when="clean|dirty" swap on the first edit (markDirty) without a repaint
+        const w = (when) => `data-when="${when}"${(when === "dirty") !== !!e.dirty ? " hidden" : ""}`;
+        const saves = (sz, withClose) => {
+          if (!e.id) return `${withClose ? `<button class="${sz} secondary" data-act="edCancel">Cancel</button>` : ""}<button class="${sz} primary" data-act="edSave">Add timelog</button>`;
+          const close = withClose ? `<button class="${sz} secondary" data-act="edCancel" ${w("clean")}>Close</button><button class="${sz} secondary" data-act="edCancel" ${w("dirty")}>Cancel</button>` : "";
+          return close + `<button class="${sz} primary" data-act="edSave" disabled title="Change something to save" ${w("clean")}>Save changes</button>`
+            + (isWaiting && dayOk ? `<button class="${sz} secondary" data-act="edSave" ${w("dirty")}>Save</button><button class="${sz} primary" data-act="edSave" data-v="approve" ${w("dirty")}>Save and approve</button>`
+              : `<button class="${sz} primary" data-act="edSave" ${w("dirty")}>Save changes</button>`);
+        };
+        const f = (k, label, inner, cls = "") => `<div class="field ${cls}${e.err[k] ? " err" : ""}"><label for="ed-${k}">${label}</label>${inner}${e.err[k] ? `<div class="err-msg">${e.err[k]}</div>` : ""}</div>`;
+        return {
+          emp, who, acts, why, kill, saves,
+          meta: edMeta(),
+          stale: e.stale ? `<div class="banner err">${ico("alert")}<div class="main"><b>Someone else changed this timelog</b>Reload it to see their changes, then make yours again.</div><button class="btn-chip sm" data-act="edReload">Reload</button></div>` : "",
+          person: e.id || e.lockPerson ? `<div class="field ${span.person || ""}"><span class="lbl">Person</span><div class="ro-person">${personName(emp)}</div></div>` : picker({ label: "Person", value: emp ? personName(emp) : "Choose a person", act: "edPerson", err: e.err.emp, cls: span.person || "" }),
+          date: picker({ label: "Date", value: fd(fromIso(e.date), { dow: true, y: true }), act: "edDate", cls: span.date || "" }),
+          code: picker({ label: "Time code", value: act ? esc(act.code) : "Choose a time code", act: "edCode", err: e.err.act, cls: span.code || "" }),
+          start: f("start", "Start", `<input class="input" type="time" id="ed-start" data-f="start" value="${e.start}" step="300">`),
+          end: f("end", "Finish", `<input class="input" type="time" id="ed-end" data-f="end" value="${e.end}" step="300">`),
+          brk: f("brk", "Break", `<div class="stepper"><button class="icon-btn" data-act="brkStep" data-v="-1" aria-label="5 minutes less" tabindex="-1">${ico("minus")}</button><div class="input sfx-wrap"><input id="ed-brk" data-f="brk" inputmode="numeric" value="${e.brk}" aria-label="Break in minutes"><span class="sfx">min</span></div><button class="icon-btn" data-act="brkStep" data-v="1" aria-label="5 minutes more" tabindex="-1">${ico("plus")}</button></div>`),
+          totals: `<div id="ed-totals">${totalsHtml()}</div>`,
+          clash: `<div id="ed-clash" class="${span.clash || ""}">${clashHtml()}</div>`,
+          noteFrom: `<div class="field ${span.noteFrom || ""}"><span class="lbl">Note from ${who}</span><div class="note-ro${e.kioskNote ? "" : " empty"}">${e.kioskNote ? esc(e.kioskNote) : "No note"}</div></div>`,
+          note: `<div class="field ${span.note || ""}"><label for="ed-note">Your note <span class="opt">(optional)</span></label><textarea class="input" id="ed-note" data-f="approverNote" maxlength="${SETTINGS.approverNoteMaxLength}" placeholder="Add a note for ${who}">${esc(e.approverNote)}</textarea>
+            <div class="field-foot"><span class="switch-row">${toggleBtn(e.show, "edShow", `Let ${who} see this note`)}<span>Let ${who} see this note</span></span><span class="count" id="ed-count">${SETTINGS.approverNoteMaxLength - e.approverNote.length} left</span></div></div>`,
+        };
+      }
+      const edMeta = () => (ED.id ? (ED.createdByKiosk ? `Added by ${esc(personFirst(EMP(ED.empId)))}` : "Added by an approver") : "");
+      const roSummary = () => { const e = ED, emp = EMP(e.empId), act = ACTS.find((a) => a.id === e.actId); return [["Person", personName(emp)], ["Date", fd(fromIso(e.date), { dow: true, y: true })], ["Time code", esc(act.code)], ["Start – finish", trange(e.start, e.end)], ["Break", `${e.brk} min`], ["Net hours", num(edCalc().net)]]; };
+      const roMsg = () => (ED.leave ? "Leave request, read-only here" : STATUS_INFO.Accepted);
+      const histLink = () => `<button class="text-btn" data-act="edHist">${ED.histOpen ? "Hide history" : "History"}</button>`;
+      const noteFromRo = () => (ED.kioskNote ? `<div class="field"><span class="lbl">Note from ${esc(personFirst(EMP(ED.empId)))}</span><div class="note-ro">${esc(ED.kioskNote)}</div></div>` : "");
+      // phones: bottom sheet
+      function editorPanel() {
+        const e = ED;
+        if (e.ro) return { title: e.leave ? "Leave" : "Timelog", body: `<div class="ed-status">${stChip(e.status)}<span class="meta">${roMsg()}</span></div>${kvs(roSummary())}${noteFromRo()}${sec("History")}<div class="hist" id="ed-hist">${histHtml()}</div>` };
+        const p = edParts();
+        const body = `${e.id ? `<div class="ed-status">${stChip(e.status)}<span class="meta">${p.meta}</span>${p.acts}${p.why}</div>` : ""}${p.stale}${p.person}${p.date}${p.code}<div class="row2">${p.start}${p.end}</div>${p.brk}${p.totals}${p.clash}${e.id ? p.noteFrom : ""}${p.note}${e.id ? `${sec("History")}<div class="hist" id="ed-hist">${histHtml()}</div>` : ""}`;
+        return { title: e.id ? "Edit timelog" : "Add timelog", body, foot: `<div class="foot-row">${p.kill("btn")}${p.saves("btn", false)}</div>` };
+      }
+      // desktop: in the row. Same header for every state: status line, who added it, History; actions on the right.
+      function edInline() {
+        const e = ED;
+        if (e.ro) return `<div class="tr-ed" id="ied" role="region" aria-label="Timelog details"><div class="ied-head"><div class="ied-state"><b>${roMsg()}</b><small>${edMeta()}${histLink()}</small></div></div><div class="ied-ro">${roSummary().slice(1).map(([k, v]) => `<div><span class="lbl">${k}</span><b>${v}</b></div>`).join("")}</div>${noteFromRo()}${e.histOpen ? `<div class="ied-hist" id="ed-hist">${histHtml()}</div>` : ""}<div class="ied-foot"><span class="grow"></span><button class="btn sm secondary" data-act="edCancel">Close</button></div></div>`;
+        const editPerson = !e.id && !e.lockPerson;
+        const p = edParts({ person: "", date: "", code: e.id || !editPerson ? "span3" : "span2", clash: "span4", noteFrom: "span2", note: e.id ? "span2" : "span4" });
+        const head = e.id ? `<div class="ied-head"><div class="ied-state"><b>${STATUS_INFO[e.status] || e.status}</b><small>${p.meta}${histLink()}</small></div><span class="grow"></span>${p.acts}</div>${p.why}`
+          : `<div class="ied-head"><b class="ied-title">New timelog${e.lockPerson ? ` for ${personName(p.emp)}` : ""}</b></div>`;
+        const grid = `${editPerson ? p.person : ""}${p.date}${p.code}${p.start}${p.end}${p.brk}${p.totals}${clashHtml() ? p.clash : `<div id="ed-clash" class="span4" hidden></div>`}${e.id ? p.noteFrom : ""}${p.note}`;
+        const foot = `<div class="ied-foot">${p.kill("btn sm")}<span class="grow"></span>${p.saves("btn sm", true)}</div>`;
+        return `<div class="tr-ed${e.id ? "" : " new"}" id="ied" role="region" aria-label="${e.id ? "Edit timelog" : "New timelog"}">${head}${p.stale}<div class="ied-grid">${grid}</div>${e.id && e.histOpen ? `<div class="ied-hist" id="ed-hist">${histHtml()}</div>` : ""}${foot}</div>`;
+      }
+      // first edit: status actions pause; Close → Cancel, and Save (and approve) take over as the one dark button
+      function markDirty() {
+        if (ED.dirty) return; ED.dirty = true;
+        $$(".ed-acts button").forEach((b) => { b.disabled = true; b.title = "Save your changes first"; });
+        $$("[data-when]").forEach((b) => (b.hidden = b.dataset.when !== "dirty"));
+      }
+      function edInput(k, el) {
+        ED[k] = k === "brk" ? el.value.replace(/\D/g, "").slice(0, 3) : el.value; if (k === "brk") el.value = ED[k];
+        markDirty();
+        if (ED.err[k]) { delete ED.err[k]; el.closest(".field")?.classList.remove("err"); el.closest(".field")?.querySelector(".err-msg")?.remove(); }
+        $("#ed-totals").innerHTML = totalsHtml();
+        const c = $("#ed-clash"), ch = clashHtml(); c.innerHTML = ch; c.hidden = !ch;
+        if (k === "approverNote") $("#ed-count").textContent = `${SETTINGS.approverNoteMaxLength - ED.approverNote.length} left`;
+      }
+      function edValidate() {
+        const err = {};
+        if (!ED.empId) err.emp = "Choose a person";
+        if (!ED.actId) err.act = "Choose a time code";
+        if (!ED.start) err.start = "Enter a start time";
+        if (!ED.end) err.end = "Enter a finish time";
+        else if (ED.start && mins(ED.end) <= mins(ED.start)) err.end = "Finish after the start time";
+        if (!err.end && !err.start && (Number(ED.brk) || 0) / 60 >= hoursBetween(ED.start, ED.end)) err.brk = "Longer than the time worked";
+        return err;
+      }
+      const edBody = () => {
+        const act = ACTS.find((a) => a.id === ED.actId), emp = EMP(ED.empId);
+        return { employee: { id: emp.id, name: emp.name, inactive: emp.inactive }, date: `${ED.date}T00:00:00.000Z`, startTime: `${ED.date}T${ED.start}:00.000Z`, endTime: `${ED.date}T${ED.end}:00.000Z`,
+          activity: { ...act }, status: ED.id ? ED.status : "Submitted", breakMinutes: Number(ED.brk) || 0, kioskNote: ED.kioskNote, approverNote: ED.approverNote, viewApproverNoteInKiosk: ED.show, version: ED.version };
+      };
+
+      // ==========================================================================
+      // js/actions.js
+      // ==========================================================================
+      const refresh = () => load(true);
+      const undoMany = (ids, msg = "Change undone") => async () => { try { await Promise.all(ids.map((id, i) => api.undo(id, i ? 0 : undefined))); await refresh(); toast(msg, null, "", "info"); } catch { toast("Couldn't undo", null, "", "err"); } };
+      const PAST = { Approved: "approved", Suspended: "put on hold", Void: "voided" };
+      // confirmation rule: Undo is the safety net. Only Delete asks first, plus bulk changes bigger than this.
+      const BULK_CONFIRM = 20;
+      const subFor = (es) => (es.length === 1 ? `${personName(es[0].employee)} · ${fdl(ex(es[0]).date)} · ${num(ex(es[0]).net)} hours` : `${whoLine(es)} · ${num(sum(es, (e) => ex(e).net))} hours`);
+      const closeRowEditor = () => { if (ED && ED.mode === "row") { ED = null; S.openId = null; } };
+      // every approve control (tick on a timelog, day or person; bulk bar; editor) comes through here
+      async function approve(ids, btn, { next } = {}) {
+        const es = ids.map(findRow).filter(Boolean), done = busy(btn, btn && btn.classList.contains("qa") ? "" : "Approving…");
+        try {
+          await api.updateStatus(ids, "Approved"); ids.forEach((id) => S.sel.delete(id)); if (ED && ids.includes(ED.id)) endEditor();
+          await refresh();
+          toast(es.length === 1 ? "Timelog approved" : `${plural(es.length, "timelog")} approved`, undoMany(ids), "Undo", "", subFor(es));
+          if (next && DB.entries.some((e) => e.id === next && canApprove(e))) openEditor(next);
+        } catch { toast("Couldn't approve", null, "", "err"); } finally { done(); }
+      }
+      async function setStatus(es, status, extra, btn) {
+        const ids = es.map((e) => e.id), done = busy(btn, "");
+        try {
+          await api.updateStatus(ids, status, extra); ids.forEach((id) => S.sel.delete(id)); if (ED && ids.includes(ED.id)) endEditor();
+          await refresh();
+          toast(es.length === 1 ? `Timelog ${PAST[status]}` : `${plural(es.length, "timelog")} ${PAST[status]}`, undoMany(ids), "Undo", "", subFor(es));
+        } catch { toast("Couldn't change the status", null, "", "err"); } finally { done(); }
+      }
+      // putting on hold asks for the reason (the note the employee sees), not for a confirmation
+      function holdDialog(es) {
+        const firsts = [...new Set(es.map((e) => personFirst(e.employee)))], name = firsts.length === 1 ? esc(firsts[0]) : "them";
+        openDialog({
+          title: es.length === 1 ? "Put this timelog on hold?" : `Put ${plural(es.length, "timelog")} on hold?`,
+          text: `They stay on hold until you approve them. Tell ${name} what needs fixing.`,
+          html: `<textarea class="input dlg-note" id="dlg-note" maxlength="${SETTINGS.approverNoteMaxLength}" placeholder="What needs fixing?">${es.length === 1 ? esc(es[0].approverNote || "") : ""}</textarea><div class="switch-row dlg-sw">${toggleBtn(true, "dlgShow", `Let ${name} see this note`)}<span>Let ${name} see this note</span></div>`,
+          ok: "Put on hold",
+          onOk: () => { const note = $("#dlg-note").value.trim(), show = $('.dialog [data-act="dlgShow"]').getAttribute("aria-checked") === "true"; return setStatus(es, "Suspended", note ? { approverNote: note, viewApproverNoteInKiosk: show } : {}); },
+        });
+        setTimeout(() => $("#dlg-note")?.focus(), 40);
+      }
+      const ACT = {
+        soon: (v) => toast(`${v || "That"} isn't in this prototype`, null, "", "info"),
+        closePanel: () => (ED && ED.mode === "panel" ? guardDirty(closePanel) : closePanel()),
+        panelBack: () => panelBack(), closeDialog: () => closeDialog(),
+        dlgShow: (v, el) => el.setAttribute("aria-checked", el.getAttribute("aria-checked") !== "true"),
+        sort: (v) => { S.sort = S.sort.key === v ? { key: v, dir: -S.sort.dir } : { key: v, dir: NUMERIC.includes(v) ? -1 : 1 }; render(); },
+        selReady: () => { readyIds(visibleRows()).forEach((id) => S.sel.add(id)); render(); },
+        // tabs, folding, list filters
+        tab: (v) => guardDirty(() => { closeRowEditor(); S.tab = v; S.fold.clear(); S.sel.clear(); render(); }),
+        fold: (v) => guardDirty(() => { if (ED && ED.empId === v) closeRowEditor(); S.fold.has(v) ? S.fold.delete(v) : S.fold.add(v); render(); }),
+        foldAll: (v) => guardDirty(() => {
+          const ids = [...new Set(visibleRows().map((e) => e.employee.id))], collapse = v === "1";
+          if (collapse) closeRowEditor(); S.fold = new Set(collapse !== (S.tab === "all") ? ids : []); render();
+        }),
+        quick: (v) => { S.quick = v; render(); },
+        fPerson: (v, el) => { PQ = ""; choose(el, personMenu, 300); },
+        fInactive: (v, el) => { S.f.inactive = !S.f.inactive; el.setAttribute("aria-checked", S.f.inactive); $("#pq-list").innerHTML = personOpts(S.f.person, "pickPerson", true); load(); },
+        pickPerson: (v) => { S.f.person = v; S.sel.clear(); chosen(); load(); },
+        fRange: (v, el) => choose(el, rangeMenu, 280),
+        pickRange: (v) => { const p = PRESETS().find((x) => x[0] === v); S.f.from = p[2]; S.f.to = p[3]; S.sel.clear(); chosen(); load(); },
+        rangeStep: (v) => { const n = daysBetween(S.f.from, S.f.to) + 1, k = Number(v) * n; S.f.from = iso(addDays(fromIso(S.f.from), k)); S.f.to = iso(addDays(fromIso(S.f.to), k)); S.sel.clear(); load(); },
+        clearFilters: () => { S.quick = "all"; S.f.person = "all"; S.f.inactive = false; load(); },
+        // person view
+        stripDay: (v) => guardDirty(() => { closeRowEditor(); S.day = v; setDayHash(); render(); }),
+        dayStep: (v) => setDay(iso(addDays(fromIso(S.day), Number(v)))),
+        goToday: () => setDay(TODAY_ISO),
+        pickDay: (v, el) => { CAL = { title: "Go to date", cur: S.day, m: fromIso(S.day), empId: S.empId, onPick: (k) => { chosen(); setDay(k); } }; choose(el, calMenu, 300); },
+        calStep: (v) => { CAL.m = new Date(CAL.m.getFullYear(), CAL.m.getMonth() + Number(v), 1); repaintChooser(); },
+        calPick: (v) => CAL.onPick(v),
+        submitDayDrafts: async (v, btn) => {
+          const ds = dayBlockers(S.empId, S.day).filter((e) => e.status === "Draft"), ids = ds.map((e) => e.id), done = busy(btn, "Submitting…");
+          try { await api.submitDraftsOnBehalf(ids); await refresh(); toast(`${plural(ids.length, "draft")} submitted`, undoMany(ids), "Undo", "", `On behalf of ${personName(ds[0].employee)}`); } catch { toast("Couldn't submit", null, "", "err"); } finally { done(); }
+        },
+        // selection + status changes (PUT /timecard/entry/updateStatus, PUT /timecard/entry/submitDraftsOnBehalf)
+        clearSel: () => { S.sel.clear(); render(); },
+        approveIds: (v, btn) => approve(v.split(",").map(Number), btn),
+        bulk: (status, btn) => {
+          const es = [...S.sel].map(findRow).filter(Boolean);
+          const targets = status === "Approved" ? es.filter(waiting) : status === "Suspended" ? es.filter((e) => e.status !== "Suspended") : es;
+          if (!targets.length) return toast(status === "Approved" ? "Nothing selected is waiting for approval" : `Nothing to change: they're already ${LABEL[status].toLowerCase()}`, null, "", "info");
+          if (status === "Approved") return approve(targets.map((e) => e.id), btn);
+          if (status === "Suspended") return holdDialog(targets);
+          if (targets.length > BULK_CONFIRM) return openDialog({ title: `Void ${plural(targets.length, "timelog")}?`, text: "Voided timelogs won't be paid and leave this list. You can undo straight after.", ok: "Void", danger: true, onOk: () => setStatus(targets, "Void") });
+          setStatus(targets, "Void", undefined, btn);
+        },
+        bulkSubmit: async (v, btn) => {
+          const ds = [...S.sel].map(findRow).filter((e) => e && e.status === "Draft"), ids = ds.map((e) => e.id), done = busy(btn, "Submitting…");
+          try { await api.submitDraftsOnBehalf(ids); await refresh(); toast(`${plural(ids.length, "draft")} submitted`, undoMany(ids), "Undo", "", `On behalf of ${whoLine(ds)}`); } catch { toast("Couldn't submit", null, "", "err"); } finally { done(); }
+        },
+        // editor
+        openEntry: (v) => openEditor(Number(v)),
+        addEntry: () => { const ctx = S.route === "person" ? { empId: S.empId, date: S.day } : S.f.person !== "all" ? { empId: S.f.person } : {}; openEditor(null, ctx); },
+        edCancel: () => guardDirty(closeEditor),
+        edHist: () => { ED.histOpen = !ED.histOpen; paintEditor(); },
+        edPerson: (v, el) => { PQ = ""; choose(el, edPersonMenu, 300); },
+        edPickPerson: (v) => { ED.empId = v; delete ED.err.emp; ED.dirty = true; chosen(); paintEditor(); },
+        edDate: (v, el) => { CAL = { title: "Date", cur: ED.date, m: fromIso(ED.date), empId: ED.empId, onPick: (k) => { ED.date = k; ED.dirty = true; chosen(); paintEditor(); } }; choose(el, calMenu, 300); },
+        edCode: (v, el) => { TCQ = ""; choose(el, tcMenu, 380); },
+        pickCode: (v) => { ED.actId = Number(v); delete ED.err.act; ED.dirty = true; chosen(); paintEditor(); },
+        brkStep: (v) => { const el = $("#ed-brk"); el.value = Math.max(0, (Number(ED.brk) || 0) + Number(v) * SETTINGS.breakStepMinutes); edInput("brk", el); },
+        edShow: (v, el) => { ED.show = !ED.show; markDirty(); el.setAttribute("aria-checked", ED.show); },
+        edReload: async (v, btn) => {
+          const done = busy(btn, ""), id = ED.id;
+          try { const fresh = await api.get(id); S.rows = S.rows.map((e) => (e.id === id ? fresh : e)); S.period = S.period.map((e) => (e.id === id ? fresh : e)); ED.dirty = false; closeRowEditor(); openEditor(id); toast("Loaded the latest version", null, "", "info"); refresh(); } finally { done(); }
+        },
+        // v = "approve": Save and approve (fix it, then approve it, in one go; then the next ready timelog opens)
+        edSave: async (v, btn) => {
+          if (!ED || ED.ro) return;
+          const andApprove = v === "approve";
+          const err = edValidate(); if (Object.keys(err).length) { ED.err = err; paintEditor(); $(".field.err input, .field.err .picker")?.focus(); return; }
+          const clash = overlaps({ id: ED.id, empId: ED.empId, date: ED.date, start: ED.start, end: ED.end });
+          if (clash.length && !ED.okClash) {
+            openDialog({ title: "This timelog overlaps another", html: kvs(clash.map((x) => [trange(x.startTime.slice(11, 16), x.endTime.slice(11, 16)), `${esc(x.activity.code.slice(0, 26))}${x.activity.code.length > 26 ? "…" : ""}`])), text: `${esc(personFirst(EMP(ED.empId)))} would be paid twice for the same time. Save it anyway?`, ok: "Save anyway",
+              onOk: () => { ED.okClash = true; setTimeout(() => ACT.edSave(v, $(andApprove ? '[data-act="edSave"][data-v="approve"]' : '[data-act="edSave"]:not([data-v]):not([hidden])'))); } });
+            return;
+          }
+          const done = busy(btn, andApprove ? "Approving…" : "Saving…"), wasNew = !ED.id, emp = EMP(ED.empId), { net } = edCalc(), date = ED.date, next = andApprove && ED.mode === "row" ? nextReady(ED.id) : null;
+          try {
+            const r = wasNew ? await api.create(edBody()) : await api.update(ED.id, edBody());
+            if (andApprove) await api.updateStatus([r.id], "Approved", undefined, 0);
+            endEditor(); if (S.route === "person") { S.day = date; setDayHash(); }
+            await refresh(); $(`.ent[data-v="${r.id}"]`)?.focus({ preventScroll: true });
+            const undo = andApprove ? async () => { try { await api.undo(r.id); await api.undo(r.id, 0); await refresh(); toast("Change undone", null, "", "info"); } catch { toast("Couldn't undo", null, "", "err"); } } : undoMany([r.id], wasNew ? "Timelog removed" : "Change undone");
+            toast(wasNew ? "Timelog added" : andApprove ? "Saved and approved" : "Changes saved", undo, "Undo", "", `${personName(emp)} · ${fdl(date)} · ${num(net)} hours`);
+            if (next && DB.entries.some((e) => e.id === next && canApprove(e))) openEditor(next);
+          } catch (e) { done(); if (e.status === 409) { ED.stale = true; paintEditor(); } else toast("Couldn't save the timelog", null, "", "err"); }
+        },
+        edDelete: () => {
+          const emp = EMP(ED.empId), id = ED.id, version = ED.version, act = ACTS.find((a) => a.id === ED.actId);
+          openDialog({ title: "Delete this timelog?", html: kvs([["Person", personName(emp)], ["Date", fdl(ED.date)], ["Time", trange(ED.start, ED.end)], ["Net hours", num(edCalc().net)]]), ok: "Delete", danger: true,
+            onOk: async () => { try { await api.remove(id, version); endEditor(); await refresh(); toast("Timelog deleted", undoMany([id], "Timelog restored"), "Undo", "", `${personName(emp)} · ${act.code.slice(0, 32)}`); } catch (e) { if (e.status === 409) { ED.stale = true; paintEditor(); } else toast("Couldn't delete", null, "", "err"); } } });
+        },
+        edStatus: (status, btn) => {
+          const e = findRow(ED.id);
+          if (status === "Approved") return approve([e.id], btn, { next: ED.mode === "row" ? nextReady(e.id) : null });
+          if (status === "Suspended") return holdDialog([{ ...e, approverNote: ED.approverNote }]);
+          setStatus([e], status, undefined, btn);
+        },
+        edSubmit: async (v, btn) => { const id = ED.id, e = findRow(id), done = busy(btn, "Submitting…"); try { await api.submitDraftsOnBehalf([id]); endEditor(); await refresh(); toast("Draft submitted", undoMany([id]), "Undo", "", `On behalf of ${personName(e.employee)}`); } catch { done(); toast("Couldn't submit", null, "", "err"); } },
+      };
+      function setDay(k) {
+        guardDirty(() => {
+          closeRowEditor();
+          const same = payPeriod(fromIso(k))[0] === payPeriod(fromIso(S.day))[0]; S.day = k; S.sel.clear(); setDayHash(); same ? render() : load();
+        });
+      }
+
+      // ==========================================================================
+      // js/events.js
+      // Delegated clicks (data-act → ACT, data-go → go), selection checkboxes, inputs, keyboard shortcuts.
+      // ==========================================================================
+      document.addEventListener("click", (e) => {
+        if (e.target.matches('input[type="checkbox"]')) return; // handled on change
+        const cell = e.target.closest(".tr .c-chk"); if (cell) { cell.querySelector("input")?.click(); return; }
+        const el = e.target.closest("[data-act],[data-go]"); if (!el || el.disabled) return;
+        if (el.dataset.go) { if (location.hash === "#/" + el.dataset.go) return; guardDirty(() => { if (ED) { ED.dirty = false; } closePanel(true); go(el.dataset.go); }); return; }
+        const fn = ACT[el.dataset.act]; if (fn) fn(el.dataset.v, el, e);
+      });
+      document.addEventListener("mousedown", (e) => { if (POP && !e.target.closest(".pop") && !POP.anchor.contains(e.target)) closePop(); }, true);
+      document.addEventListener("scroll", (e) => { if (POP && !(e.target.closest && e.target.closest(".pop"))) closePop(); }, true);
+      document.addEventListener("change", (e) => {
+        const t = e.target; if (!t.matches('input[type="checkbox"]')) return;
+        const rows = S.route === "person" ? S.period.filter((x) => x.date.startsWith(S.day)) : visibleRows();
+        let ids = [];
+        if (t.dataset.sel) ids = [Number(t.dataset.sel)];
+        else if (t.dataset.selday) ids = rows.filter((x) => dayKey(x) === t.dataset.selday && selectable(x)).map((x) => x.id);
+        else if (t.dataset.selgrp) ids = rows.filter((x) => x.employee.id === t.dataset.selgrp && selectable(x)).map((x) => x.id);
+        else if (t.dataset.selall) ids = rows.filter(selectable).map((x) => x.id);
+        ids.forEach((id) => (t.checked ? S.sel.add(id) : S.sel.delete(id)));
+        const focusSel = t.dataset.sel ? `.ent[data-v="${t.dataset.sel}"]` : t.dataset.selgrp ? `[data-selgrp="${t.dataset.selgrp}"]` : t.dataset.selday ? `[data-selday="${t.dataset.selday}"]` : "[data-selall]";
+        render(); $(focusSel)?.focus({ preventScroll: true });
+      });
+      document.addEventListener("input", (e) => {
+        const t = e.target;
+        if (t.dataset.f && ED) return edInput(t.dataset.f, t);
+        if (t.dataset.q === "pq") { PQ = t.value; $("#pq-list").innerHTML = personOpts(S.f.person, "pickPerson", true); }
+        if (t.dataset.q === "pq2") { PQ = t.value; $("#pq-list").innerHTML = personOpts(ED.empId, "edPickPerson"); }
+        if (t.dataset.q === "tcq") { TCQ = t.value; $("#tc-list").innerHTML = tcOpts(); }
+        if (POP) placePop();
+      });
+      document.addEventListener("keydown", (e) => {
+        const t = e.target;
+        if (e.key === "Escape") {
+          if ($("#dlg-layer .dialog")) closeDialog();
+          else if (POP) chosen();
+          else if (PN) { if (PSTACK.length) panelBack(); else ACT.closePanel(); }
+          else if (ED) ACT.edCancel();
+          else if (S.sel.size) ACT.clearSel();
+          return;
+        }
+        if (POP && (e.key === "ArrowDown" || e.key === "ArrowUp") && !$(".pop .cal")) {
+          e.preventDefault(); const items = $$(".pop-body .row"); const i = items.indexOf(document.activeElement);
+          items[e.key === "ArrowDown" ? Math.min(items.length - 1, i + 1) : Math.max(0, i - 1)]?.focus(); return;
+        }
+        if (POP && e.key === "Enter" && t.matches("input[data-q]")) { e.preventDefault(); $(".pop-body button.row")?.click(); return; }
+        const row = t.closest?.(".ent");
+        if (e.key === "Enter" && row && t === row) { e.preventDefault(); ACT.openEntry(row.dataset.v); }
+      });
+      $("#view").addEventListener("scroll", (e) => e.currentTarget.classList.toggle("scrolled", e.currentTarget.scrollTop > 4), { passive: true });
+      window.addEventListener("hashchange", () => {
+        parseHash(); S.sel.clear(); closePop(); closePanel(true); ED = null; S.openId = null;
+        $("#view").scrollTop = 0; load(); animIn($("#view .page"), S.route === "person" ? "anim-push" : "anim-back");
+      });
+
+      // ==========================================================================
+      // js/responsive.js
+      // <html data-bp>: sm < 720 (phone: sheets, row editor falls back to the sheet) · md < 1024 · lg < 1360 (panel
+      // ) · xl ≥ 1360. Desktop edits in the row; phones use the sheet. The app sits in a centred frame.
+      // ==========================================================================
+      const BP = () => document.documentElement.dataset.bp;
+      function setBp() { const w = innerWidth; document.documentElement.dataset.bp = w < 720 ? "sm" : w < 1024 ? "md" : w < 1360 ? "lg" : "xl"; }
+      addEventListener("resize", () => { const b = BP(); setBp(); if (b !== BP() && ED && ED.mode !== edMode()) { closePanel(true); ED = null; S.openId = null; } if (b !== BP() && $("#view .page")) render(); if ($("#toast").classList.contains("show")) placeToast(); if (POP) placePop(); });
+
+      // ==========================================================================
+      // js/demo.js
+      // Console: ACT.simConflict() (someone else edits 19096 → Save shows the conflict), ACT.simEmpty(), ACT.resetDemo().
+      // ==========================================================================
+      ACT.simConflict = () => { const e = DB.entries.find((x) => x.id === 19096); e.version++; (DB.logs[19096] ||= []).push({ at: nowStamp(), text: "Edited by another approver" }); return "Entry 19096 changed on the server — edit it and Save"; };
+      ACT.simEmpty = () => { S.f.person = "6"; S.quick = "ot"; load(); };
+      ACT.resetDemo = () => { seed(); S.sel.clear(); S.quick = "all"; S.tab = "todo"; S.fold.clear(); S.f = { person: "all", inactive: false, from: payPeriod(TODAY)[0], to: payPeriod(TODAY)[1] }; closePanel(true); ED = null; S.openId = null; go("timelogs"); load(); };
+
+      // ==========================================================================
+      // js/main.js
+      // ==========================================================================
+      seed(); setBp(); api.settings(); parseHash(); load();
+    </script>
+  </body>
+</html>
